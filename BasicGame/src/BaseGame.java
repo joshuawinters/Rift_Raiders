@@ -3,6 +3,7 @@ import nl.saxion.app.interaction.GameLoop;
 import nl.saxion.app.interaction.KeyboardEvent;
 import nl.saxion.app.interaction.MouseEvent;
 
+
 public class BaseGame implements GameLoop {
 
     //gameloop aanroepen en starten via main
