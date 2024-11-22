@@ -32,10 +32,10 @@ public class BaseGame implements GameLoop {
         SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
 
         //frames bijhouden voor animatiesnelheid
-        shafir.frameCounter++;
-        if (shafir.frameCounter >= 9) { // Wissel sprite elke 10 frames (1 stap)
-            shafir.frameCounter = 0; // Reset frameCounter
-            shafir.stapCounter++;
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - shafir.animationTime >= shafir.animationDelay) {
+            shafir.stapCounter++; // Wissel van frame
+            shafir.animationTime = currentTime; // Reset de tijd
         }
 
         //sprites veranderen op basis van directie
@@ -69,19 +69,15 @@ public class BaseGame implements GameLoop {
             if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_A) {
                 shafir.x -= 8;
                 shafir.direction = "Left";
-                shafir.stapCounter++;
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_D) {
                 shafir.x += 8;
                 shafir.direction = "Right";
-                shafir.stapCounter++;
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_W) {
                 shafir.y -= 8;
                 shafir.direction = "Up";
-                shafir.stapCounter++;
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
                 shafir.y += 8;
                 shafir.direction = "Down";
-                shafir.stapCounter++;
             }
         }
     }
@@ -99,14 +95,16 @@ class Shafir {
     String direction;
     //houdt stappen bij voor verschillende sprites
     int stapCounter;
-    //houdt frames bij voor een beter stap effect
-    int frameCounter;
+
+    long animationTime; // Tijdstip van de laatste animatie-update
+    long animationDelay;
 
     public Shafir() {
         this.x = 0;
         this.y = 0;
-        this.direction = "Down";
+        this.direction = "IDLE";
         this.stapCounter = 0;
-        this.frameCounter = 0;
+        this.animationTime = System.currentTimeMillis(); // Starttijd
+        this.animationDelay = 200;
     }
 }
