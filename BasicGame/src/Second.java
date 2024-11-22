@@ -22,7 +22,7 @@ public class Second {
     static String imageShafirRechts2 = "Sprites\\Shafir\\ShafirRechts2.png";
 
     //Shafir idle sprite
-    static String imageShafirIdle = "Sprites\\Shafir\\ShafirIdle.png";
+    static String imageShafirIdle = "Sprites\\Shafir\\ShafirIdleVoor.png";
     //Stage Sprites
     static String imageStage = "Sprites\\Stage1.png";
 }
