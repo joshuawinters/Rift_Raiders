@@ -20,7 +20,7 @@ public class BaseGame implements GameLoop {
         shafir = new Shafir();
         shafir.x = 450;
         shafir.y = 250;
-        SaxionApp.playSound("C:\\Users\\juana\\OneDrive\\Bureaublad\\IntelliJ opdrachten\\Sandbox\\BasicGame\\src\\OST\\OSTStage1.wav");
+        SaxionApp.playSound("BasicGame\\src\\OST\\OSTStage1.wav");
     }
 
     @Override

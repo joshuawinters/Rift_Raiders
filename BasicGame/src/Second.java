@@ -22,7 +22,7 @@ public class Second {
     static String imageShafirRechts2 = "Sprites\\Shafir\\ShafirRechts2.png";
 
     //Shafir idle sprite
-    static String imageShafirIdle = "C:\\Users\\juana\\OneDrive\\Bureaublad\\IntelliJ opdrachten\\Sandbox\\BasicGame\\src\\Sprites\\Shafir\\ShafirIdle.png";
+    static String imageShafirIdle = "Sprites\\Shafir\\ShafirIdle.png";
     //Stage Sprites
-    static String imageStage = "C:\\Users\\juana\\OneDrive\\Bureaublad\\IntelliJ opdrachten\\Sandbox\\BasicGame\\src\\Sprites\\Stage1.png";
+    static String imageStage = "Sprites\\Stage1.png";
 }
