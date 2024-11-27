@@ -1,3 +1,5 @@
+package main;
+
 import entity.Player;
 import nl.saxion.app.SaxionApp;
 import nl.saxion.app.interaction.GameLoop;
