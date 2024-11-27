@@ -19,12 +19,7 @@ public class BaseGame implements GameLoop {
     public void init() {
         // Initialize Player with position, speed, and animation delay
         shafir = new Player(450, 250, 8, 200, 50, 50);
-        // Statische hitbox toevoegen in het midden van het scherm
-        int hitboxWidth = 100;  // Breedte van de hitbox
-        int hitboxHeight = 100; // Hoogte van de hitbox
-        int centerX = 1000 / 2 - hitboxWidth / 2; // Midden van het scherm (x)
-        int centerY = 1000 / 2 - hitboxHeight / 2; // Midden van het scherm (y)
-        staticHitbox = new Rectangle(centerX, centerY, hitboxWidth, hitboxHeight);
+
     }
 
     @Override
@@ -54,7 +49,13 @@ public class BaseGame implements GameLoop {
         // for debugging
         Rectangle hitbox = shafir.getHitbox();
         SaxionApp.drawRectangle(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
-
+// Statische hitbox toevoegen in het midden van het scherm
+        int hitboxWidth = 100;  // Breedte van de hitbox
+        int hitboxHeight = 100; // Hoogte van de hitbox
+        int centerX = 1000 / 2 - hitboxWidth / 2; // Midden van het scherm (x)
+        int centerY = 1000 / 2 - hitboxHeight / 2; // Midden van het scherm (y)
+        staticHitbox = new Rectangle(centerX, centerY, hitboxWidth, hitboxHeight);
+        SaxionApp.drawRectangle(centerX, centerY, hitboxWidth, hitboxHeight);
 
     }
 
