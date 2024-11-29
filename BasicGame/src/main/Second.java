@@ -49,5 +49,5 @@ public class Second {
     static String imageCavemanRechts2 = "Sprite\\Enemy\\CavemanRechts2.png";
 
     //enemy sprites idle
-    static String imageCavemanIdle = "Sprite\\Enemy\\CavemanIdle1.png";
+    static String imageCavemanIdle = "Sprites\\Enemy\\CavemanIdle1.png";
 }

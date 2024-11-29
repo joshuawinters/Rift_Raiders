@@ -1,5 +1,6 @@
 package main;
 
+import entity.Enemies;
 import entity.Player;
 import nl.saxion.app.SaxionApp;
 import nl.saxion.app.interaction.GameLoop;
@@ -16,11 +17,13 @@ public class BaseGame implements GameLoop {
     }
 
     Player shafir;
+    Enemies caveman;
     Rectangle staticHitbox;
     @Override
     public void init() {
         // Initialize Player with position, speed, and animation delay
         shafir = new Player(450, 250, 8, 200, 50, 50);
+        caveman = new Enemies(450,250,8, 200, 50, 50);
 
     }
 
@@ -30,7 +33,7 @@ public class BaseGame implements GameLoop {
 
         // Draw stage background
         SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
-
+        SaxionApp.drawImage(Second.imageCavemanIdle, 0,280, 100, 100);
         // Check and update animation
         if (shafir.shouldUpdateAnimation()) {
             shafir.stapCounter++; // Advance animation frame
@@ -45,13 +48,18 @@ public class BaseGame implements GameLoop {
             default -> Second.imageShafirIdle;
         };
 
+
         // Draw the player sprite
         SaxionApp.drawImage(sprite, shafir.x, shafir.y, 100, 100);
+
+        //follow player (enemy)
+
 
         // for debugging
         Rectangle hitbox = shafir.getHitbox();
         SaxionApp.drawRectangle(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
-// Statische hitbox toevoegen in het midden van het scherm
+
+        // Statische hitbox toevoegen in het midden van het scherm
         int hitboxWidth = 100;  // Breedte van de hitbox
         int hitboxHeight = 100; // Hoogte van de hitbox
         int centerX = 1000 / 2 - hitboxWidth / 2; // Midden van het scherm (x)
