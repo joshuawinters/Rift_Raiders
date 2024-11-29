@@ -16,6 +16,8 @@ public class BaseGame implements GameLoop {
         SaxionApp.startGameLoop(new BaseGame(), 1000, 1000, 40);
     }
 
+    String currentScreen = "startscreen";
+
     Player shafir;
     Enemies caveman;
     Rectangle staticHitbox;
