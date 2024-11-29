@@ -24,6 +24,8 @@ public class BaseGame implements GameLoop {
         // Initialize Player with position, speed, and animation delay
         shafir = new Player(450, 250, 8, 200, 50, 50);
         caveman = new Enemies(450,250,8, 200, 50, 50);
+        //enemy inspawnen
+        SaxionApp.drawImage(Second.imageCavemanIdle, 0,280, 100, 100);
 
     }
 
@@ -33,7 +35,6 @@ public class BaseGame implements GameLoop {
 
         // Draw stage background
         SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
-        SaxionApp.drawImage(Second.imageCavemanIdle, 0,280, 100, 100);
         // Check and update animation
         if (shafir.shouldUpdateAnimation()) {
             shafir.stapCounter++; // Advance animation frame
@@ -53,7 +54,22 @@ public class BaseGame implements GameLoop {
         SaxionApp.drawImage(sprite, shafir.x, shafir.y, 100, 100);
 
         //follow player (enemy)
+        //positie enemy horizontaal
+        if(shafir.x > caveman.x){
+            caveman.x++;
+        } else if(shafir.x < caveman.x) {
+            caveman.x--;
+        }
 
+        //positie enemy verticaal
+        if(shafir.y > caveman.y){
+            caveman.y++;
+        } else if(shafir.y < caveman.y) {
+            caveman.y--;
+        }
+
+        //Draw enemy sprite
+        SaxionApp.drawImage(Second.imageCavemanIdle, caveman.x, caveman.y,100, 100);
 
         // for debugging
         Rectangle hitbox = shafir.getHitbox();
