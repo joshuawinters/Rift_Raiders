@@ -23,9 +23,7 @@ public class BaseGame implements GameLoop {
     public void init() {
         // Initialize Player with position, speed, and animation delay
         shafir = new Player(450, 250, 8, 200, 50, 50);
-        caveman = new Enemies(450,250,8, 200, 50, 50);
-        //enemy inspawnen
-        SaxionApp.drawImage(Second.imageCavemanIdle, 0,280, 100, 100);
+        caveman = new Enemies(150,250,8, 200, 50, 50);
 
     }
 
@@ -56,20 +54,36 @@ public class BaseGame implements GameLoop {
         //follow player (enemy)
         //positie enemy horizontaal
         if(shafir.x > caveman.x){
-            caveman.x++;
+            caveman.move("Right");
         } else if(shafir.x < caveman.x) {
-            caveman.x--;
+            caveman.move("Left");
         }
 
         //positie enemy verticaal
         if(shafir.y > caveman.y){
-            caveman.y++;
+            caveman.move("Down");
         } else if(shafir.y < caveman.y) {
-            caveman.y--;
+            caveman.move("Up");
         }
 
+
+        if (caveman.shouldUpdateAnimation()) {
+            caveman.stapCounter++; // Advance animation frame
+        }
+
+
+        //enemy sprites aanpassen op de richting
+        String spriteCaveman = switch (caveman.direction) {
+            case "Up" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanBoven1 : Second.imageCavemanBoven2;
+            case "Down" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanOnder1 : Second.imageCavemanOnder2;
+            case "Left" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanLinks1 : Second.imageCavemanLinks2;
+            case "Right" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanRechts1 : Second.imageCavemanRechts2;
+            default -> Second.imageCavemanIdle;
+        };
+
         //Draw enemy sprite
-        SaxionApp.drawImage(Second.imageCavemanIdle, caveman.x, caveman.y,100, 100);
+        SaxionApp.drawImage(spriteCaveman, caveman.x, caveman.y,100, 100);
+
 
         // for debugging
         Rectangle hitbox = shafir.getHitbox();

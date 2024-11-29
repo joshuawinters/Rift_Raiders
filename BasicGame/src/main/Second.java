@@ -28,7 +28,7 @@ public class Second {
     //Stage Sprites
     static String imageStage = "Sprites\\Stage1.png";
 
-
+//-------------------------------------------------------------------------------------------------------------------
 
     // enemy #1 sprites
 
@@ -38,16 +38,18 @@ public class Second {
 
     //enemy stappen naar links
     static String imageCavemanLinks1 = "Sprites\\Enemy\\CavemanLinks1.png";
-    static String imageCavemanLinks2 = "Sprite\\Enemy\\CavemanLinks2.png";
+    static String imageCavemanLinks2 = "Sprites\\Enemy\\CavemanLinks2.png";
 
     //enemy stappen naar boven
-    static String imageCavemanBoven1 = "Sprite\\Enemy\\CavemanBoven1.png";
-    static String imageCavemanBoven2 = "Sprite\\Enemy\\CavemanBoven2.png";
+    static String imageCavemanBoven1 = "Sprites\\Enemy\\CavemanBoven1.png";
+    static String imageCavemanBoven2 = "Sprites\\Enemy\\CavemanBoven2.png";
 
     //enemy stappen naar rechts
-    static String imageCavemanRechts1 = "Sprite\\Enemy\\CavemanRechts1.png";
-    static String imageCavemanRechts2 = "Sprite\\Enemy\\CavemanRechts2.png";
+    static String imageCavemanRechts1 = "Sprites\\Enemy\\CavemanRechts1.png";
+    static String imageCavemanRechts2 = "Sprites\\Enemy\\CavemanRechts2.png";
 
     //enemy sprites idle
     static String imageCavemanIdle = "Sprites\\Enemy\\CavemanIdle1.png";
+
+    //---------------------------------------------------------------------------------------------------------------
 }
