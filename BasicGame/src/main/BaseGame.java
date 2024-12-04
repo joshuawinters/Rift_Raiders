@@ -21,16 +21,30 @@ public class BaseGame implements GameLoop {
     Player shafir;
     Enemies caveman;
     Rectangle staticHitbox;
+
     @Override
     public void init() {
         // Initialize Player with position, speed, and animation delay
         shafir = new Player(450, 250, 8, 200, 50, 50);
-        caveman = new Enemies(150,250,8, 200, 50, 50);
+        caveman = new Enemies(150, 250, 8, 200, 50, 50);
 
     }
 
     @Override
     public void loop() {
+        if (currentScreen.equals("startscreen")) {
+            startscreenLoop();
+        } else {
+            gamescreenLoop();
+        }
+    }
+
+    public void startscreenLoop() {
+        SaxionApp.clear();
+        SaxionApp.drawImage("Sprites/RRstartscreen.png", 0, 0, 1000, 700);
+    }
+
+    public void gamescreenLoop() {
         SaxionApp.clear();
 
         // Draw stage background
@@ -55,16 +69,16 @@ public class BaseGame implements GameLoop {
 
         //follow player (enemy)
         //positie enemy horizontaal
-        if(shafir.x > caveman.x){
+        if (shafir.x > caveman.x) {
             caveman.move("Right");
-        } else if(shafir.x < caveman.x) {
+        } else if (shafir.x < caveman.x) {
             caveman.move("Left");
         }
 
         //positie enemy verticaal
-        if(shafir.y > caveman.y){
+        if (shafir.y > caveman.y) {
             caveman.move("Down");
-        } else if(shafir.y < caveman.y) {
+        } else if (shafir.y < caveman.y) {
             caveman.move("Up");
         }
 
@@ -84,7 +98,7 @@ public class BaseGame implements GameLoop {
         };
 
         //Draw enemy sprite
-        SaxionApp.drawImage(spriteCaveman, caveman.x, caveman.y,100, 100);
+        SaxionApp.drawImage(spriteCaveman, caveman.x, caveman.y, 100, 100);
 
 
         // for debugging
@@ -101,24 +115,40 @@ public class BaseGame implements GameLoop {
 
     }
 
+
     @Override
     public void keyboardEvent(KeyboardEvent keyboardEvent) {
-        if (keyboardEvent.isKeyPressed()) {
-            if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_A) {
-                shafir.move("Left");
-            } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_D) {
-                shafir.move("Right");
-            } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_W) {
-                shafir.move("Up");
-            } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
-                shafir.move("Down");
-            }
+        if (currentScreen.equals("startscreen")) {
+            startscreenKeyboardEvent(keyboardEvent);
+        } else {
+            gamescreenKeyboardEvent(keyboardEvent);
         }
     }
 
-    @Override
-    public void mouseEvent(MouseEvent mouseEvent) {
-        // Handle mouse events if necessary
+    public void startscreenKeyboardEvent(KeyboardEvent keyboardEvent) {
+        if (keyboardEvent.isKeyPressed()) {
+            if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_SPACE) {
+                currentScreen = "gamescreen";
+            }
+        }
     }
+            public void gamescreenKeyboardEvent(KeyboardEvent keyboardEvent) {
+                if (keyboardEvent.isKeyPressed()) {
+                    if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_A) {
+                        shafir.move("Left");
+                    } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_D) {
+                        shafir.move("Right");
+                    } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_W) {
+                        shafir.move("Up");
+                    } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
+                        shafir.move("Down");
+                    }
+                }
+            }
 
-}
+
+            @Override
+            public void mouseEvent (MouseEvent mouseEvent){
+                // Handle mouse events if necessary
+            }
+        }
