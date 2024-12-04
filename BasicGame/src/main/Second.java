@@ -27,4 +27,29 @@ public class Second {
     static String imageShafirIdle = "Sprites\\Shafir\\ShafirIdleVoor.png";
     //Stage Sprites
     static String imageStage = "Sprites\\Stage1.png";
+
+//-------------------------------------------------------------------------------------------------------------------
+
+    // enemy #1 sprites
+
+    //enemy stappen naar onder
+    static String imageCavemanOnder1 = "Sprites\\Enemy\\CavemanOnder1.png";
+    static String imageCavemanOnder2 = "Sprites\\Enemy\\CavemanOnder2.png";
+
+    //enemy stappen naar links
+    static String imageCavemanLinks1 = "Sprites\\Enemy\\CavemanLinks1.png";
+    static String imageCavemanLinks2 = "Sprites\\Enemy\\CavemanLinks2.png";
+
+    //enemy stappen naar boven
+    static String imageCavemanBoven1 = "Sprites\\Enemy\\CavemanBoven1.png";
+    static String imageCavemanBoven2 = "Sprites\\Enemy\\CavemanBoven2.png";
+
+    //enemy stappen naar rechts
+    static String imageCavemanRechts1 = "Sprites\\Enemy\\CavemanRechts1.png";
+    static String imageCavemanRechts2 = "Sprites\\Enemy\\CavemanRechts2.png";
+
+    //enemy sprites idle
+    static String imageCavemanIdle = "Sprites\\Enemy\\CavemanIdle1.png";
+
+    //---------------------------------------------------------------------------------------------------------------
 }
