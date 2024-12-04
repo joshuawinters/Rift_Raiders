@@ -27,6 +27,7 @@ public class TileManager {
         }
     }
     public void drawTiles() {
+        //d
         SaxionApp.drawImage(tile[0].image, 0, 0, 64, 64);
     }
 
