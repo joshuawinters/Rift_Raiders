@@ -1,5 +1,8 @@
 package tiles;
 
-public class Tiles {
+import java.awt.image.BufferedImage;
 
+public class Tiles {
+    public String image;
+    public boolean collision = false;
 }
