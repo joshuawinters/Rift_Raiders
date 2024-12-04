@@ -41,7 +41,7 @@ public class BaseGame implements GameLoop {
 
     public void startscreenLoop() {
         SaxionApp.clear();
-        SaxionApp.drawImage("Sprites/RRstartscreen.png", 0, 0, 1000, 700);
+        SaxionApp.drawImage("Sprites/RRstartscreen.png", 0, 0, 1000, 600);
     }
 
     public void gamescreenLoop() {
