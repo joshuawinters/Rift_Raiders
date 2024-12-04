@@ -5,11 +5,27 @@ import nl.saxion.app.SaxionApp;
 import nl.saxion.app.interaction.GameLoop;
 import nl.saxion.app.interaction.KeyboardEvent;
 import nl.saxion.app.interaction.MouseEvent;
+import tiles.TileManager;
 
 import java.awt.*;
 
 
 public class BaseGame implements GameLoop {
+    //set size
+    final int originalTileSize = 16;
+    final int scale = 3;
+
+    public final int tileSize = originalTileSize * scale;
+    final int maxScreencol = 16;
+    final int maxScreenrow = 16;
+    final int screenwidth = maxScreencol * tileSize;
+    final int screenheight = maxScreenrow * tileSize;
+
+    // tiles
+    TileManager tileM = new TileManager(this);
+
+
+
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
         SaxionApp.startGameLoop(new BaseGame(), 1000, 1000, 40);
@@ -21,7 +37,6 @@ public class BaseGame implements GameLoop {
     public void init() {
         // Initialize Player with position, speed, and animation delay
         shafir = new Player(450, 250, 8, 200, 50, 50);
-
     }
 
     @Override
@@ -30,7 +45,7 @@ public class BaseGame implements GameLoop {
 
         // Draw stage background
         SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
-
+        //paintScreen();
         // Check and update animation
         if (shafir.shouldUpdateAnimation()) {
             shafir.stapCounter++; // Advance animation frame
@@ -51,6 +66,7 @@ public class BaseGame implements GameLoop {
         // for debugging
         Rectangle hitbox = shafir.getHitbox();
         SaxionApp.drawRectangle(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+        //System.out.println("Tile image path: " + tile[0].image);
 // Statische hitbox toevoegen in het midden van het scherm
         int hitboxWidth = 100;  // Breedte van de hitbox
         int hitboxHeight = 100; // Hoogte van de hitbox
@@ -79,6 +95,14 @@ public class BaseGame implements GameLoop {
     @Override
     public void mouseEvent(MouseEvent mouseEvent) {
         // Handle mouse events if necessary
+    }
+
+    public void paintScreen() {
+
+        if (tileM != null) {
+            tileM.drawTiles();
+        }
+
     }
 
 }
