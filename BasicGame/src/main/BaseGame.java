@@ -6,8 +6,10 @@ import nl.saxion.app.interaction.GameLoop;
 import nl.saxion.app.interaction.KeyboardEvent;
 import nl.saxion.app.interaction.MouseEvent;
 import tiles.TileManager;
+import tiles.Level;
 
 import java.awt.*;
+import java.io.IOException;
 
 
 public class BaseGame implements GameLoop {
@@ -21,9 +23,9 @@ public class BaseGame implements GameLoop {
     final int screenwidth = maxScreencol * tileSize;
     final int screenheight = maxScreenrow * tileSize;
 
-    // tiles
+    // tiles en levels
     TileManager tileM = new TileManager(this);
-
+    Level currentLevel; // Add the current level
 
 
     //gameloop aanroepen en starten via main
@@ -35,6 +37,14 @@ public class BaseGame implements GameLoop {
     Rectangle staticHitbox;
     @Override
     public void init() {
+        //load level
+        try {
+            // Load a level from a file (example level1.txt)
+            currentLevel = Level.load("levels/level1.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // Initialize Player with position, speed, and animation delay
         shafir = new Player(450, 250, 8, 200, 50, 50);
     }
@@ -96,6 +106,7 @@ public class BaseGame implements GameLoop {
     public void mouseEvent(MouseEvent mouseEvent) {
         // Handle mouse events if necessary
     }
+
 
     public void paintScreen() {
 
