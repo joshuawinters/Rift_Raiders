@@ -52,4 +52,15 @@ public class Second {
     static String imageCavemanIdle = "Sprites\\Enemy\\CavemanIdle1.png";
 
     //---------------------------------------------------------------------------------------------------------------
+
+    //Item sprites
+
+    //Knuppel sprite
+    static String imageKnuppel = "Sprites\\UI&Items\\Knuppel.png";
+
+
+
+
+
+
 }
