@@ -17,8 +17,8 @@ public class Entity {
     public int height; // Height of the entity
 
     public Entity(int x, int y, int speed, long animationDelay, int width, int height) {
-        this.x = 250;
-        this.y = 450;
+        this.x = x;
+        this.y = y;
         this.direction = "IDLE";
         this.stapCounter = 0;
         this.speed = speed;
