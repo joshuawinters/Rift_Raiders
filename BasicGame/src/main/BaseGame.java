@@ -164,6 +164,7 @@ public class BaseGame implements GameLoop {
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
                 shafir.move("Down");
             }
+
         }
     }
 
