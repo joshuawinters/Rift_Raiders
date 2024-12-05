@@ -151,4 +151,5 @@ public class BaseGame implements GameLoop {
             public void mouseEvent (MouseEvent mouseEvent){
                 // Handle mouse events if necessary
             }
+
         }
