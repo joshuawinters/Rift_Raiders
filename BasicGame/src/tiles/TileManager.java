@@ -28,8 +28,7 @@ public class TileManager {
     public void GetTileImage() {
         try {
 
-            // Loop through the tile numbers (001 to 010)
-
+            // Loop through the tile numbers (001 to @variable num_tiles)
             for (int i = 1; i <= num_tiles; i++) {
                 tile[i - 1] = new Tiles(); // Initialize each tile object
 
@@ -39,7 +38,7 @@ public class TileManager {
                 // Set the image path dynamically
                 tile[i - 1].image = "Sprites/Tiles/New version (with numbers)/" + formattedNumber + ".png";
             }
-
+            // this code for special tiles
             /*
             tile[0] = new Tiles();
             tile[0].image = "Sprites/Tiles/New version (with numbers)/017.png";
