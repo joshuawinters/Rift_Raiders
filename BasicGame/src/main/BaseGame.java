@@ -56,6 +56,9 @@ public class BaseGame implements GameLoop {
         SaxionApp.clear();
         SaxionApp.drawImage("Sprites/RRstartscreen.png", 0, 0, 1000, 700);
     }
+    public boolean checkCollision(Rectangle rect1, Rectangle rect2) {
+        return rect1.intersects(rect2);
+    }
 
     public void gamescreenLoop() {
         SaxionApp.clear();
@@ -120,18 +123,30 @@ public class BaseGame implements GameLoop {
         //Draw enemy sprite
         SaxionApp.drawImage(spriteCaveman, caveman.x, caveman.y, 100, 100);
 
+        // Detect collision
+        if (checkCollision(shafir.getHitbox(), caveman.getHitbox())) {
+            System.out.println("Collision detected between player and enemy!");
+            // Handle collision (e.g., reduce health, game over, etc.)
+        }
 
-        // for debugging
-        Rectangle hitbox = shafir.getHitbox();
-        SaxionApp.drawRectangle(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+        // Debugging: Draw hitboxes
+        SaxionApp.drawRectangle(shafir.getHitbox().x, shafir.getHitbox().y, shafir.getHitbox().width, shafir.getHitbox().height);
+        SaxionApp.drawRectangle(caveman.getHitbox().x, caveman.getHitbox().y, caveman.getHitbox().width, caveman.getHitbox().height);
 
-        // Statische hitbox toevoegen in het midden van het scherm
-        int hitboxWidth = 100;  // Breedte van de hitbox
-        int hitboxHeight = 100; // Hoogte van de hitbox
-        int centerX = 1000 / 2 - hitboxWidth / 2; // Midden van het scherm (x)
-        int centerY = 1000 / 2 - hitboxHeight / 2; // Midden van het scherm (y)
+        // Draw static hitbox
+        int hitboxWidth = 100;
+        int hitboxHeight = 100;
+        int centerX = 1000 / 2 - hitboxWidth / 2;
+        int centerY = 1000 / 2 - hitboxHeight / 2;
         staticHitbox = new Rectangle(centerX, centerY, hitboxWidth, hitboxHeight);
         SaxionApp.drawRectangle(centerX, centerY, hitboxWidth, hitboxHeight);
+
+        // Collision with static hitbox
+        if (checkCollision(shafir.getHitbox(), staticHitbox)) {
+            System.out.println("Collision detected with static object!");
+            // Handle collision
+        }
+
 
     }
 
