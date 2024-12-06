@@ -24,6 +24,7 @@ public class RiftRaiders implements GameLoop {
     //boolean
     boolean cavemanMoves = false;
     boolean knuppelOpgepakt = false;
+    boolean ShafirHeeftKnuppel = false;
 
     // tiles en level
     TileManager tileM;
@@ -81,6 +82,15 @@ public class RiftRaiders implements GameLoop {
 
         if (knuppelOpgepakt == false) {
             SaxionApp.drawImage(Second.imageKnuppel, 200, 300, 50, 50);
+        }else {
+            String sprite2 = switch (shafir.direction) {
+                case "Up" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelBoven1 : Second.shafirKnuppelBoven2;
+                case "Down" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelOnder1 : Second.shafirKnuppelOnder2;
+                case "Left" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelLinks1 : Second.shafirKnuppelLinks2;
+                case "Right" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelRechts1 : Second.shafirKnuppelRechts2;
+                default -> Second.imageShafirIdle;
+            };
+            SaxionApp.drawImage(sprite2, shafir.x, shafir.y, 100, 100);
         }
 
         // Check and update animation
@@ -89,17 +99,20 @@ public class RiftRaiders implements GameLoop {
         }
 
         // Determine the sprite based on direction and animation frame
-        String sprite = switch (shafir.direction) {
-            case "Up" -> (shafir.stapCounter % 2 == 0) ? Second.imageShafirAchterkant1 : Second.imageShafirAchterkant2;
-            case "Down" -> (shafir.stapCounter % 2 == 0) ? Second.imageShafirVoorkant1 : Second.imageShafirVoorkant2;
-            case "Left" -> (shafir.stapCounter % 2 == 0) ? Second.imageShafirLinks1 : Second.imageShafirLinks2;
-            case "Right" -> (shafir.stapCounter % 2 == 0) ? Second.imageShafirRechts1 : Second.imageShafirRechts2;
-            default -> Second.imageShafirIdle;
-        };
+        if (ShafirHeeftKnuppel == false) {
+            String sprite = switch (shafir.direction) {
+                case "Up" ->
+                        (shafir.stapCounter % 2 == 0) ? Second.imageShafirAchterkant1 : Second.imageShafirAchterkant2;
+                case "Down" ->
+                        (shafir.stapCounter % 2 == 0) ? Second.imageShafirVoorkant1 : Second.imageShafirVoorkant2;
+                case "Left" -> (shafir.stapCounter % 2 == 0) ? Second.imageShafirLinks1 : Second.imageShafirLinks2;
+                case "Right" -> (shafir.stapCounter % 2 == 0) ? Second.imageShafirRechts1 : Second.imageShafirRechts2;
+                default -> Second.imageShafirIdle;
+            };
+            // Draw the player sprite
+            SaxionApp.drawImage(sprite, shafir.x, shafir.y, 100, 100);
+        }
 
-
-        // Draw the player sprite
-        SaxionApp.drawImage(sprite, shafir.x, shafir.y, 100, 100);
 
         //follow player (enemy)
         //positie enemy horizontaal
@@ -182,6 +195,9 @@ public class RiftRaiders implements GameLoop {
                 //knuppel oppakken
                 if ( Math.abs(shafir.x - 200) < 50 && Math.abs(shafir.y - 300) < 50) {
                     knuppelOpgepakt = true;
+                    ShafirHeeftKnuppel = true;
+
+
                 }
             }
 

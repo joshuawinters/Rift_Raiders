@@ -58,6 +58,18 @@ public class Second {
     //Knuppel sprite
     static String imageKnuppel = "Sprites\\UI&Items\\Knuppel.png";
 
+    //---------------------------------------------------------------------------------------------------------------
+
+    //Shafir met knuppel sprites
+    static String shafirKnuppelBoven1 = "Sprites\\Shafir\\ShafirMetKnuppel\\McKNuppelBoven1.png";
+    static String shafirKnuppelBoven2 = "Sprites\\Shafir\\ShafirMetKnuppel\\McKNuppelBoven2.png";
+    static String shafirKnuppelOnder1 = "Sprites\\Shafir\\ShafirMetKnuppel\\McKNuppelOnder1.png";
+    static String shafirKnuppelOnder2 = "Sprites\\Shafir\\ShafirMetKnuppel\\McKNuppelOnder2.png";
+    static String shafirKnuppelLinks1 = "Sprites\\Shafir\\ShafirMetKnuppel\\McKNuppelLinks1.png";
+    static String shafirKnuppelLinks2 = "Sprites\\Shafir\\ShafirMetKnuppel\\McKNuppelLinks2.png";
+    static String shafirKnuppelRechts1 = "Sprites\\Shafir\\ShafirMetKnuppel\\McKNuppelRechts1.png";
+    static String shafirKnuppelRechts2 = "Sprites\\Shafir\\ShafirMetKnuppel\\McKNuppelRechts2.png";
+
 
 
 
