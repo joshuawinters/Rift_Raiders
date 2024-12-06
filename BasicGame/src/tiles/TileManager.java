@@ -1,20 +1,21 @@
 package tiles;
 
-import main.BaseGame;
+import main.RiftRaiders;
+import main.RiftRaiders;
 import nl.saxion.app.SaxionApp;
 
 import java.io.*;
 
 
 public class TileManager {
-    BaseGame game;
+    RiftRaiders game;
     Tiles[] tile;
     int tileWidth;  // Width of a single tile
     int tileHeight; // Height of a single tile
     final int num_tiles = 37;
     int mapTileNumber[][];
 
-    public TileManager(BaseGame game, int tileWidth, int tileHeight) {
+    public TileManager(RiftRaiders game, int tileWidth, int tileHeight) {
         this.game = game;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;

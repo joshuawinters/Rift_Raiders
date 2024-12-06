@@ -11,7 +11,7 @@ import tiles.TileManager;
 import java.awt.*;
 
 
-public class BaseGame implements GameLoop {
+public class RiftRaiders implements GameLoop {
     // set parameters
     // Define tile size and screen dimensions
     final int tileWidth = 48;  // Width of each tile
@@ -21,12 +21,16 @@ public class BaseGame implements GameLoop {
     public int maxScreencol = 16;
     public int maxScreenrow = 12;
 
+    //boolean
+    boolean cavemanMoves = false;
+    boolean knuppelOpgepakt = false;
+
     // tiles en level
     TileManager tileM;
 
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
-        SaxionApp.startGameLoop(new BaseGame(), 1000, 1000, 40);
+        SaxionApp.startGameLoop(new RiftRaiders(), 1000, 1000, 40);
     }
 
     String currentScreen = "startscreen";
@@ -34,13 +38,16 @@ public class BaseGame implements GameLoop {
     Player shafir;
     Enemies caveman;
     Rectangle staticHitbox;
+    int x_knuppel = 200;
+    int y_knuppel = 300;
 
     @Override
     public void init() {
         // Initialize Player with position, speed, and animation delay
-        shafir = new Player(450, 250, 8, 200, 50, 50);
-        caveman = new Enemies(150, 250, 8, 200, 50, 50);
+        shafir = new Player(0, 280, 8, 200, 50, 50);
+        caveman = new Enemies(450, 200, 8, 200, 50, 50);
         tileM = new TileManager(this, tileWidth, tileHeight);
+
     }
 
     @Override
@@ -52,6 +59,7 @@ public class BaseGame implements GameLoop {
         }
     }
 
+    //Start screen invoegen
     public void startscreenLoop() {
         SaxionApp.clear();
         SaxionApp.drawImage("Sprites/RRstartscreen.png", 0, 0, 1000, 700);
@@ -66,8 +74,14 @@ public class BaseGame implements GameLoop {
         // TODO: make function to load level
         // TODO: make file to create level
         // TODO: each level has a starting posistion, and end position/condition
-        //SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
-        draw_level();
+        //draw_level();
+
+        //Stage sprite tekenen
+        SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
+
+        if (knuppelOpgepakt == false) {
+            SaxionApp.drawImage(Second.imageKnuppel, 200, 300, 50, 50);
+        }
 
         // Check and update animation
         if (shafir.shouldUpdateAnimation()) {
@@ -163,6 +177,12 @@ public class BaseGame implements GameLoop {
                 shafir.move("Up");
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
                 shafir.move("Down");
+            } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_E) {
+
+                //knuppel oppakken
+                if ( Math.abs(shafir.x - 200) < 50 && Math.abs(shafir.y - 300) < 50) {
+                    knuppelOpgepakt = true;
+                }
             }
 
         }
