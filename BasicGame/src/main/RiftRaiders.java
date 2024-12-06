@@ -199,6 +199,9 @@ public class RiftRaiders implements GameLoop {
                     knuppelOpgepakt = true;
                     ShafirHeeftKnuppel = true;
                     cavemanMoves = true;
+
+                    caveman.x = 450;
+                    caveman.y = 200;
                 }
             }
 
