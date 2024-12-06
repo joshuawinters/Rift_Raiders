@@ -136,16 +136,18 @@ public class RiftRaiders implements GameLoop {
 
 
         //enemy sprites aanpassen op de richting
-        String spriteCaveman = switch (caveman.direction) {
-            case "Up" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanBoven1 : Second.imageCavemanBoven2;
-            case "Down" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanOnder1 : Second.imageCavemanOnder2;
-            case "Left" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanLinks1 : Second.imageCavemanLinks2;
-            case "Right" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanRechts1 : Second.imageCavemanRechts2;
-            default -> Second.imageCavemanIdle;
-        };
-
-        //Draw enemy sprite
-        SaxionApp.drawImage(spriteCaveman, caveman.x, caveman.y, 100, 100);
+        if (cavemanMoves == true) {
+            String spriteCaveman = switch (caveman.direction) {
+                case "Up" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanBoven1 : Second.imageCavemanBoven2;
+                case "Down" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanOnder1 : Second.imageCavemanOnder2;
+                case "Left" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanLinks1 : Second.imageCavemanLinks2;
+                case "Right" ->
+                        (caveman.stapCounter % 2 == 0) ? Second.imageCavemanRechts1 : Second.imageCavemanRechts2;
+                default -> Second.imageCavemanIdle;
+            };
+            //Draw enemy sprite
+            SaxionApp.drawImage(spriteCaveman, caveman.x, caveman.y, 100, 100);
+        }
 
 
         // for debugging
@@ -196,8 +198,7 @@ public class RiftRaiders implements GameLoop {
                 if ( Math.abs(shafir.x - 200) < 50 && Math.abs(shafir.y - 300) < 50) {
                     knuppelOpgepakt = true;
                     ShafirHeeftKnuppel = true;
-
-
+                    cavemanMoves = true;
                 }
             }
 
