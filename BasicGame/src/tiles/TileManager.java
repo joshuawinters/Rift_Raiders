@@ -1,15 +1,15 @@
 package tiles;
 
-import main.BaseGame;
+import main.RiftRaiders;
 import nl.saxion.app.SaxionApp;
 
 
 public class TileManager {
-    BaseGame game;
+    RiftRaiders game;
     Tiles[] tile;
 
 
-    public TileManager(BaseGame game) {
+    public TileManager(RiftRaiders game) {
         this.game = game;
         // number of tiles
         tile = new Tiles[10];

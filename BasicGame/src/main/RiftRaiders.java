@@ -10,10 +10,10 @@ import nl.saxion.app.interaction.MouseEvent;
 import java.awt.*;
 
 
-public class BaseGame implements GameLoop {
+public class RiftRaiders implements GameLoop {
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
-        SaxionApp.startGameLoop(new BaseGame(), 1000, 1000, 40);
+        SaxionApp.startGameLoop(new RiftRaiders(), 1000, 1000, 40);
     }
 
     String currentScreen = "startscreen";
@@ -21,13 +21,13 @@ public class BaseGame implements GameLoop {
     Player shafir;
     Enemies caveman;
     Rectangle staticHitbox;
+    boolean enemyBeweegt = false;
 
     @Override
     public void init() {
         // Initialize Player with position, speed, and animation delay
-        shafir = new Player(450, 250, 8, 200, 50, 50);
-        caveman = new Enemies(150, 250, 8, 200, 50, 50);
-
+        shafir = new Player(0, 280, 8, 200, 50, 50);
+        caveman = new Enemies(450, 80, 8, 200, 50, 50);
     }
 
     @Override
@@ -88,6 +88,7 @@ public class BaseGame implements GameLoop {
         }
 
 
+
         //enemy sprites aanpassen op de richting
         String spriteCaveman = switch (caveman.direction) {
             case "Up" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanBoven1 : Second.imageCavemanBoven2;
@@ -134,6 +135,7 @@ public class BaseGame implements GameLoop {
     }
             public void gamescreenKeyboardEvent(KeyboardEvent keyboardEvent) {
                 if (keyboardEvent.isKeyPressed()) {
+                    enemyBeweegt = true;
                     if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_A) {
                         shafir.move("Left");
                     } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_D) {
