@@ -49,6 +49,9 @@ public class RiftRaiders implements GameLoop {
 
         // Draw stage background
         SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
+
+        //Knuppel sprite tekenen
+        SaxionApp.drawImage(Second.imageKnuppel, 180, 350, 50, 50);
         // Check and update animation
         if (shafir.shouldUpdateAnimation()) {
             shafir.stapCounter++; // Advance animation frame
@@ -86,7 +89,6 @@ public class RiftRaiders implements GameLoop {
         if (caveman.shouldUpdateAnimation()) {
             caveman.stapCounter++; // Advance animation frame
         }
-
 
 
         //enemy sprites aanpassen op de richting
