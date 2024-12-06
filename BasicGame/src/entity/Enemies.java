@@ -5,4 +5,5 @@ public class Enemies extends Entity {
         super(x, y, speed, animationDelay, width, height); // Call the Entity constructor
     }
 
+
 }
