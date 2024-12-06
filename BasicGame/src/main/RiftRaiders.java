@@ -6,14 +6,27 @@ import nl.saxion.app.SaxionApp;
 import nl.saxion.app.interaction.GameLoop;
 import nl.saxion.app.interaction.KeyboardEvent;
 import nl.saxion.app.interaction.MouseEvent;
+import tiles.TileManager;
 
 import java.awt.*;
 
 
-public class RiftRaiders implements GameLoop {
+public class BaseGame implements GameLoop {
+    // set parameters
+    // Define tile size and screen dimensions
+    final int tileWidth = 48;  // Width of each tile
+    final int tileHeight = 48; // Height of each tile
+    public final int screenWidth = 1000; // Screen width in pixels
+    public final int screenHeight = 1000; // Screen height in pixels
+    public int maxScreencol = 16;
+    public int maxScreenrow = 12;
+
+    // tiles en level
+    TileManager tileM;
+
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
-        SaxionApp.startGameLoop(new RiftRaiders(), 1000, 1000, 40);
+        SaxionApp.startGameLoop(new BaseGame(), 1000, 1000, 40);
     }
 
     String currentScreen = "startscreen";
@@ -21,13 +34,13 @@ public class RiftRaiders implements GameLoop {
     Player shafir;
     Enemies caveman;
     Rectangle staticHitbox;
-    boolean enemyBeweegt = false;
 
     @Override
     public void init() {
         // Initialize Player with position, speed, and animation delay
-        shafir = new Player(0, 280, 8, 200, 50, 50);
-        caveman = new Enemies(450, 80, 8, 200, 50, 50);
+        shafir = new Player(450, 250, 8, 200, 50, 50);
+        caveman = new Enemies(150, 250, 8, 200, 50, 50);
+        tileM = new TileManager(this, tileWidth, tileHeight);
     }
 
     @Override
@@ -48,10 +61,14 @@ public class RiftRaiders implements GameLoop {
         SaxionApp.clear();
 
         // Draw stage background
-        SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
+        // TODO: make someting to choose level
+        // draw tiles before player
+        // TODO: make function to load level
+        // TODO: make file to create level
+        // TODO: each level has a starting posistion, and end position/condition
+        //SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
+        draw_level();
 
-        //Knuppel sprite tekenen
-        SaxionApp.drawImage(Second.imageKnuppel, 180, 350, 50, 50);
         // Check and update animation
         if (shafir.shouldUpdateAnimation()) {
             shafir.stapCounter++; // Advance animation frame
@@ -135,25 +152,32 @@ public class RiftRaiders implements GameLoop {
             }
         }
     }
-            public void gamescreenKeyboardEvent(KeyboardEvent keyboardEvent) {
-                if (keyboardEvent.isKeyPressed()) {
-                    enemyBeweegt = true;
-                    if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_A) {
-                        shafir.move("Left");
-                    } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_D) {
-                        shafir.move("Right");
-                    } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_W) {
-                        shafir.move("Up");
-                    } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
-                        shafir.move("Down");
-                    }
-                }
-            }
 
-
-            @Override
-            public void mouseEvent (MouseEvent mouseEvent){
-                // Handle mouse events if necessary
+    public void gamescreenKeyboardEvent(KeyboardEvent keyboardEvent) {
+        if (keyboardEvent.isKeyPressed()) {
+            if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_A) {
+                shafir.move("Left");
+            } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_D) {
+                shafir.move("Right");
+            } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_W) {
+                shafir.move("Up");
+            } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
+                shafir.move("Down");
             }
 
         }
+    }
+
+    @Override
+    public void mouseEvent(MouseEvent mouseEvent) {
+        // Handle mouse events if necessary
+    }
+
+    public void draw_level(){
+        if (tileM != null) {
+            tileM.drawTiles();
+        }
+    }
+
+}
+
