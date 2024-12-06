@@ -11,7 +11,7 @@ import tiles.TileManager;
 import java.awt.*;
 
 
-public class BaseGame implements GameLoop {
+public class RiftRaiders implements GameLoop {
     // set parameters
     // Define tile size and screen dimensions
     final int tileWidth = 48;  // Width of each tile
@@ -21,12 +21,17 @@ public class BaseGame implements GameLoop {
     public int maxScreencol = 16;
     public int maxScreenrow = 12;
 
+    //boolean
+    boolean cavemanMoves = false;
+    boolean knuppelOpgepakt = false;
+    boolean ShafirHeeftKnuppel = false;
+
     // tiles en level
     TileManager tileM;
 
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
-        SaxionApp.startGameLoop(new BaseGame(), 1000, 1000, 40);
+        SaxionApp.startGameLoop(new RiftRaiders(), 1000, 1000, 40);
     }
 
     String currentScreen = "startscreen";
@@ -34,13 +39,16 @@ public class BaseGame implements GameLoop {
     Player shafir;
     Enemies caveman;
     Rectangle staticHitbox;
+    int x_knuppel = 200;
+    int y_knuppel = 300;
 
     @Override
     public void init() {
         // Initialize Player with position, speed, and animation delay
-        shafir = new Player(450, 250, 8, 200, 50, 50);
-        caveman = new Enemies(150, 250, 8, 200, 50, 50);
+        shafir = new Player(0, 280, 8, 200, 50, 50);
+        caveman = new Enemies(450, 200, 8, 200, 50, 50);
         tileM = new TileManager(this, tileWidth, tileHeight);
+
     }
 
     @Override
@@ -52,6 +60,7 @@ public class BaseGame implements GameLoop {
         }
     }
 
+    //Start screen invoegen
     public void startscreenLoop() {
         SaxionApp.clear();
         SaxionApp.drawImage("Sprites/RRstartscreen.png", 0, 0, 1000, 700);
@@ -69,8 +78,23 @@ public class BaseGame implements GameLoop {
         // TODO: make function to load level
         // TODO: make file to create level
         // TODO: each level has a starting posistion, and end position/condition
-        //SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
-        draw_level();
+        //draw_level();
+
+        //Stage sprite tekenen
+        SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
+
+        if (knuppelOpgepakt == false) {
+            SaxionApp.drawImage(Second.imageKnuppel, 200, 300, 50, 50);
+        }else {
+            String sprite2 = switch (shafir.direction) {
+                case "Up" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelBoven1 : Second.shafirKnuppelBoven2;
+                case "Down" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelOnder1 : Second.shafirKnuppelOnder2;
+                case "Left" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelLinks1 : Second.shafirKnuppelLinks2;
+                case "Right" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelRechts1 : Second.shafirKnuppelRechts2;
+                default -> Second.imageShafirIdle;
+            };
+            SaxionApp.drawImage(sprite2, shafir.x, shafir.y, 100, 100);
+        }
 
         // Check and update animation
         if (shafir.shouldUpdateAnimation()) {
@@ -78,17 +102,20 @@ public class BaseGame implements GameLoop {
         }
 
         // Determine the sprite based on direction and animation frame
-        String sprite = switch (shafir.direction) {
-            case "Up" -> (shafir.stapCounter % 2 == 0) ? Second.imageShafirAchterkant1 : Second.imageShafirAchterkant2;
-            case "Down" -> (shafir.stapCounter % 2 == 0) ? Second.imageShafirVoorkant1 : Second.imageShafirVoorkant2;
-            case "Left" -> (shafir.stapCounter % 2 == 0) ? Second.imageShafirLinks1 : Second.imageShafirLinks2;
-            case "Right" -> (shafir.stapCounter % 2 == 0) ? Second.imageShafirRechts1 : Second.imageShafirRechts2;
-            default -> Second.imageShafirIdle;
-        };
+        if (ShafirHeeftKnuppel == false) {
+            String sprite = switch (shafir.direction) {
+                case "Up" ->
+                        (shafir.stapCounter % 2 == 0) ? Second.imageShafirAchterkant1 : Second.imageShafirAchterkant2;
+                case "Down" ->
+                        (shafir.stapCounter % 2 == 0) ? Second.imageShafirVoorkant1 : Second.imageShafirVoorkant2;
+                case "Left" -> (shafir.stapCounter % 2 == 0) ? Second.imageShafirLinks1 : Second.imageShafirLinks2;
+                case "Right" -> (shafir.stapCounter % 2 == 0) ? Second.imageShafirRechts1 : Second.imageShafirRechts2;
+                default -> Second.imageShafirIdle;
+            };
+            // Draw the player sprite
+            SaxionApp.drawImage(sprite, shafir.x, shafir.y, 100, 100);
+        }
 
-
-        // Draw the player sprite
-        SaxionApp.drawImage(sprite, shafir.x, shafir.y, 100, 100);
 
         //follow player (enemy)
         //positie enemy horizontaal
@@ -112,16 +139,18 @@ public class BaseGame implements GameLoop {
 
 
         //enemy sprites aanpassen op de richting
-        String spriteCaveman = switch (caveman.direction) {
-            case "Up" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanBoven1 : Second.imageCavemanBoven2;
-            case "Down" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanOnder1 : Second.imageCavemanOnder2;
-            case "Left" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanLinks1 : Second.imageCavemanLinks2;
-            case "Right" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanRechts1 : Second.imageCavemanRechts2;
-            default -> Second.imageCavemanIdle;
-        };
-
-        //Draw enemy sprite
-        SaxionApp.drawImage(spriteCaveman, caveman.x, caveman.y, 100, 100);
+        if (cavemanMoves == true) {
+            String spriteCaveman = switch (caveman.direction) {
+                case "Up" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanBoven1 : Second.imageCavemanBoven2;
+                case "Down" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanOnder1 : Second.imageCavemanOnder2;
+                case "Left" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanLinks1 : Second.imageCavemanLinks2;
+                case "Right" ->
+                        (caveman.stapCounter % 2 == 0) ? Second.imageCavemanRechts1 : Second.imageCavemanRechts2;
+                default -> Second.imageCavemanIdle;
+            };
+            //Draw enemy sprite
+            SaxionApp.drawImage(spriteCaveman, caveman.x, caveman.y, 100, 100);
+        }
 
         // Detect collision
         if (checkCollision(shafir.getHitbox(), caveman.getHitbox())) {
@@ -178,6 +207,17 @@ public class BaseGame implements GameLoop {
                 shafir.move("Up");
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
                 shafir.move("Down");
+            } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_E) {
+
+                //knuppel oppakken
+                if ( Math.abs(shafir.x - 200) < 50 && Math.abs(shafir.y - 300) < 50) {
+                    knuppelOpgepakt = true;
+                    ShafirHeeftKnuppel = true;
+                    cavemanMoves = true;
+
+                    caveman.x = 450;
+                    caveman.y = 200;
+                }
             }
 
         }

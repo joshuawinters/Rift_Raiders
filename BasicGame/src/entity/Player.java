@@ -1,6 +1,6 @@
 package entity;
 
-import main.BaseGame;
+import main.RiftRaiders;
 
 import java.awt.*;
 
