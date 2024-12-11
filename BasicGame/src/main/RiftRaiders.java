@@ -43,6 +43,7 @@ public class RiftRaiders implements GameLoop {
     Rectangle staticHitbox;
     int x_knuppel = 200;
     int y_knuppel = 300;
+    int slaanRefresh = 0;
 
     @Override
     public void init() {
@@ -99,8 +100,6 @@ public class RiftRaiders implements GameLoop {
             SaxionApp.drawImage(Second.imageHartLeeg3, 25, 55, 30, 30);
         }
 
-        // int shafirSlaatAantalFrames = 25
-        int slaanRefresh = 25;
         //sprite inspawnen voor knuppel en boolean koppelen
         if (knuppelOpgepakt == false) {
             SaxionApp.drawImage(Second.imageKnuppel, 200, 300, 50, 50);
@@ -193,8 +192,8 @@ public class RiftRaiders implements GameLoop {
         }
 
         // Debugging: Draw hitboxes
-        SaxionApp.drawRectangle(shafir.getHitbox().x, shafir.getHitbox().y, shafir.getHitbox().width, shafir.getHitbox().height);
-        SaxionApp.drawRectangle(caveman.getHitbox().x, caveman.getHitbox().y, caveman.getHitbox().width, caveman.getHitbox().height);
+//        SaxionApp.drawRectangle(shafir.getHitbox().x, shafir.getHitbox().y, shafir.getHitbox().width, shafir.getHitbox().height);
+//        SaxionApp.drawRectangle(caveman.getHitbox().x, caveman.getHitbox().y, caveman.getHitbox().width, caveman.getHitbox().height);
 
         // Draw static hitbox
         int hitboxWidth = 100;
@@ -255,6 +254,8 @@ public class RiftRaiders implements GameLoop {
                 }
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_E) {
                 ShafirSlaat = true;
+                // int shafirSlaatAantalFrames = 25
+                slaanRefresh = 8;
             }
 
         }
