@@ -25,6 +25,7 @@ public class RiftRaiders implements GameLoop {
     boolean cavemanMoves = false;
     boolean knuppelOpgepakt = false;
     boolean ShafirHeeftKnuppel = false;
+    boolean hartVol = true;
 
     // tiles en level
     TileManager tileM;
@@ -82,7 +83,22 @@ public class RiftRaiders implements GameLoop {
 
         //Stage sprite tekenen
         SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
+        //Health boarder tekenen
+        SaxionApp.drawImage(Second.imageHealthBoarder, 0, 0, 160, 200 );
 
+
+        //hart sprites toevoegen
+        if (hartVol == true) {
+            SaxionApp.drawImage(Second.imageHartVol1, 25, 55, 30, 30);
+            SaxionApp.drawImage(Second.imageHartVol2, 65, 55, 30, 30);
+            SaxionApp.drawImage(Second.imageHartVol3, 105, 55, 30, 30);
+        } else if (hartVol == false) {
+            SaxionApp.drawImage(Second.imageHartLeeg1, 25, 55, 30, 30);
+            SaxionApp.drawImage(Second.imageHartLeeg2, 25, 55, 30, 30);
+            SaxionApp.drawImage(Second.imageHartLeeg3, 25, 55, 30, 30);
+        }
+
+        //sprite inspawnen voor knuppel en boolean koppelen
         if (knuppelOpgepakt == false) {
             SaxionApp.drawImage(Second.imageKnuppel, 200, 300, 50, 50);
         }else {
@@ -189,6 +205,7 @@ public class RiftRaiders implements GameLoop {
         }
     }
 
+    //keyboard interaction voor startscreen
     public void startscreenKeyboardEvent(KeyboardEvent keyboardEvent) {
         if (keyboardEvent.isKeyPressed()) {
             if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_SPACE) {
@@ -197,6 +214,7 @@ public class RiftRaiders implements GameLoop {
         }
     }
 
+    //keyboard interactions aanmaken
     public void gamescreenKeyboardEvent(KeyboardEvent keyboardEvent) {
         if (keyboardEvent.isKeyPressed()) {
             if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_A) {
@@ -208,6 +226,26 @@ public class RiftRaiders implements GameLoop {
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
                 shafir.move("Down");
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_E) {
+
+
+                //Caveman laten slaan en sprite aanpassen op basis van directie
+                if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
+                    if (caveman.direction == "Left") {
+                       SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
+                    }
+                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
+                    if (caveman.direction == "Right") {
+                        SaxionApp.drawImage(Second.imageCavemanSlagRechts, caveman.x, caveman.y, 100, 100);
+                    }
+                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
+                    if (caveman.direction == "Up") {
+                        SaxionApp.drawImage(Second.imageCavemanSlagAchter, caveman.x, caveman.y, 100, 100);
+                    }
+                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
+                    if (caveman.direction == "Down") {
+                        SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
+                    }
+                }
 
                 //knuppel oppakken
                 if ( Math.abs(shafir.x - 200) < 50 && Math.abs(shafir.y - 300) < 50) {
