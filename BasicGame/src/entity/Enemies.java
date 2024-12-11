@@ -6,7 +6,5 @@ public class Enemies extends Entity {
     }
 
     // Get hitbox based on enemy position
-    public Rectangle getHitbox() {
-        return new Rectangle(x, y, width, height);
+
     }
-}
