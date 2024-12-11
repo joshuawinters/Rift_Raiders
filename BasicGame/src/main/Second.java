@@ -51,9 +51,25 @@ public class Second {
     //enemy sprites idle
     static String imageCavemanIdle = "Sprites\\Enemy\\CavemanIdle.png";
 
+    //Caveman attack sprites
+    static String imageCavemanSlagLinks = "Sprites\\Enemy\\CavemanSlaanLinks.png";
+    static String imageCavemanSlagRechts = "Sprites\\Enemy\\CavemanSlaanRechts.png";
+    static String imageCavemanSlagVoor = "Sprites\\Enemy\\CavemanSlaanVoor.png";
+    static String imageCavemanSlagAchter = "Sprites\\Enemy\\CavemanSlaanAchter.png";
+
     //---------------------------------------------------------------------------------------------------------------
 
-    //Item sprites
+    //Item & UI sprites
+
+    //Hart boarder sprite
+    static String imageHealthBoarder = "Sprites\\UI&Items\\HealthBoarder1.png";
+    //Hart sprites
+    static String imageHartVol1 = "Sprites\\UI&Items\\HeartFull1.png";
+    static String imageHartVol2 = "Sprites\\UI&Items\\HeartFull2.png";
+    static String imageHartVol3 = "Sprites\\UI&Items\\HeartFull3.png";
+    static String imageHartLeeg1 = "Sprites\\UI&Items\\HeartEmpty1.png";
+    static String imageHartLeeg2 = "Sprites\\UI&Items\\HeartEmpty2.png";
+    static String imageHartLeeg3 = "Sprites\\UI&Items\\HeartEmpty3.png";
 
     //Knuppel sprite
     static String imageKnuppel = "Sprites\\UI&Items\\Knuppel.png";

@@ -5,10 +5,9 @@ public class Entity {
 
     public int x; // Position X
     public int y; // Position Y
-    public int speed = 8; // Movement speed
+    public int speed=8; // Movement speed
     public String direction; // Current direction (Up, Down, Left, Right)
     public int stapCounter; // Counter for animation steps
-
 
     protected long animationTime; // Last animation update time
     protected long animationDelay; // Delay between animation frames
@@ -32,33 +31,41 @@ public class Entity {
 
 
     }
-
     // hit box
-    public Rectangle getHitbox() {}
-        //begin hierrrrrrr/
+    public Rectangle getHitbox() {
+        //putting hitbox in the middle of character
+        // dit werkt kut!!
+        int hitboxX = x + (width*4/5); // Offset to center the hitbox horizontally
+        int hitboxY = y + height; // Offset to center the hitbox vertically
+        int hitboxWidth = width / 2;   // Hitbox is half the sprite's width
+        int hitboxHeight = height / 2; // Hitbox is half the sprite's height
+        return new Rectangle(hitboxX, hitboxY, hitboxWidth, hitboxHeight);
+    }
 
-        // public boolean shouldUpdateAnimation(); {
-        // long currentTime = System.currentTimeMillis();
-        //if (currentTime - this.animationTime >= this.animationDelay) {
-        //this.animationTime = currentTime;
-        //return true;
-        //} else {
-        //      return false;
-        // }
-        //}
+    public void move(String direction) {
+        this.direction = direction;
+        switch (direction) {
+            case "Up":
+                y -= speed;
+                break;
+            case "Down":
+                y += speed;
+                break;
+            case "Left":
+                x -= speed;
+                break;
+            case "Right":
+                x += speed;
+                break;
+        }
+    }
 
-        // public void setStaticHitBox(Rectangle staticHitbox) { this.staticHitbox = staticHitbox; }
-       // public boolean shouldUpdateAnimation () {
-          //  long currentTime = System.currentTimeMillis();
-           // if (currentTime - this.animationTime >= this.animationDelay) {
-              //  this.animationTime = currentTime;
-              //  return true;
-          //  } else {
-             //   return false;
-
-
-
-      //  public void setStaticHitBox (Rectangle staticHitbox){
-          //  this.staticHitbox = staticHitbox;
-
-
+    public boolean shouldUpdateAnimation() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - animationTime >= animationDelay) {
+            animationTime = currentTime;
+            return true;
+        }
+        return false;
+    }
+}
