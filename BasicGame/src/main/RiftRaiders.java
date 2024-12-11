@@ -225,7 +225,8 @@ public class RiftRaiders implements GameLoop {
                 shafir.move("Up");
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
                 shafir.move("Down");
-            } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_E) {
+            } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_F) {
+
 
 
                 //Caveman laten slaan en sprite aanpassen op basis van directie
