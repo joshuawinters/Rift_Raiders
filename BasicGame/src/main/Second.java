@@ -28,6 +28,7 @@ public class Second {
     //Stage Sprites
     static String imageStage = "Sprites\\Stage1.png";
 
+
 //-------------------------------------------------------------------------------------------------------------------
 
     // enemy #1 sprites
@@ -86,8 +87,11 @@ public class Second {
     static String shafirKnuppelRechts1 = "Sprites\\Shafir\\ShafirMetKnuppel\\McKNuppelRechts1.png";
     static String shafirKnuppelRechts2 = "Sprites\\Shafir\\ShafirMetKnuppel\\McKNuppelRechts2.png";
 
-
-
+    //Shafir slag animatie
+    static String imageShafirSlagLinks = "Sprites\\Shafir\\ShafirMetKnuppel\\ShafirSlaatLinks.png";
+    static String imageShafirSlagRechts = "Sprites\\Shafir\\ShafirMetKnuppel\\ShafirSlaatRechts.png";
+    static String imageShafirSlagOnder = "Sprites\\Shafir\\ShafirMetKnuppel\\ShafirSlaatOnder.png";
+    static String imageShafirSlagBoven = "Sprites\\Shafir\\ShafirMetKnuppel\\ShafirSlaatBoven.png";
 
 
 

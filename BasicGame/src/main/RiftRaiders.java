@@ -26,6 +26,7 @@ public class RiftRaiders implements GameLoop {
     boolean knuppelOpgepakt = false;
     boolean ShafirHeeftKnuppel = false;
     boolean hartVol = true;
+    boolean ShafirSlaat = false;
 
     // tiles en level
     TileManager tileM;
@@ -229,27 +230,6 @@ public class RiftRaiders implements GameLoop {
                 shafir.move("Down");
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_F) {
 
-
-
-                //Caveman laten slaan en sprite aanpassen op basis van directie
-                if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
-                    if (caveman.direction == "Left") {
-                       SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
-                    }
-                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
-                    if (caveman.direction == "Right") {
-                        SaxionApp.drawImage(Second.imageCavemanSlagRechts, caveman.x, caveman.y, 100, 100);
-                    }
-                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
-                    if (caveman.direction == "Up") {
-                        SaxionApp.drawImage(Second.imageCavemanSlagAchter, caveman.x, caveman.y, 100, 100);
-                    }
-                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
-                    if (caveman.direction == "Down") {
-                        SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
-                    }
-                }
-
                 //knuppel oppakken
                 if ( Math.abs(shafir.x - 200) < 50 && Math.abs(shafir.y - 300) < 50) {
                     knuppelOpgepakt = true;
@@ -259,10 +239,41 @@ public class RiftRaiders implements GameLoop {
                     caveman.x = 450;
                     caveman.y = 200;
                 }
+            } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_E) {
+                ShafirSlaat = true;
+               if (shafir.direction == "Left") {
+                   SaxionApp.drawImage(Second.imageShafirSlagLinks, shafir.x, shafir.y, 100, 100);
+               } else if (shafir.direction == "Right") {
+                   SaxionApp.drawImage(Second.imageShafirSlagRechts, shafir.x, shafir.y, 100, 100);
+               } else if (shafir.direction == "Up") {
+                   SaxionApp.drawImage(Second.imageShafirSlagBoven, shafir.x, shafir.y, 100, 100);
+               } else if (shafir.direction == "Down") {
+                   SaxionApp.drawImage(Second.imageShafirSlagOnder, shafir.x, shafir.y, 100, 100);
+               }
             }
 
         }
     }
+
+
+    //                  Caveman laten slaan en sprite aanpassen op basis van directie
+//                if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
+//                    if (caveman.direction == "Left") {
+//                       SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
+//                    }
+//                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
+//                    if (caveman.direction == "Right") {
+//                        SaxionApp.drawImage(Second.imageCavemanSlagRechts, caveman.x, caveman.y, 100, 100);
+//                    }
+//                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
+//                    if (caveman.direction == "Up") {
+//                        SaxionApp.drawImage(Second.imageCavemanSlagAchter, caveman.x, caveman.y, 100, 100);
+//                    }
+//                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
+//                    if (caveman.direction == "Down") {
+//                        SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
+//                    }
+//                }
 
     @Override
     public void mouseEvent(MouseEvent mouseEvent) {
