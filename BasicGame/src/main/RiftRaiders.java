@@ -149,25 +149,24 @@ public class RiftRaiders implements GameLoop {
             SaxionApp.drawImage(sprite, shafir.x, shafir.y, 100, 100);
         }
 
-
-        //follow player (enemy)
-        //positie enemy horizontaal
-        if (shafir.x > caveman.x) {
-            caveman.move("Right");
-        } else if (shafir.x < caveman.x) {
-            caveman.move("Left");
-        }
-
-        //positie enemy verticaal
-        if (shafir.y > caveman.y) {
-            caveman.move("Down");
-        } else if (shafir.y < caveman.y) {
-            caveman.move("Up");
-        }
-
-
-        if (caveman.shouldUpdateAnimation()) {
-            caveman.stapCounter++; // Advance animation frame
+        boolean kd = moving();
+        if(!kd) {
+            //follow player (enemy)
+            //positie enemy horizontaal
+            if (shafir.x > caveman.x) {
+                caveman.move("Right");
+            } else if (shafir.x < caveman.x) {
+                caveman.move("Left");
+            }
+            //positie enemy verticaal
+            if (shafir.y > caveman.y) {
+                caveman.move("Down");
+            } else if (shafir.y < caveman.y) {
+                caveman.move("Up");
+            }
+            if (caveman.shouldUpdateAnimation()) {
+                caveman.stapCounter++; // Advance animation frame
+            }
         }
 
 
@@ -212,6 +211,12 @@ public class RiftRaiders implements GameLoop {
 
     }
 
+    public boolean moving(){
+        if(Math.abs(caveman.x - shafir.x) < 70 && Math.abs(caveman.y - shafir.y) < 70){
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public void keyboardEvent(KeyboardEvent keyboardEvent) {
