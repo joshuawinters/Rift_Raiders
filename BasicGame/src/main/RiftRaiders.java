@@ -244,7 +244,7 @@ public class RiftRaiders implements GameLoop {
                 shafir.move("Down");
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_F) {
                 //knuppel oppakken
-                if ( Math.abs(shafir.x - 200) < 50 && Math.abs(shafir.y - 300) < 50) {
+                if ( Math.abs(shafir.x - 200) < 70 && Math.abs(shafir.y - 300) < 70) {
                     knuppelOpgepakt = true;
                     ShafirHeeftKnuppel = true;
                     cavemanMoves = true;
