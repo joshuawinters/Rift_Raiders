@@ -35,13 +35,25 @@ public class Entity {
     public Rectangle getHitbox() {
         //putting hitbox in the middle of character
         // dit werkt kut!!
-        int hitboxX = x - (width*4/5); // Offset to center the hitbox horizontally
-        int hitboxY = y - height; // Offset to center the hitbox vertically
+        int hitboxX = x + (width*4/5); // Offset to center the hitbox horizontally
+        int hitboxY = y + height; // Offset to center the hitbox vertically
         int hitboxWidth = width / 2;   // Hitbox is half the sprite's width
         int hitboxHeight = height / 2; // Hitbox is half the sprite's height
         return new Rectangle(hitboxX, hitboxY, hitboxWidth, hitboxHeight);
     }
-
+    /*
+    possible extra hitbox
+    currently not used
+    public Rectangle getReach() {
+        //putting hitbox in the middle of character
+        // dit werkt kut!!
+        int hitboxX = x ; // Offset to center the hitbox horizontally
+        int hitboxY = y ; // Offset to center the hitbox vertically
+        int hitboxWidth = width * 2;   // Hitbox is half the sprite's width
+        int hitboxHeight = height * 2; // Hitbox is half the sprite's height
+        return new Rectangle(hitboxX, hitboxY, hitboxWidth, hitboxHeight);
+    }
+    */
     public void move(String direction) {
         this.direction = direction;
 

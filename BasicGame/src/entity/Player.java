@@ -9,8 +9,5 @@ public class Player extends Entity {
         super(x, y, speed, animationDelay, width, height); // Call the Entity constructor
     }
 
-    public Rectangle getHitbox() {
-        return new Rectangle(x, y, width, height);
-    }
 }
 
