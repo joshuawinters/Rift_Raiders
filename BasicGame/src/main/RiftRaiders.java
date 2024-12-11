@@ -81,11 +81,10 @@ public class RiftRaiders implements GameLoop {
         // TODO: make function to load level
         // TODO: make file to create level
         // TODO: each level has a starting posistion, and end position/condition
-
-        draw_level();
+        //draw_level();
 
         //Stage sprite tekenen
-        //SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
+        SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
         //Health boarder tekenen
         SaxionApp.drawImage(Second.imageHealthBoarder, 0, 0, 160, 200);
 
@@ -189,13 +188,12 @@ public class RiftRaiders implements GameLoop {
         // Detect collision
         if (checkCollision(shafir.getHitbox(), caveman.getHitbox())) {
             System.out.println("Collision detected between player and enemy!");
-
             // Handle collision (e.g., reduce health, game over, etc.)
         }
 
         // Debugging: Draw hitboxes
-        SaxionApp.drawRectangle(shafir.getHitbox().x, shafir.getHitbox().y, shafir.getHitbox().width, shafir.getHitbox().height);
-        SaxionApp.drawRectangle(caveman.getHitbox().x, caveman.getHitbox().y, caveman.getHitbox().width, caveman.getHitbox().height);
+//        SaxionApp.drawRectangle(shafir.getHitbox().x, shafir.getHitbox().y, shafir.getHitbox().width, shafir.getHitbox().height);
+//        SaxionApp.drawRectangle(caveman.getHitbox().x, caveman.getHitbox().y, caveman.getHitbox().width, caveman.getHitbox().height);
 
         // Draw static hitbox
         int hitboxWidth = 100;
@@ -235,7 +233,6 @@ public class RiftRaiders implements GameLoop {
 
     //keyboard interactions aanmaken
     public void gamescreenKeyboardEvent(KeyboardEvent keyboardEvent) {
-
         if (keyboardEvent.isKeyPressed()) {
             if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_A) {
                 shafir.move("Left");
@@ -247,7 +244,7 @@ public class RiftRaiders implements GameLoop {
                 shafir.move("Down");
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_F) {
                 //knuppel oppakken
-                if ( Math.abs(shafir.x - 200) < 80 && Math.abs(shafir.y - 300) < 80) {
+                if ( Math.abs(shafir.x - 200) < 70 && Math.abs(shafir.y - 300) < 70) {
                     knuppelOpgepakt = true;
                     ShafirHeeftKnuppel = true;
                     cavemanMoves = true;
