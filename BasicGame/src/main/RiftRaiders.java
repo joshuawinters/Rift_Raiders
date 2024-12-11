@@ -85,7 +85,7 @@ public class RiftRaiders implements GameLoop {
         //Stage sprite tekenen
         SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
         //Health boarder tekenen
-        SaxionApp.drawImage(Second.imageHealthBoarder, 0, 0, 160, 200 );
+        SaxionApp.drawImage(Second.imageHealthBoarder, 0, 0, 160, 200);
 
 
         //hart sprites toevoegen
@@ -99,19 +99,36 @@ public class RiftRaiders implements GameLoop {
             SaxionApp.drawImage(Second.imageHartLeeg3, 25, 55, 30, 30);
         }
 
+        // int shafirSlaatAantalFrames = 25
+        int slaanRefresh = 25;
         //sprite inspawnen voor knuppel en boolean koppelen
         if (knuppelOpgepakt == false) {
             SaxionApp.drawImage(Second.imageKnuppel, 200, 300, 50, 50);
-        }else {
+        } else if (slaanRefresh > 0) {
+            ShafirSlaat = true;
+            if (shafir.direction.equals("Left")) {
+                SaxionApp.drawImage(Second.imageShafirSlagLinks, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Right")) {
+                SaxionApp.drawImage(Second.imageShafirSlagRechts, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Up")) {
+                SaxionApp.drawImage(Second.imageShafirSlagBoven, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Down")) {
+                SaxionApp.drawImage(Second.imageShafirSlagOnder, shafir.x, shafir.y, 100, 100);
+            }
+            slaanRefresh--;
+        } else {
+            ShafirSlaat = false;
             String sprite2 = switch (shafir.direction) {
                 case "Up" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelBoven1 : Second.shafirKnuppelBoven2;
                 case "Down" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelOnder1 : Second.shafirKnuppelOnder2;
                 case "Left" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelLinks1 : Second.shafirKnuppelLinks2;
-                case "Right" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelRechts1 : Second.shafirKnuppelRechts2;
+                case "Right" ->
+                        (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelRechts1 : Second.shafirKnuppelRechts2;
                 default -> Second.imageShafirIdle;
             };
             SaxionApp.drawImage(sprite2, shafir.x, shafir.y, 100, 100);
         }
+
 
         // Check and update animation
         if (shafir.shouldUpdateAnimation()) {
@@ -227,7 +244,6 @@ public class RiftRaiders implements GameLoop {
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
                 shafir.move("Down");
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_F) {
-
                 //knuppel oppakken
                 if ( Math.abs(shafir.x - 200) < 50 && Math.abs(shafir.y - 300) < 50) {
                     knuppelOpgepakt = true;
@@ -239,15 +255,6 @@ public class RiftRaiders implements GameLoop {
                 }
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_E) {
                 ShafirSlaat = true;
-               if (shafir.direction == "Left") {
-                   SaxionApp.drawImage(Second.imageShafirSlagLinks, shafir.x, shafir.y, 100, 100);
-               } else if (shafir.direction == "Right") {
-                   SaxionApp.drawImage(Second.imageShafirSlagRechts, shafir.x, shafir.y, 100, 100);
-               } else if (shafir.direction == "Up") {
-                   SaxionApp.drawImage(Second.imageShafirSlagBoven, shafir.x, shafir.y, 100, 100);
-               } else if (shafir.direction == "Down") {
-                   SaxionApp.drawImage(Second.imageShafirSlagOnder, shafir.x, shafir.y, 100, 100);
-               }
             }
 
         }
