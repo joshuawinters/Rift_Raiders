@@ -35,8 +35,8 @@ public class Entity {
     public Rectangle getHitbox() {
         //putting hitbox in the middle of character
         // dit werkt kut!!
-        int hitboxX = x + (width*4/5); // Offset to center the hitbox horizontally
-        int hitboxY = y + height; // Offset to center the hitbox vertically
+        int hitboxX = x - (width*4/5); // Offset to center the hitbox horizontally
+        int hitboxY = y - height; // Offset to center the hitbox vertically
         int hitboxWidth = width / 2;   // Hitbox is half the sprite's width
         int hitboxHeight = height / 2; // Hitbox is half the sprite's height
         return new Rectangle(hitboxX, hitboxY, hitboxWidth, hitboxHeight);
@@ -44,20 +44,22 @@ public class Entity {
 
     public void move(String direction) {
         this.direction = direction;
-        switch (direction) {
-            case "Up":
-                y -= speed;
-                break;
-            case "Down":
-                y += speed;
-                break;
-            case "Left":
-                x -= speed;
-                break;
-            case "Right":
-                x += speed;
-                break;
-        }
+
+            switch (direction) {
+                case "Up":
+                    y -= speed;
+                    break;
+                case "Down":
+                    y += speed;
+                    break;
+                case "Left":
+                    x -= speed;
+                    break;
+                case "Right":
+                    x += speed;
+                    break;
+            }
+
     }
 
     public boolean shouldUpdateAnimation() {

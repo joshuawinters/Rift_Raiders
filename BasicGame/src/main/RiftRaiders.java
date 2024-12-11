@@ -219,6 +219,7 @@ public class RiftRaiders implements GameLoop {
 
     //keyboard interactions aanmaken
     public void gamescreenKeyboardEvent(KeyboardEvent keyboardEvent) {
+
         if (keyboardEvent.isKeyPressed()) {
             if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_A) {
                 shafir.move("Left");
