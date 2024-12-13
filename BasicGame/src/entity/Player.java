@@ -10,8 +10,5 @@ public class Player extends Entity {
 
     }
 
-    public Rectangle getHitbox() {
-        return new Rectangle(x, y, width, height);
-    }
 }
 

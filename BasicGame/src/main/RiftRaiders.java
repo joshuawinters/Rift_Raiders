@@ -26,6 +26,7 @@ public class RiftRaiders implements GameLoop {
     boolean knuppelOpgepakt = false;
     boolean ShafirHeeftKnuppel = false;
     boolean hartVol = true;
+    boolean ShafirSlaat = false;
 
     // tiles en level
     TileManager tileM;
@@ -42,6 +43,7 @@ public class RiftRaiders implements GameLoop {
     Rectangle staticHitbox;
     int x_knuppel = 200;
     int y_knuppel = 300;
+    int slaanRefresh = 0;
 
     @Override
     public void init() {
@@ -84,7 +86,7 @@ public class RiftRaiders implements GameLoop {
         //Stage sprite tekenen
         //SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
         //Health boarder tekenen
-        SaxionApp.drawImage(Second.imageHealthBoarder, 0, 0, 160, 200 );
+        SaxionApp.drawImage(Second.imageHealthBoarder, 0, 0, 160, 200);
 
 
         //hart sprites toevoegen
@@ -101,16 +103,31 @@ public class RiftRaiders implements GameLoop {
         //sprite inspawnen voor knuppel en boolean koppelen
         if (knuppelOpgepakt == false) {
             SaxionApp.drawImage(Second.imageKnuppel, 200, 300, 50, 50);
-        }else {
+        } else if (slaanRefresh > 0) {
+            ShafirSlaat = true;
+            if (shafir.direction.equals("Left")) {
+                SaxionApp.drawImage(Second.imageShafirSlagLinks, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Right")) {
+                SaxionApp.drawImage(Second.imageShafirSlagRechts, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Up")) {
+                SaxionApp.drawImage(Second.imageShafirSlagBoven, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Down")) {
+                SaxionApp.drawImage(Second.imageShafirSlagOnder, shafir.x, shafir.y, 100, 100);
+            }
+            slaanRefresh--;
+        } else {
+            ShafirSlaat = false;
             String sprite2 = switch (shafir.direction) {
                 case "Up" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelBoven1 : Second.shafirKnuppelBoven2;
                 case "Down" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelOnder1 : Second.shafirKnuppelOnder2;
                 case "Left" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelLinks1 : Second.shafirKnuppelLinks2;
-                case "Right" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelRechts1 : Second.shafirKnuppelRechts2;
+                case "Right" ->
+                        (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelRechts1 : Second.shafirKnuppelRechts2;
                 default -> Second.imageShafirIdle;
             };
             SaxionApp.drawImage(sprite2, shafir.x, shafir.y, 100, 100);
         }
+
 
         // Check and update animation
         if (shafir.shouldUpdateAnimation()) {
@@ -132,25 +149,24 @@ public class RiftRaiders implements GameLoop {
             SaxionApp.drawImage(sprite, shafir.x, shafir.y, 100, 100);
         }
 
-
-        //follow player (enemy)
-        //positie enemy horizontaal
-        if (shafir.x > caveman.x) {
-            caveman.move("Right");
-        } else if (shafir.x < caveman.x) {
-            caveman.move("Left");
-        }
-
-        //positie enemy verticaal
-        if (shafir.y > caveman.y) {
-            caveman.move("Down");
-        } else if (shafir.y < caveman.y) {
-            caveman.move("Up");
-        }
-
-
-        if (caveman.shouldUpdateAnimation()) {
-            caveman.stapCounter++; // Advance animation frame
+        boolean kd = moving();
+        if(!kd) {
+            //follow player (enemy)
+            //positie enemy horizontaal
+            if (shafir.x > caveman.x) {
+                caveman.move("Right");
+            } else if (shafir.x < caveman.x) {
+                caveman.move("Left");
+            }
+            //positie enemy verticaal
+            if (shafir.y > caveman.y) {
+                caveman.move("Down");
+            } else if (shafir.y < caveman.y) {
+                caveman.move("Up");
+            }
+            if (caveman.shouldUpdateAnimation()) {
+                caveman.stapCounter++; // Advance animation frame
+            }
         }
 
 
@@ -175,8 +191,8 @@ public class RiftRaiders implements GameLoop {
         }
 
         // Debugging: Draw hitboxes
-        SaxionApp.drawRectangle(shafir.getHitbox().x, shafir.getHitbox().y, shafir.getHitbox().width, shafir.getHitbox().height);
-        SaxionApp.drawRectangle(caveman.getHitbox().x, caveman.getHitbox().y, caveman.getHitbox().width, caveman.getHitbox().height);
+//        SaxionApp.drawRectangle(shafir.getHitbox().x, shafir.getHitbox().y, shafir.getHitbox().width, shafir.getHitbox().height);
+//        SaxionApp.drawRectangle(caveman.getHitbox().x, caveman.getHitbox().y, caveman.getHitbox().width, caveman.getHitbox().height);
 
         // Draw static hitbox
         int hitboxWidth = 100;
@@ -195,6 +211,12 @@ public class RiftRaiders implements GameLoop {
 
     }
 
+    public boolean moving(){
+        if(Math.abs(caveman.x - shafir.x) < 70 && Math.abs(caveman.y - shafir.y) < 70){
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public void keyboardEvent(KeyboardEvent keyboardEvent) {
@@ -226,30 +248,8 @@ public class RiftRaiders implements GameLoop {
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
                 shafir.move("Down");
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_F) {
-
-
-
-                //Caveman laten slaan en sprite aanpassen op basis van directie
-                if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
-                    if (caveman.direction == "Left") {
-                       SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
-                    }
-                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
-                    if (caveman.direction == "Right") {
-                        SaxionApp.drawImage(Second.imageCavemanSlagRechts, caveman.x, caveman.y, 100, 100);
-                    }
-                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
-                    if (caveman.direction == "Up") {
-                        SaxionApp.drawImage(Second.imageCavemanSlagAchter, caveman.x, caveman.y, 100, 100);
-                    }
-                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
-                    if (caveman.direction == "Down") {
-                        SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
-                    }
-                }
-
                 //knuppel oppakken
-                if ( Math.abs(shafir.x - 200) < 50 && Math.abs(shafir.y - 300) < 50) {
+                if ( Math.abs(shafir.x - 200) < 70 && Math.abs(shafir.y - 300) < 70) {
                     knuppelOpgepakt = true;
                     ShafirHeeftKnuppel = true;
                     cavemanMoves = true;
@@ -257,10 +257,34 @@ public class RiftRaiders implements GameLoop {
                     caveman.x = 450;
                     caveman.y = 200;
                 }
+            } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_E) {
+                ShafirSlaat = true;
+                // int shafirSlaatAantalFrames = 25
+                slaanRefresh = 8;
             }
 
         }
     }
+
+
+    //                  Caveman laten slaan en sprite aanpassen op basis van directie
+//                if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
+//                    if (caveman.direction == "Left") {
+//                       SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
+//                    }
+//                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
+//                    if (caveman.direction == "Right") {
+//                        SaxionApp.drawImage(Second.imageCavemanSlagRechts, caveman.x, caveman.y, 100, 100);
+//                    }
+//                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
+//                    if (caveman.direction == "Up") {
+//                        SaxionApp.drawImage(Second.imageCavemanSlagAchter, caveman.x, caveman.y, 100, 100);
+//                    }
+//                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
+//                    if (caveman.direction == "Down") {
+//                        SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
+//                    }
+//                }
 
     @Override
     public void mouseEvent(MouseEvent mouseEvent) {
