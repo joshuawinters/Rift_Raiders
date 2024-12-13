@@ -27,6 +27,7 @@ public class RiftRaiders implements GameLoop {
     boolean ShafirHeeftKnuppel = false;
     boolean hartVol = true;
     boolean ShafirSlaat = false;
+    boolean cavemanSlaat = false;
 
     // tiles en level
     TileManager tileM;
@@ -128,6 +129,22 @@ public class RiftRaiders implements GameLoop {
             SaxionApp.drawImage(sprite2, shafir.x, shafir.y, 100, 100);
         }
 
+        if (Math.abs(caveman.x - shafir.x) > 200 && Math.abs(caveman.y - shafir.y) > 200) {
+            System.out.println("dichtbij genoeg");
+            if (slaanRefresh > 0) {
+                cavemanSlaat = true;
+                if (caveman.direction.equals("Left")) {
+                    SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
+                } else if (caveman.direction.equals("Right")) {
+                    SaxionApp.drawImage(Second.imageCavemanSlagRechts, caveman.x, caveman.y, 100, 100);
+                } else if (caveman.direction.equals("Up")) {
+                    SaxionApp.drawImage(Second.imageCavemanSlagAchter, caveman.x, caveman.y, 100, 100);
+                } else if (caveman.direction.equals("Down")) {
+                    SaxionApp.drawImage(Second.imageCavemanSlagVoor, caveman.x, caveman.y, 100, 100);
+                }
+            }
+            slaanRefresh--;
+        }
 
         // Check and update animation
         if (shafir.shouldUpdateAnimation()) {
@@ -135,7 +152,7 @@ public class RiftRaiders implements GameLoop {
         }
 
         // Determine the sprite based on direction and animation frame
-        if (ShafirHeeftKnuppel == false) {
+        if (!ShafirHeeftKnuppel) {
             String sprite = switch (shafir.direction) {
                 case "Up" ->
                         (shafir.stapCounter % 2 == 0) ? Second.imageShafirAchterkant1 : Second.imageShafirAchterkant2;
@@ -149,6 +166,7 @@ public class RiftRaiders implements GameLoop {
             SaxionApp.drawImage(sprite, shafir.x, shafir.y, 100, 100);
         }
 
+        //caveman laten stoppen
         boolean kd = moving();
         if(!kd) {
             //follow player (enemy)
@@ -184,6 +202,7 @@ public class RiftRaiders implements GameLoop {
             SaxionApp.drawImage(spriteCaveman, caveman.x, caveman.y, 100, 100);
         }
 
+
         // Detect collision
         if (checkCollision(shafir.getHitbox(), caveman.getHitbox())) {
             System.out.println("Collision detected between player and enemy!");
@@ -211,8 +230,10 @@ public class RiftRaiders implements GameLoop {
 
     }
 
+
+    //caveman laten stoppen als hij in range is
     public boolean moving(){
-        if(Math.abs(caveman.x - shafir.x) < 70 && Math.abs(caveman.y - shafir.y) < 70){
+        if(Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80){
             return true;
         }
         return false;
@@ -266,25 +287,6 @@ public class RiftRaiders implements GameLoop {
         }
     }
 
-
-    //                  Caveman laten slaan en sprite aanpassen op basis van directie
-//                if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
-//                    if (caveman.direction == "Left") {
-//                       SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
-//                    }
-//                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
-//                    if (caveman.direction == "Right") {
-//                        SaxionApp.drawImage(Second.imageCavemanSlagRechts, caveman.x, caveman.y, 100, 100);
-//                    }
-//                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
-//                    if (caveman.direction == "Up") {
-//                        SaxionApp.drawImage(Second.imageCavemanSlagAchter, caveman.x, caveman.y, 100, 100);
-//                    }
-//                } else if (Math.abs(shafir.x - caveman.x) < 100 && Math.abs(shafir.y - caveman.y) < 100) {
-//                    if (caveman.direction == "Down") {
-//                        SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
-//                    }
-//                }
 
     @Override
     public void mouseEvent(MouseEvent mouseEvent) {
