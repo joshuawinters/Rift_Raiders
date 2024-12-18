@@ -283,12 +283,13 @@ public class RiftRaiders implements GameLoop {
   //        SaxionApp.drawRectangle(caveman.getHitbox().x, caveman.getHitbox().y, caveman.getHitbox().width, caveman.getHitbox().height);
 
         // Draw static hitbox
+
         int hitboxWidth = 100;
         int hitboxHeight = 100;
         int centerX = 1000 / 2 - hitboxWidth / 2;
         int centerY = 1000 / 2 - hitboxHeight / 2;
         staticHitbox = new Rectangle(centerX, centerY, hitboxWidth, hitboxHeight);
-        SaxionApp.drawRectangle(centerX, centerY, hitboxWidth, hitboxHeight);
+        //SaxionApp.drawRectangle(centerX, centerY, hitboxWidth, hitboxHeight);
 
         // Collision with static hitbox
         if (checkCollision(shafir.getHitbox(), staticHitbox)) {
