@@ -17,7 +17,9 @@ public class Player extends Entity {
         xp = 0;
         nexlevelxp = 5;
         coin = 0;
-
+        // functions die attack vermenigvuldigen met de attack waarde van wapen
+        // attack = getattackvalue();
+        // defense = getdefensevalue();
     }
 }
 
