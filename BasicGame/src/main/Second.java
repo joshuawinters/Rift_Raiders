@@ -93,6 +93,13 @@ public class Second {
     static String imageShafirSlagOnder = "Sprites\\Shafir\\ShafirMetKnuppel\\ShafirSlaatOnder.png";
     static String imageShafirSlagBoven = "Sprites\\Shafir\\ShafirMetKnuppel\\ShafirSlaatBoven.png";
 
+    //Shafir met damage animatie
+    static String imageShafirDamageVoor = "Sprites\\Shafir\\ShafirMetDamage\\ShafirMetDamageVoor.png";
+    static String imageShafirDamageAchter = "Sprites\\Shafir\\ShafirMetDamage\\ShafirMetDamageAchter.png";
+    static String imageShafirDamageLinks = "Sprites\\Shafir\\ShafirMetDamage\\ShafirMetDamageLinks.png";
+    static String imageShafirDamageRechts = "Sprites\\Shafir\\ShafirMetDamage\\ShafirMetDamageRechts.png";
+
+
 
 
 }

@@ -43,6 +43,7 @@ public class TileManager {
             /*
             tile[0] = new Tiles();
             tile[0].image = "Sprites/Tiles/New version (with numbers)/017.png";
+            hitbox= true
 
             tile[1] = new Tiles();
             tile[1].image = "Sprites/Tiles/New version (with numbers)/016.png";

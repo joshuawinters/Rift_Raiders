@@ -82,7 +82,4 @@ public class Entity {
         }
         return false;
     }
-    public boolean checkCollision(Rectangle rect1, Rectangle rect2) {
-        return rect1.intersects(rect2);
-    }
 }
