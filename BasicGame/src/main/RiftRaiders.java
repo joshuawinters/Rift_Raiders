@@ -149,8 +149,7 @@ public class RiftRaiders implements GameLoop {
             SaxionApp.drawImage(sprite, shafir.x, shafir.y, 100, 100);
         }
 
-        boolean kd = moving();
-        if(!kd) {
+        if(!moving()) {
             //follow player (enemy)
             //positie enemy horizontaal
             if (shafir.x > caveman.x) {
@@ -170,19 +169,24 @@ public class RiftRaiders implements GameLoop {
         }
 
 
+
         //enemy sprites aanpassen op de richting
+        
         if (cavemanMoves == true) {
             String spriteCaveman = switch (caveman.direction) {
                 case "Up" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanBoven1 : Second.imageCavemanBoven2;
-                case "Down" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanOnder1 : Second.imageCavemanOnder2;
-                case "Left" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanLinks1 : Second.imageCavemanLinks2;
+                case "Down" ->
+                        (caveman.stapCounter % 2 == 0) ? Second.imageCavemanOnder1 : Second.imageCavemanOnder2;
+                case "Left" ->
+                        (caveman.stapCounter % 2 == 0) ? Second.imageCavemanLinks1 : Second.imageCavemanLinks2;
                 case "Right" ->
                         (caveman.stapCounter % 2 == 0) ? Second.imageCavemanRechts1 : Second.imageCavemanRechts2;
                 default -> Second.imageCavemanIdle;
             };
-            //Draw enemy sprite
-            SaxionApp.drawImage(spriteCaveman, caveman.x, caveman.y, 100, 100);
+                //Draw enemy sprite
+               SaxionApp.drawImage(spriteCaveman, caveman.x, caveman.y, 100, 100);
         }
+
 
         // Detect collision
         if (checkCollision(shafir.getHitbox(), caveman.getHitbox())) {
@@ -212,7 +216,7 @@ public class RiftRaiders implements GameLoop {
     }
 
     public boolean moving(){
-        if(Math.abs(caveman.x - shafir.x) < 70 && Math.abs(caveman.y - shafir.y) < 70){
+        if(Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80){
             return true;
         }
         return false;
