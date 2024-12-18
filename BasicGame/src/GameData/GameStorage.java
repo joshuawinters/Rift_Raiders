@@ -9,6 +9,8 @@ public class GameStorage implements Serializable {
     int Strength;
     int NextLevelXP;
 
+    //player inventory
+
 
     //Level stats
 
