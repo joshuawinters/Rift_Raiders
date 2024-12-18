@@ -9,6 +9,15 @@ public class Player extends Entity {
         super(x, y, speed, animationDelay, width, height);// Call the Entity constructor
 
     }
+    public void SetDefaultStats() {
+        level = 1;
+        Maxhealth = 3;
+        strenght = 1;
+        dexterity = 1;
+        xp = 0;
+        nexlevelxp = 5;
+        coin = 0;
 
+    }
 }
 

@@ -1,6 +1,6 @@
 package main;
 
-import GameData.SaveLoad;
+
 import entity.Enemies;
 import entity.Player;
 import nl.saxion.app.SaxionApp;
@@ -22,8 +22,7 @@ public class RiftRaiders implements GameLoop {
     public int maxScreencol = 16;
     public int maxScreenrow = 12;
 
-    //eeh
-    SaveLoad saveLoad = new SaveLoad(this);
+
     //boolean
     boolean cavemanMoves = false;
     boolean knuppelOpgepakt = false;
