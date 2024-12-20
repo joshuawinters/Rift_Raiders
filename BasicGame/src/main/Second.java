@@ -97,7 +97,10 @@ public class Second {
     static String imageShafirDamageVoor = "Sprites\\Shafir\\ShafirMetDamage\\ShafirMetDamageVoor.png";
     static String imageShafirDamageAchter = "Sprites\\Shafir\\ShafirMetDamage\\ShafirMetDamageAchter.png";
     static String imageShafirDamageLinks = "Sprites\\Shafir\\ShafirMetDamage\\ShafirMetDamageLinks.png";
-    static String imageShafirDamageRechts = "Sprites\\Shafir\\ShafirMetDamage\\ShafirMetDamageRechts.png";
+    static String imageShafirDamageRechts = "Sprites\\Shafir\\ShafirMetDamage\\ShafirMetDamageRechts.png2";
+
+    //shafir death animation
+
 
 
 
