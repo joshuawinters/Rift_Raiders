@@ -36,7 +36,7 @@ public class RiftRaiders implements GameLoop {
 
     // tiles en level
     TileManager tileM;
-
+    mainUI ui = new mainUI();
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
         SaxionApp.startGameLoop(new RiftRaiders(), screenWidth, screenHeight, 40);
@@ -65,17 +65,13 @@ public class RiftRaiders implements GameLoop {
     @Override
     public void loop() {
         if (currentScreen.equals("startscreen")) {
-            startscreenLoop();
+            ui.startscreenLoop();
         } else {
             gamescreenLoop();
         }
     }
 
-    //Start screen invoegen
-    public void startscreenLoop() {
-        SaxionApp.clear();
-        SaxionApp.drawImage("Sprites/RRstartscreen.png", 0, 0, 1000, 700);
-    }
+
     public boolean checkCollision(Rectangle rect1, Rectangle rect2) {
         return rect1.intersects(rect2);
     }
@@ -89,6 +85,7 @@ public class RiftRaiders implements GameLoop {
         // TODO: make function to load level
         // TODO: make file to create level
         // TODO: each level has a starting posistion, and end position/condition
+        // TODO: clear main file and put everything in classes
        // draw_level();
 
         //Stage sprite tekenen
@@ -98,11 +95,11 @@ public class RiftRaiders implements GameLoop {
 
 
         //hart sprites toevoegen
-        if (hartVol == true) {
+        if (hartVol) {
             SaxionApp.drawImage(Second.imageHartVol1, 25, 55, 30, 30);
             SaxionApp.drawImage(Second.imageHartVol2, 65, 55, 30, 30);
             SaxionApp.drawImage(Second.imageHartVol3, 105, 55, 30, 30);
-        } else if (hartVol == false) {
+        } else if (!hartVol) {
             SaxionApp.drawImage(Second.imageHartLeeg1, 25, 55, 30, 30);
             SaxionApp.drawImage(Second.imageHartLeeg2, 65, 55, 30, 30);
             SaxionApp.drawImage(Second.imageHartLeeg3, 105, 55, 30, 30);
@@ -122,6 +119,7 @@ public class RiftRaiders implements GameLoop {
             } else if (shafir.direction.equals("Down")) {
                 SaxionApp.drawImage(Second.imageShafirSlagOnder, shafir.x, shafir.y, 100, 100);
             }
+            cavemanHit = true;
             slaanRefresh--;
         } else {
             ShafirSlaat = false;
@@ -181,7 +179,7 @@ public class RiftRaiders implements GameLoop {
 
         //caveman laten slaan in range
         if (knuppelOpgepakt) {
-            if (Math.abs(caveman.x - shafir.x) < 100 && Math.abs(caveman.y - shafir.y) < 100) {
+            if (Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80) {
                 cavemanInRange = true;
                 if (cavemanSlaat) {
                     if (caveman.direction.equals("Left")) {
@@ -248,7 +246,6 @@ public class RiftRaiders implements GameLoop {
                     SaxionApp.drawImage(Second.imageShafirDamageVoor, shafir.x, shafir.y, 100, 100);
                 }
 
-
                 if (charHIt) {
                     charHIt = false;
                     damageRefreshChar = 5;
@@ -271,6 +268,10 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
+        //caveman laten despawnen bij hit
+        if (cavemanHit) {
+
+        }
 
         // Detect collision
         if (checkCollision(shafir.getHitbox(), caveman.getHitbox())) {
