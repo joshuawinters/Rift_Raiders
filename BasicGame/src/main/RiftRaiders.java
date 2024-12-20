@@ -1,5 +1,6 @@
 package main;
 
+
 import entity.Enemies;
 import entity.Player;
 import nl.saxion.app.SaxionApp;
@@ -16,10 +17,11 @@ public class RiftRaiders implements GameLoop {
     // Define tile size and screen dimensions
     final int tileWidth = 48;  // Width of each tile
     final int tileHeight = 48; // Height of each tile
-    public final int screenWidth = 1000; // Screen width in pixels
-    public final int screenHeight = 1000; // Screen height in pixels
+    static int screenWidth = 1000; // Screen width in pixels
+    static int screenHeight = 1000; // Screen height in pixels
     public int maxScreencol = 16;
     public int maxScreenrow = 12;
+
 
     //boolean
     boolean cavemanMoves = false;
@@ -37,7 +39,7 @@ public class RiftRaiders implements GameLoop {
 
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
-        SaxionApp.startGameLoop(new RiftRaiders(), 1000, 1000, 40);
+        SaxionApp.startGameLoop(new RiftRaiders(), screenWidth, screenHeight, 40);
     }
 
     String currentScreen = "startscreen";
@@ -87,7 +89,7 @@ public class RiftRaiders implements GameLoop {
         // TODO: make function to load level
         // TODO: make file to create level
         // TODO: each level has a starting posistion, and end position/condition
-        //draw_level();
+       // draw_level();
 
         //Stage sprite tekenen
         SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
@@ -102,8 +104,8 @@ public class RiftRaiders implements GameLoop {
             SaxionApp.drawImage(Second.imageHartVol3, 105, 55, 30, 30);
         } else if (hartVol == false) {
             SaxionApp.drawImage(Second.imageHartLeeg1, 25, 55, 30, 30);
-            SaxionApp.drawImage(Second.imageHartLeeg2, 25, 55, 30, 30);
-            SaxionApp.drawImage(Second.imageHartLeeg3, 25, 55, 30, 30);
+            SaxionApp.drawImage(Second.imageHartLeeg2, 65, 55, 30, 30);
+            SaxionApp.drawImage(Second.imageHartLeeg3, 105, 55, 30, 30);
         }
 
         //sprite inspawnen voor knuppel en boolean koppelen
@@ -192,6 +194,7 @@ public class RiftRaiders implements GameLoop {
                         SaxionApp.drawImage(Second.imageCavemanSlagVoor, caveman.x, caveman.y, 100, 100);
                     }
                     charHIt = true;
+                    hartVol = false;
                 } else {
                     if (caveman.direction.equals("Left")) {
                         SaxionApp.drawImage(Second.imageCavemanLinks1, caveman.x, caveman.y, 100, 100);
@@ -232,7 +235,7 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
-        //damage system aanmaken
+        //hit indicator aanmaken
         if (knuppelOpgepakt) {
             if (charHIt && damageRefreshChar > 0) {
                 if (shafir.direction.equals("Left")) {
@@ -245,14 +248,12 @@ public class RiftRaiders implements GameLoop {
                     SaxionApp.drawImage(Second.imageShafirDamageVoor, shafir.x, shafir.y, 100, 100);
                 }
 
-                if (damageRefreshChar <= 0) {
+
+                if (charHIt) {
+                    charHIt = false;
                     damageRefreshChar = 5;
-                    if (charHIt) {
-                        charHIt = false;
-                    } else {
-                        charHIt = true;
-                    }
                 }
+
                 damageRefreshChar--;
             } else if (damageRefreshChar < 0) {
                 String sprite2 = switch (shafir.direction) {
@@ -269,7 +270,6 @@ public class RiftRaiders implements GameLoop {
                 SaxionApp.drawImage(sprite2, shafir.x, shafir.y, 100, 100);
             }
         }
-
 
 
         // Detect collision

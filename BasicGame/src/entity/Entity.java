@@ -2,10 +2,10 @@ package entity;
 import java.awt.Rectangle;
 
 public class Entity {
-
+    // place and speed
     public int x; // Position X
     public int y; // Position Y
-    public int speed=8; // Movement speed
+
     public String direction; // Current direction (Up, Down, Left, Right)
     public int stapCounter; // Counter for animation steps
 
@@ -15,6 +15,24 @@ public class Entity {
     //hitbox
     public int width; // Width of the entity
     public int height; // Height of the entity
+
+    //player atributes
+    public int speed=8; // Movement speed
+    public int Maxhealth;
+    public int currentHealth;
+    public int strenght;
+    public int attack;
+    public int dexterity;
+    public int defense;
+    public int xp;
+    public int level;
+    public int nexlevelxp;
+    public int coin;
+    public int attackValue;
+    public int defenseValue;
+
+
+
 
     public Entity(int x, int y, int speed, long animationDelay, int width, int height) {
         this.x = x;
