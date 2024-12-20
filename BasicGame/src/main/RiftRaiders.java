@@ -33,6 +33,7 @@ public class RiftRaiders implements GameLoop {
     boolean cavemanHit = false;
     boolean cavemanInRange = false;
     boolean charHIt = false;
+    boolean deathAnimation = false;
 
     // tiles en level
     TileManager tileM;
@@ -111,18 +112,8 @@ public class RiftRaiders implements GameLoop {
             SaxionApp.drawImage(Second.imageHartVol3, 105, 55, 30, 30);
         }else {
             SaxionApp.drawImage(Second.imageHartLeeg3, 105, 55, 30, 30);
+            deathAnimation = true;
         }
-        /*
-        if (hartVol) {
-            SaxionApp.drawImage(Second.imageHartVol1, 25, 55, 30, 30);
-            SaxionApp.drawImage(Second.imageHartVol2, 65, 55, 30, 30);
-            SaxionApp.drawImage(Second.imageHartVol3, 105, 55, 30, 30);
-        } else if (!hartVol) {
-            SaxionApp.drawImage(Second.imageHartLeeg1, 25, 55, 30, 30);
-            SaxionApp.drawImage(Second.imageHartLeeg2, 65, 55, 30, 30);
-            SaxionApp.drawImage(Second.imageHartLeeg3, 105, 55, 30, 30);
-        }
-        */
 
 
         //sprite inspawnen voor knuppel en boolean koppelen
@@ -254,6 +245,7 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
+
         //hit indicator aanmaken
         if (knuppelOpgepakt) {
             if (charHIt && damageRefreshChar > 0) {
@@ -289,10 +281,6 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
-        //caveman laten despawnen bij hit
-        if (cavemanHit) {
-
-        }
 
         // Detect collision
         if (checkCollision(shafir.getHitbox(), caveman.getHitbox())) {
@@ -321,7 +309,6 @@ public class RiftRaiders implements GameLoop {
 
 
     }
-
 
     //caveman laten stoppen als hij in range is
     public boolean moving(){
