@@ -1,5 +1,6 @@
 package main;
 
+
 import entity.Enemies;
 import entity.Player;
 import nl.saxion.app.SaxionApp;
@@ -16,10 +17,11 @@ public class RiftRaiders implements GameLoop {
     // Define tile size and screen dimensions
     final int tileWidth = 48;  // Width of each tile
     final int tileHeight = 48; // Height of each tile
-    public final int screenWidth = 1000; // Screen width in pixels
-    public final int screenHeight = 1000; // Screen height in pixels
+    static int screenWidth = 1000; // Screen width in pixels
+    static int screenHeight = 1000; // Screen height in pixels
     public int maxScreencol = 16;
     public int maxScreenrow = 12;
+
 
     //boolean
     boolean cavemanMoves = false;
@@ -37,7 +39,7 @@ public class RiftRaiders implements GameLoop {
 
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
-        SaxionApp.startGameLoop(new RiftRaiders(), 1000, 1000, 40);
+        SaxionApp.startGameLoop(new RiftRaiders(), screenWidth, screenHeight, 40);
     }
 
     String currentScreen = "startscreen";
