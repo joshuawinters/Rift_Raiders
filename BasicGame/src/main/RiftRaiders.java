@@ -36,7 +36,7 @@ public class RiftRaiders implements GameLoop {
 
     // tiles en level
     TileManager tileM;
-
+    mainUI ui = new mainUI();
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
         SaxionApp.startGameLoop(new RiftRaiders(), screenWidth, screenHeight, 40);
@@ -65,17 +65,13 @@ public class RiftRaiders implements GameLoop {
     @Override
     public void loop() {
         if (currentScreen.equals("startscreen")) {
-            startscreenLoop();
+            ui.startscreenLoop();
         } else {
             gamescreenLoop();
         }
     }
 
-    //Start screen invoegen
-    public void startscreenLoop() {
-        SaxionApp.clear();
-        SaxionApp.drawImage("Sprites/RRstartscreen.png", 0, 0, 1000, 700);
-    }
+
     public boolean checkCollision(Rectangle rect1, Rectangle rect2) {
         return rect1.intersects(rect2);
     }
@@ -89,6 +85,7 @@ public class RiftRaiders implements GameLoop {
         // TODO: make function to load level
         // TODO: make file to create level
         // TODO: each level has a starting posistion, and end position/condition
+        // TODO: clear main file and put everything in classes
        // draw_level();
 
         //Stage sprite tekenen

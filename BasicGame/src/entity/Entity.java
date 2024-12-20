@@ -1,4 +1,7 @@
 package entity;
+import nl.saxion.app.SaxionApp;
+import main.Second;
+
 import java.awt.Rectangle;
 
 public class Entity {
@@ -17,9 +20,10 @@ public class Entity {
     public int height; // Height of the entity
 
     //player atributes
+    public int health = 3; // Aantal hartjes
+    public boolean hartVol = true;
     public int speed=8; // Movement speed
     public int Maxhealth;
-    public int currentHealth;
     public int strenght;
     public int attack;
     public int dexterity;
@@ -59,6 +63,7 @@ public class Entity {
         int hitboxHeight = height / 2; // Hitbox is half the sprite's height
         return new Rectangle(hitboxX, hitboxY, hitboxWidth, hitboxHeight);
     }
+
     /*
     possible extra hitbox
     currently not used
