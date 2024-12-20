@@ -50,8 +50,10 @@ public class RiftRaiders implements GameLoop {
     int x_knuppel = 200;
     int y_knuppel = 300;
     int slaanRefresh = 0;
-    int slaanRefreshCaveman = 10;
+    int slaanRefreshCaveman = 15;
     int damageRefreshChar = 5;
+
+    int heartsFrameCounter = 6;
 
     @Override
     public void init() {
@@ -95,6 +97,22 @@ public class RiftRaiders implements GameLoop {
 
 
         //hart sprites toevoegen
+        if (heartsFrameCounter > 0) {
+            SaxionApp.drawImage(Second.imageHartVol1, 25, 55, 30, 30);
+        }else {
+            SaxionApp.drawImage(Second.imageHartLeeg1, 25, 55, 30, 30);
+        }
+        if (heartsFrameCounter > 2) {
+            SaxionApp.drawImage(Second.imageHartVol2, 65, 55, 30, 30);
+        }else {
+            SaxionApp.drawImage(Second.imageHartLeeg2, 65, 55, 30, 30);
+        }
+        if (heartsFrameCounter > 4) {
+            SaxionApp.drawImage(Second.imageHartVol3, 105, 55, 30, 30);
+        }else {
+            SaxionApp.drawImage(Second.imageHartLeeg3, 105, 55, 30, 30);
+        }
+        /*
         if (hartVol) {
             SaxionApp.drawImage(Second.imageHartVol1, 25, 55, 30, 30);
             SaxionApp.drawImage(Second.imageHartVol2, 65, 55, 30, 30);
@@ -104,6 +122,8 @@ public class RiftRaiders implements GameLoop {
             SaxionApp.drawImage(Second.imageHartLeeg2, 65, 55, 30, 30);
             SaxionApp.drawImage(Second.imageHartLeeg3, 105, 55, 30, 30);
         }
+        */
+
 
         //sprite inspawnen voor knuppel en boolean koppelen
         if (knuppelOpgepakt == false) {
@@ -207,7 +227,8 @@ public class RiftRaiders implements GameLoop {
 
                 // bijhouden slaan niet slaan van enemy
                 if (slaanRefreshCaveman <= 0) {
-                    slaanRefreshCaveman = 10;
+                    slaanRefreshCaveman = 15;
+                    heartsFrameCounter--;
                     if (cavemanSlaat) {
                         cavemanSlaat = false;
                     } else {
