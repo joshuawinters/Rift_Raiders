@@ -95,11 +95,11 @@ public class RiftRaiders implements GameLoop {
 
 
         //hart sprites toevoegen
-        if (hartVol == true) {
+        if (hartVol) {
             SaxionApp.drawImage(Second.imageHartVol1, 25, 55, 30, 30);
             SaxionApp.drawImage(Second.imageHartVol2, 65, 55, 30, 30);
             SaxionApp.drawImage(Second.imageHartVol3, 105, 55, 30, 30);
-        } else if (hartVol == false) {
+        } else if (!hartVol) {
             SaxionApp.drawImage(Second.imageHartLeeg1, 25, 55, 30, 30);
             SaxionApp.drawImage(Second.imageHartLeeg2, 65, 55, 30, 30);
             SaxionApp.drawImage(Second.imageHartLeeg3, 105, 55, 30, 30);
@@ -119,6 +119,7 @@ public class RiftRaiders implements GameLoop {
             } else if (shafir.direction.equals("Down")) {
                 SaxionApp.drawImage(Second.imageShafirSlagOnder, shafir.x, shafir.y, 100, 100);
             }
+            cavemanHit = true;
             slaanRefresh--;
         } else {
             ShafirSlaat = false;
@@ -178,7 +179,7 @@ public class RiftRaiders implements GameLoop {
 
         //caveman laten slaan in range
         if (knuppelOpgepakt) {
-            if (Math.abs(caveman.x - shafir.x) < 100 && Math.abs(caveman.y - shafir.y) < 100) {
+            if (Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80) {
                 cavemanInRange = true;
                 if (cavemanSlaat) {
                     if (caveman.direction.equals("Left")) {
@@ -245,7 +246,6 @@ public class RiftRaiders implements GameLoop {
                     SaxionApp.drawImage(Second.imageShafirDamageVoor, shafir.x, shafir.y, 100, 100);
                 }
 
-
                 if (charHIt) {
                     charHIt = false;
                     damageRefreshChar = 5;
@@ -268,6 +268,10 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
+        //caveman laten despawnen bij hit
+        if (cavemanHit) {
+
+        }
 
         // Detect collision
         if (checkCollision(shafir.getHitbox(), caveman.getHitbox())) {
