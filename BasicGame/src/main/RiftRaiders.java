@@ -174,23 +174,25 @@ public class RiftRaiders implements GameLoop {
         }
 
         //caveman laten stoppen
-        boolean kd = moving();
-        if(!kd) {
-            //follow player (enemy)
-            //positie enemy horizontaal
-            if (shafir.x > caveman.x) {
-                caveman.move("Right");
-            } else if (shafir.x < caveman.x) {
-                caveman.move("Left");
-            }
-            //positie enemy verticaal
-            if (shafir.y > caveman.y) {
-                caveman.move("Down");
-            } else if (shafir.y < caveman.y) {
-                caveman.move("Up");
-            }
-            if (caveman.shouldUpdateAnimation()) {
-                caveman.stapCounter++; // Advance animation frame
+        if (shafirLeeft) {
+            boolean kd = moving();
+            if (!kd) {
+                //follow player (enemy)
+                //positie enemy horizontaal
+                if (shafir.x > caveman.x) {
+                    caveman.move("Right");
+                } else if (shafir.x < caveman.x) {
+                    caveman.move("Left");
+                }
+                //positie enemy verticaal
+                if (shafir.y > caveman.y) {
+                    caveman.move("Down");
+                } else if (shafir.y < caveman.y) {
+                    caveman.move("Up");
+                }
+                if (caveman.shouldUpdateAnimation()) {
+                    caveman.stapCounter++; // Advance animation frame
+                }
             }
         }
 
