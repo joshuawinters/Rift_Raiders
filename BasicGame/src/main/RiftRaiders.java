@@ -55,6 +55,7 @@ public class RiftRaiders implements GameLoop {
     int slaanRefreshCaveman = 15;
     int damageRefreshChar = 5;
     int heartsFrameCounter = 6;
+    int shafirStijgSpeed = 7;
 
     @Override
     public void init() {
@@ -119,7 +120,9 @@ public class RiftRaiders implements GameLoop {
             deathAnimation = true;
             SaxionApp.drawImage(Second.imageCavemanIdle, caveman.x, caveman.y, 100, 100);
             shafirLeeft = false;
-
+            if (!shafirLeeft) {
+                shafir.y -= shafirStijgSpeed;
+            }
         }
 
 
