@@ -34,6 +34,7 @@ public class RiftRaiders implements GameLoop {
     boolean cavemanInRange = false;
     boolean charHIt = false;
     boolean deathAnimation = false;
+    boolean shafirLeeft = true;
 
     // tiles en level
     TileManager tileM;
@@ -53,7 +54,6 @@ public class RiftRaiders implements GameLoop {
     int slaanRefresh = 0;
     int slaanRefreshCaveman = 15;
     int damageRefreshChar = 5;
-
     int heartsFrameCounter = 6;
 
     @Override
@@ -112,12 +112,19 @@ public class RiftRaiders implements GameLoop {
             SaxionApp.drawImage(Second.imageHartVol3, 105, 55, 30, 30);
         }else {
             SaxionApp.drawImage(Second.imageHartLeeg3, 105, 55, 30, 30);
+        }
+
+        //game over animations
+        if (heartsFrameCounter == 0) {
             deathAnimation = true;
+            SaxionApp.drawImage(Second.imageCavemanIdle, caveman.x, caveman.y, 100, 100);
+            shafirLeeft = false;
+
         }
 
 
         //sprite inspawnen voor knuppel en boolean koppelen
-        if (knuppelOpgepakt == false) {
+        if (!knuppelOpgepakt) {
             SaxionApp.drawImage(Second.imageKnuppel, 200, 300, 50, 50);
         } else if (slaanRefresh > 0) {
             ShafirSlaat = true;
@@ -132,7 +139,7 @@ public class RiftRaiders implements GameLoop {
             }
             cavemanHit = true;
             slaanRefresh--;
-        } else {
+        } else if (heartsFrameCounter > 0) {
             ShafirSlaat = false;
             String sprite2 = switch (shafir.direction) {
                 case "Up" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelBoven1 : Second.shafirKnuppelBoven2;
@@ -189,7 +196,7 @@ public class RiftRaiders implements GameLoop {
 
 
         //caveman laten slaan in range
-        if (knuppelOpgepakt) {
+        if (knuppelOpgepakt && heartsFrameCounter > 0) {
             if (Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80) {
                 cavemanInRange = true;
                 if (cavemanSlaat) {
@@ -247,7 +254,7 @@ public class RiftRaiders implements GameLoop {
 
 
         //hit indicator aanmaken
-        if (knuppelOpgepakt) {
+        if (knuppelOpgepakt && heartsFrameCounter > 0) {
             if (charHIt && damageRefreshChar > 0) {
                 if (shafir.direction.equals("Left")) {
                     SaxionApp.drawImage(Second.imageShafirDamageLinks, shafir.x, shafir.y, 100, 100);
@@ -286,6 +293,19 @@ public class RiftRaiders implements GameLoop {
         if (checkCollision(shafir.getHitbox(), caveman.getHitbox())) {
             System.out.println("Collision detected between player and enemy!");
             // Handle collision (e.g., reduce health, game over, etc.)
+        }
+
+        //shafir death sprites printen bij death
+        if (deathAnimation) {
+            if (shafir.direction.equals("Left")) {
+                SaxionApp.drawImage(Second.imageShafirDeathLinks, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Right")) {
+                SaxionApp.drawImage(Second.imageShafirDeathRechts, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Up")) {
+                SaxionApp.drawImage(Second.imageShafirDeathAchter, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Down")) {
+                SaxionApp.drawImage(Second.imageShafirDeathVoor, shafir.x, shafir.y, 100, 100);
+            }
         }
 
         // Debugging: Draw hitboxes
