@@ -17,10 +17,20 @@ public class RiftRaiders implements GameLoop {
     // Define tile size and screen dimensions
     final int tileWidth = 48;  // Width of each tile
     final int tileHeight = 48; // Height of each tile
-    static int screenWidth = 1000; // Screen width in pixels
-    static int screenHeight = 1000; // Screen height in pixels
-    public int maxScreencol = 16;
-    public int maxScreenrow = 12;
+    static public int screenWidth = 1000; // Screen width in pixels
+    static public int screenHeight = 1000; // Screen height in pixels
+    public int maxScreencol = 30;
+    public int maxScreenrow = 30;
+    public int animationdelay = 200;
+
+    // shafir and camera
+    public int shafirx = 0;
+    public int shafiry = 270;
+    public int shafirspeed = 8;
+    public int shafirwidth = 50;
+    public int shafirheight = 50;
+    public int worldx = shafirx;
+    public int worldy = shafiry;
 
 
     //boolean
@@ -46,20 +56,20 @@ public class RiftRaiders implements GameLoop {
 
     Player shafir;
     Enemies caveman;
-    Rectangle staticHitbox;
+    //Rectangle staticHitbox;
     int x_knuppel = 200;
     int y_knuppel = 300;
     int slaanRefresh = 0;
     int slaanRefreshCaveman = 10;
     int damageRefreshChar = 5;
+    mainUI camera_ui = new mainUI();
 
     @Override
     public void init() {
         // Initialize Player with position, speed, and animation delay
-        shafir = new Player(0, 280, 8, 200, 50, 50);
+        shafir = new Player(shafirx, shafiry, shafirspeed, animationdelay, shafirwidth, shafirheight);
         caveman = new Enemies(450, 200, 8, 200, 50, 50);
         tileM = new TileManager(this, tileWidth, tileHeight);
-
     }
 
     @Override
@@ -86,10 +96,10 @@ public class RiftRaiders implements GameLoop {
         // TODO: make file to create level
         // TODO: each level has a starting posistion, and end position/condition
         // TODO: clear main file and put everything in classes
-       // draw_level();
+        draw_level();
 
         //Stage sprite tekenen
-        SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
+        //SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
         //Health boarder tekenen
         SaxionApp.drawImage(Second.imageHealthBoarder, 0, 0, 160, 200);
 
@@ -284,7 +294,7 @@ public class RiftRaiders implements GameLoop {
   //        SaxionApp.drawRectangle(caveman.getHitbox().x, caveman.getHitbox().y, caveman.getHitbox().width, caveman.getHitbox().height);
 
         // Draw static hitbox
-
+        /*
         int hitboxWidth = 100;
         int hitboxHeight = 100;
         int centerX = 1000 / 2 - hitboxWidth / 2;
@@ -298,17 +308,20 @@ public class RiftRaiders implements GameLoop {
             // Handle collision
         }
 
-
+         */
+        ui.updateCamera(shafir);
     }
 
 
     //caveman laten stoppen als hij in range is
     public boolean moving(){
+
         if(Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80){
             return true;
         }
         return false;
     }
+
 
     @Override
     public void keyboardEvent(KeyboardEvent keyboardEvent) {
@@ -333,12 +346,16 @@ public class RiftRaiders implements GameLoop {
         if (keyboardEvent.isKeyPressed()) {
             if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_A) {
                 shafir.move("Left");
+                worldx -= shafir.speed;
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_D) {
                 shafir.move("Right");
+                worldx += shafir.speed;
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_W) {
                 shafir.move("Up");
+                worldy -= shafir.speed;
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
                 shafir.move("Down");
+                worldy += shafir.speed;
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_F) {
                 //knuppel oppakken
                 if ( Math.abs(shafir.x - 200) < 70 && Math.abs(shafir.y - 300) < 70) {
@@ -369,6 +386,8 @@ public class RiftRaiders implements GameLoop {
             tileM.drawTiles();
         }
     }
+
+
 
 }
 

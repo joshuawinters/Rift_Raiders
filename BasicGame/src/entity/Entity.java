@@ -1,10 +1,12 @@
 package entity;
+import main.RiftRaiders;
 import nl.saxion.app.SaxionApp;
 import main.Second;
 
 import java.awt.Rectangle;
 
 public class Entity {
+    RiftRaiders game;
     // place and speed
     public int x; // Position X
     public int y; // Position Y

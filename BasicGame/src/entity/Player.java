@@ -5,9 +5,11 @@ import main.RiftRaiders;
 import java.awt.*;
 
 public class Player extends Entity {
-    public Player(int x, int y, int speed, long animationDelay, int width, int height) {
-        super(x, y, speed, animationDelay, width, height);// Call the Entity constructor
 
+
+    public Player(int x,int y,int speed,int animationDelay,int width,int height) {
+        super(x, y, speed, animationDelay, width, height);// Call the Entity constructor
+        //super(0, 0, 10, 100, 50, 50);
     }
     public void SetDefaultStats() {
         level = 1;
