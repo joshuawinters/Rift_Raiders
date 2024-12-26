@@ -17,20 +17,10 @@ public class RiftRaiders implements GameLoop {
     // Define tile size and screen dimensions
     final int tileWidth = 48;  // Width of each tile
     final int tileHeight = 48; // Height of each tile
-    static public int screenWidth = 1000; // Screen width in pixels
-    static public int screenHeight = 1000; // Screen height in pixels
-    public int maxScreencol = 30;
-    public int maxScreenrow = 30;
-    public int animationdelay = 200;
-
-    // shafir and camera
-    public int shafirx = 0;
-    public int shafiry = 270;
-    public int shafirspeed = 8;
-    public int shafirwidth = 50;
-    public int shafirheight = 50;
-    public int worldx = shafirx;
-    public int worldy = shafiry;
+    static int screenWidth = 1000; // Screen width in pixels
+    static int screenHeight = 1000; // Screen height in pixels
+    public int maxScreencol = 16;
+    public int maxScreenrow = 12;
 
 
     //boolean
@@ -43,6 +33,8 @@ public class RiftRaiders implements GameLoop {
     boolean cavemanHit = false;
     boolean cavemanInRange = false;
     boolean charHIt = false;
+    boolean deathAnimation = false;
+    boolean shafirLeeft = true;
 
     // tiles en level
     TileManager tileM;
@@ -56,20 +48,22 @@ public class RiftRaiders implements GameLoop {
 
     Player shafir;
     Enemies caveman;
-    //Rectangle staticHitbox;
+    Rectangle staticHitbox;
     int x_knuppel = 200;
     int y_knuppel = 300;
     int slaanRefresh = 0;
-    int slaanRefreshCaveman = 10;
+    int slaanRefreshCaveman = 15;
     int damageRefreshChar = 5;
-    mainUI camera_ui = new mainUI();
+    int heartsFrameCounter = 6;
+    int shafirStijgSpeed = 7;
 
     @Override
     public void init() {
         // Initialize Player with position, speed, and animation delay
-        shafir = new Player(shafirx, shafiry, shafirspeed, animationdelay, shafirwidth, shafirheight);
+        shafir = new Player(0, 280, 8, 200, 50, 50);
         caveman = new Enemies(450, 200, 8, 200, 50, 50);
         tileM = new TileManager(this, tileWidth, tileHeight);
+
     }
 
     @Override
@@ -96,27 +90,44 @@ public class RiftRaiders implements GameLoop {
         // TODO: make file to create level
         // TODO: each level has a starting posistion, and end position/condition
         // TODO: clear main file and put everything in classes
-        draw_level();
+       // draw_level();
 
         //Stage sprite tekenen
-        //SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
+        SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
         //Health boarder tekenen
         SaxionApp.drawImage(Second.imageHealthBoarder, 0, 0, 160, 200);
 
 
         //hart sprites toevoegen
-        if (hartVol) {
+        if (heartsFrameCounter > 0) {
             SaxionApp.drawImage(Second.imageHartVol1, 25, 55, 30, 30);
-            SaxionApp.drawImage(Second.imageHartVol2, 65, 55, 30, 30);
-            SaxionApp.drawImage(Second.imageHartVol3, 105, 55, 30, 30);
-        } else if (!hartVol) {
+        }else {
             SaxionApp.drawImage(Second.imageHartLeeg1, 25, 55, 30, 30);
+        }
+        if (heartsFrameCounter > 2) {
+            SaxionApp.drawImage(Second.imageHartVol2, 65, 55, 30, 30);
+        }else {
             SaxionApp.drawImage(Second.imageHartLeeg2, 65, 55, 30, 30);
+        }
+        if (heartsFrameCounter > 4) {
+            SaxionApp.drawImage(Second.imageHartVol3, 105, 55, 30, 30);
+        }else {
             SaxionApp.drawImage(Second.imageHartLeeg3, 105, 55, 30, 30);
         }
 
+        //game over animations
+        if (heartsFrameCounter == 0) {
+            deathAnimation = true;
+            SaxionApp.drawImage(Second.imageCavemanIdle, caveman.x, caveman.y, 100, 100);
+            shafirLeeft = false;
+            if (!shafirLeeft) {
+                shafir.y -= shafirStijgSpeed;
+            }
+        }
+
+
         //sprite inspawnen voor knuppel en boolean koppelen
-        if (knuppelOpgepakt == false) {
+        if (!knuppelOpgepakt) {
             SaxionApp.drawImage(Second.imageKnuppel, 200, 300, 50, 50);
         } else if (slaanRefresh > 0) {
             ShafirSlaat = true;
@@ -131,7 +142,7 @@ public class RiftRaiders implements GameLoop {
             }
             cavemanHit = true;
             slaanRefresh--;
-        } else {
+        } else if (heartsFrameCounter > 0) {
             ShafirSlaat = false;
             String sprite2 = switch (shafir.direction) {
                 case "Up" -> (shafir.stapCounter % 2 == 0) ? Second.shafirKnuppelBoven1 : Second.shafirKnuppelBoven2;
@@ -166,29 +177,31 @@ public class RiftRaiders implements GameLoop {
         }
 
         //caveman laten stoppen
-        boolean kd = moving();
-        if(!kd) {
-            //follow player (enemy)
-            //positie enemy horizontaal
-            if (shafir.x > caveman.x) {
-                caveman.move("Right");
-            } else if (shafir.x < caveman.x) {
-                caveman.move("Left");
-            }
-            //positie enemy verticaal
-            if (shafir.y > caveman.y) {
-                caveman.move("Down");
-            } else if (shafir.y < caveman.y) {
-                caveman.move("Up");
-            }
-            if (caveman.shouldUpdateAnimation()) {
-                caveman.stapCounter++; // Advance animation frame
+        if (shafirLeeft) {
+            boolean kd = moving();
+            if (!kd) {
+                //follow player (enemy)
+                //positie enemy horizontaal
+                if (shafir.x > caveman.x) {
+                    caveman.move("Right");
+                } else if (shafir.x < caveman.x) {
+                    caveman.move("Left");
+                }
+                //positie enemy verticaal
+                if (shafir.y > caveman.y) {
+                    caveman.move("Down");
+                } else if (shafir.y < caveman.y) {
+                    caveman.move("Up");
+                }
+                if (caveman.shouldUpdateAnimation()) {
+                    caveman.stapCounter++; // Advance animation frame
+                }
             }
         }
 
 
         //caveman laten slaan in range
-        if (knuppelOpgepakt) {
+        if (knuppelOpgepakt && heartsFrameCounter > 0) {
             if (Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80) {
                 cavemanInRange = true;
                 if (cavemanSlaat) {
@@ -217,7 +230,8 @@ public class RiftRaiders implements GameLoop {
 
                 // bijhouden slaan niet slaan van enemy
                 if (slaanRefreshCaveman <= 0) {
-                    slaanRefreshCaveman = 10;
+                    slaanRefreshCaveman = 15;
+                    heartsFrameCounter--;
                     if (cavemanSlaat) {
                         cavemanSlaat = false;
                     } else {
@@ -243,8 +257,9 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
+
         //hit indicator aanmaken
-        if (knuppelOpgepakt) {
+        if (knuppelOpgepakt && heartsFrameCounter > 0) {
             if (charHIt && damageRefreshChar > 0) {
                 if (shafir.direction.equals("Left")) {
                     SaxionApp.drawImage(Second.imageShafirDamageLinks, shafir.x, shafir.y, 100, 100);
@@ -278,10 +293,6 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
-        //caveman laten despawnen bij hit
-        if (cavemanHit) {
-
-        }
 
         // Detect collision
         if (checkCollision(shafir.getHitbox(), caveman.getHitbox())) {
@@ -289,12 +300,25 @@ public class RiftRaiders implements GameLoop {
             // Handle collision (e.g., reduce health, game over, etc.)
         }
 
+        //shafir death sprites printen bij death
+        if (deathAnimation) {
+            if (shafir.direction.equals("Left")) {
+                SaxionApp.drawImage(Second.imageShafirDeathLinks, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Right")) {
+                SaxionApp.drawImage(Second.imageShafirDeathRechts, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Up")) {
+                SaxionApp.drawImage(Second.imageShafirDeathAchter, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Down")) {
+                SaxionApp.drawImage(Second.imageShafirDeathVoor, shafir.x, shafir.y, 100, 100);
+            }
+        }
+
         // Debugging: Draw hitboxes
   //        SaxionApp.drawRectangle(shafir.getHitbox().x, shafir.getHitbox().y, shafir.getHitbox().width, shafir.getHitbox().height);
   //        SaxionApp.drawRectangle(caveman.getHitbox().x, caveman.getHitbox().y, caveman.getHitbox().width, caveman.getHitbox().height);
 
         // Draw static hitbox
-        /*
+
         int hitboxWidth = 100;
         int hitboxHeight = 100;
         int centerX = 1000 / 2 - hitboxWidth / 2;
@@ -308,20 +332,16 @@ public class RiftRaiders implements GameLoop {
             // Handle collision
         }
 
-         */
-        ui.updateCamera(shafir);
-    }
 
+    }
 
     //caveman laten stoppen als hij in range is
     public boolean moving(){
-
         if(Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80){
             return true;
         }
         return false;
     }
-
 
     @Override
     public void keyboardEvent(KeyboardEvent keyboardEvent) {
@@ -346,16 +366,12 @@ public class RiftRaiders implements GameLoop {
         if (keyboardEvent.isKeyPressed()) {
             if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_A) {
                 shafir.move("Left");
-                worldx -= shafir.speed;
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_D) {
                 shafir.move("Right");
-                worldx += shafir.speed;
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_W) {
                 shafir.move("Up");
-                worldy -= shafir.speed;
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
                 shafir.move("Down");
-                worldy += shafir.speed;
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_F) {
                 //knuppel oppakken
                 if ( Math.abs(shafir.x - 200) < 70 && Math.abs(shafir.y - 300) < 70) {
@@ -386,8 +402,6 @@ public class RiftRaiders implements GameLoop {
             tileM.drawTiles();
         }
     }
-
-
 
 }
 
