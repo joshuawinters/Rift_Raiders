@@ -313,7 +313,7 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
-        // Debugging: Draw hitboxes
+        // Debugging: Draw hitboxesd
   //        SaxionApp.drawRectangle(shafir.getHitbox().x, shafir.getHitbox().y, shafir.getHitbox().width, shafir.getHitbox().height);
   //        SaxionApp.drawRectangle(caveman.getHitbox().x, caveman.getHitbox().y, caveman.getHitbox().width, caveman.getHitbox().height);
 
