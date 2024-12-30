@@ -35,6 +35,8 @@ public class RiftRaiders implements GameLoop {
     boolean charHIt = false;
     boolean deathAnimation = false;
     boolean shafirLeeft = true;
+    boolean gameOver = false;
+    boolean gameOverscreen = false;
 
     // tiles en level
     TileManager tileM;
@@ -56,6 +58,7 @@ public class RiftRaiders implements GameLoop {
     int damageRefreshChar = 5;
     int heartsFrameCounter = 6;
     int shafirStijgSpeed = 7;
+    int gameOverDelay = 60; //voor de gameover screen
 
     @Override
     public void init() {
@@ -63,13 +66,48 @@ public class RiftRaiders implements GameLoop {
         shafir = new Player(0, 280, 8, 200, 50, 50);
         caveman = new Enemies(450, 200, 8, 200, 50, 50);
         tileM = new TileManager(this, tileWidth, tileHeight);
+    }
 
+    //game resetten bij death
+    public void resetGame() {
+        //posities resetten
+        shafir = new Player(0, 280, 8, 200, 50, 50);
+        caveman = new Enemies(450, 200, 8, 200, 50, 50);
+        tileM = new TileManager(this, tileWidth, tileHeight);
+
+        //booleans resetten
+        cavemanMoves = false;
+        knuppelOpgepakt = false;
+        ShafirHeeftKnuppel = false;
+        hartVol = true;
+        ShafirSlaat = false;
+        cavemanSlaat = false;
+        cavemanHit = false;
+        cavemanInRange = false;
+        charHIt = false;
+        deathAnimation = false;
+        shafirLeeft = true;
+        gameOver = false;
+        gameOverscreen = false;
+
+        //counters resetten
+        x_knuppel = 200;
+        y_knuppel = 300;
+        slaanRefresh = 0;
+        slaanRefreshCaveman = 15;
+        damageRefreshChar = 5;
+        heartsFrameCounter = 6;
+        shafirStijgSpeed = 7;
+        gameOverDelay = 60;
     }
 
     @Override
     public void loop() {
         if (currentScreen.equals("startscreen")) {
             ui.startscreenLoop();
+        } else if (gameOverDelay == 0) {
+            gameOverscreenloop();
+            gameOverscreen = true;
         } else {
             gamescreenLoop();
         }
@@ -80,9 +118,15 @@ public class RiftRaiders implements GameLoop {
         return rect1.intersects(rect2);
     }
 
+    //game over screen
+    public void gameOverscreenloop() {
+        SaxionApp.clear();
+        SaxionApp.drawImage(Second.imageGameoverScreen, 0, 0, 1000, 700);
+    }
+
+
     public void gamescreenLoop() {
         SaxionApp.clear();
-
         // Draw stage background
         // TODO: make someting to choose level
         // draw tiles before player
@@ -90,7 +134,7 @@ public class RiftRaiders implements GameLoop {
         // TODO: make file to create level
         // TODO: each level has a starting posistion, and end position/condition
         // TODO: clear main file and put everything in classes
-       // draw_level();
+        // draw_level();
 
         //Stage sprite tekenen
         SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
@@ -117,13 +161,19 @@ public class RiftRaiders implements GameLoop {
 
         //game over animations
         if (heartsFrameCounter == 0) {
+            gameOver = true;
             deathAnimation = true;
             SaxionApp.drawImage(Second.imageCavemanIdle, caveman.x, caveman.y, 100, 100);
             shafirLeeft = false;
             if (!shafirLeeft) {
                 shafir.y -= shafirStijgSpeed;
             }
+            // Begin aftellen van de delay
+            if (gameOverDelay > 0) {
+                gameOverDelay--; // Verlaag de delay-timer
+            }
         }
+
 
 
         //sprite inspawnen voor knuppel en boolean koppelen
@@ -335,6 +385,7 @@ public class RiftRaiders implements GameLoop {
 
     }
 
+
     //caveman laten stoppen als hij in range is
     public boolean moving(){
         if(Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80){
@@ -347,8 +398,19 @@ public class RiftRaiders implements GameLoop {
     public void keyboardEvent(KeyboardEvent keyboardEvent) {
         if (currentScreen.equals("startscreen")) {
             startscreenKeyboardEvent(keyboardEvent);
+        } else if (gameOverscreen) {
+            gameOverscreenKeyboardEvent(keyboardEvent);
         } else {
             gamescreenKeyboardEvent(keyboardEvent);
+        }
+    }
+
+    //keyboard interaction voor gameover screen
+    public void gameOverscreenKeyboardEvent(KeyboardEvent keyboardEvent) {
+        if (keyboardEvent.isKeyPressed()) {
+            if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_ENTER) {
+                currentScreen = "startscreen";
+            }
         }
     }
 
@@ -356,6 +418,7 @@ public class RiftRaiders implements GameLoop {
     public void startscreenKeyboardEvent(KeyboardEvent keyboardEvent) {
         if (keyboardEvent.isKeyPressed()) {
             if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_SPACE) {
+                resetGame();
                 currentScreen = "gamescreen";
             }
         }

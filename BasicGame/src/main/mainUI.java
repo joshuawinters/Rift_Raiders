@@ -1,5 +1,4 @@
 package main;
-
 import nl.saxion.app.SaxionApp;
 
 public class mainUI {
@@ -8,4 +7,10 @@ public class mainUI {
         SaxionApp.clear();
         SaxionApp.drawImage("Sprites/RRstartscreen.png", 0, 0, 1000, 700);
     }
-}
+
+//    //gameover screen aanmaken
+//    public void gameOverscreenLoop() {
+//        SaxionApp.clear();
+//        SaxionApp.drawImage("Sprites/gameOverScreen.png", 0, 0, 1000, 700);
+//    }
+  }
