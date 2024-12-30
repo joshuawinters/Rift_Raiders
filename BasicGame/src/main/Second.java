@@ -75,6 +75,9 @@ public class Second {
     //Knuppel sprite
     static String imageKnuppel = "Sprites\\UI&Items\\Knuppel.png";
 
+    //gameover screen
+    static String imageGameoverScreen = "Sprites\\gameOverScreen.png";
+
     //---------------------------------------------------------------------------------------------------------------
 
     //Shafir met knuppel sprites
