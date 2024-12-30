@@ -90,7 +90,7 @@ public class RiftRaiders implements GameLoop {
         // TODO: make file to create level
         // TODO: each level has a starting posistion, and end position/condition
         // TODO: clear main file and put everything in classes
-       // draw_level();
+        //draw_level();
 
         //Stage sprite tekenen
         SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
