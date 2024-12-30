@@ -58,6 +58,12 @@ public class Second {
     static String imageCavemanSlagVoor = "Sprites\\Enemy\\CavemanSlaanVoor.png";
     static String imageCavemanSlagAchter = "Sprites\\Enemy\\CavemanSlaanAchter.png";
 
+    //caveman death sprites
+    static String imageCavemanDeathVoor = "Sprites\\Enemy\\cavemanDeath\\cavemanDeathVoor.png";
+    static String imageCavemanDeathAchter = "Sprites\\Enemy\\cavemanDeath\\cavemanDeathAchter.png";
+    static String imageCavemanDeathLinks = "Sprites\\Enemy\\cavemanDeath\\cavemanDeathLinks.png";
+    static String imageCavemanDeathRechts = "Sprites\\Enemy\\cavemanDeath\\cavemanDeathRechts.png";
+
     //---------------------------------------------------------------------------------------------------------------
 
     //Item & UI sprites

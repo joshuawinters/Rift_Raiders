@@ -35,8 +35,10 @@ public class RiftRaiders implements GameLoop {
     boolean charHIt = false;
     boolean deathAnimation = false;
     boolean shafirLeeft = true;
+    boolean cavemanLeeft = true;
     boolean gameOver = false;
     boolean gameOverscreen = false;
+    boolean shafirInRange = false;
 
     // tiles en level
     TileManager tileM;
@@ -59,6 +61,7 @@ public class RiftRaiders implements GameLoop {
     int heartsFrameCounter = 6;
     int shafirStijgSpeed = 7;
     int gameOverDelay = 60; //voor de gameover screen
+    int cavemanDeathdelay = 20;
 
     @Override
     public void init() {
@@ -89,6 +92,8 @@ public class RiftRaiders implements GameLoop {
         shafirLeeft = true;
         gameOver = false;
         gameOverscreen = false;
+        shafirInRange = false;
+        cavemanLeeft = true;
 
         //counters resetten
         x_knuppel = 200;
@@ -99,6 +104,23 @@ public class RiftRaiders implements GameLoop {
         heartsFrameCounter = 6;
         shafirStijgSpeed = 7;
         gameOverDelay = 60;
+        cavemanDeathdelay = 20;
+    }
+
+    //reset aanmaken voor caveman death
+    public void cavemanReset() {
+        //sprite reset
+        caveman = new Enemies(450, 200, 8, 200, 50, 50);
+
+        //booleans reset
+        cavemanLeeft = true;
+        cavemanInRange = false;
+        knuppelOpgepakt = true;
+        ShafirHeeftKnuppel = true;
+        cavemanSlaat = false;
+
+        //counters
+        slaanRefreshCaveman = 15;
     }
 
     @Override
@@ -113,7 +135,7 @@ public class RiftRaiders implements GameLoop {
         }
     }
 
-
+    //collisions checken
     public boolean checkCollision(Rectangle rect1, Rectangle rect2) {
         return rect1.intersects(rect2);
     }
@@ -222,86 +244,90 @@ public class RiftRaiders implements GameLoop {
         }
 
         //caveman laten stoppen
-        if (shafirLeeft) {
-            boolean kd = moving();
-            if (!kd) {
-                //follow player (enemy)
-                //positie enemy horizontaal
-                if (shafir.x > caveman.x) {
-                    caveman.move("Right");
-                } else if (shafir.x < caveman.x) {
-                    caveman.move("Left");
-                }
-                //positie enemy verticaal
-                if (shafir.y > caveman.y) {
-                    caveman.move("Down");
-                } else if (shafir.y < caveman.y) {
-                    caveman.move("Up");
-                }
-                if (caveman.shouldUpdateAnimation()) {
-                    caveman.stapCounter++; // Advance animation frame
+        if (cavemanLeeft) {
+            if (shafirLeeft && knuppelOpgepakt) {
+                boolean kd = moving();
+                if (!kd) {
+                    //follow player (enemy)
+                    //positie enemy horizontaal
+                    if (shafir.x > caveman.x) {
+                        caveman.move("Right");
+                    } else if (shafir.x < caveman.x) {
+                        caveman.move("Left");
+                    }
+                    //positie enemy verticaal
+                    if (shafir.y > caveman.y) {
+                        caveman.move("Down");
+                    } else if (shafir.y < caveman.y) {
+                        caveman.move("Up");
+                    }
+                    if (caveman.shouldUpdateAnimation()) {
+                        caveman.stapCounter++; // Advance animation frame
+                    }
                 }
             }
         }
 
 
         //caveman laten slaan in range
-        if (knuppelOpgepakt && heartsFrameCounter > 0) {
-            if (Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80) {
-                cavemanInRange = true;
-                if (cavemanSlaat) {
-                    if (caveman.direction.equals("Left")) {
-                        SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
-                    } else if (caveman.direction.equals("Right")) {
-                        SaxionApp.drawImage(Second.imageCavemanSlagRechts, caveman.x, caveman.y, 100, 100);
-                    } else if (caveman.direction.equals("Up")) {
-                        SaxionApp.drawImage(Second.imageCavemanSlagAchter, caveman.x, caveman.y, 100, 100);
-                    } else if (caveman.direction.equals("Down")) {
-                        SaxionApp.drawImage(Second.imageCavemanSlagVoor, caveman.x, caveman.y, 100, 100);
-                    }
-                    charHIt = true;
-                    hartVol = false;
-                } else {
-                    if (caveman.direction.equals("Left")) {
-                        SaxionApp.drawImage(Second.imageCavemanLinks1, caveman.x, caveman.y, 100, 100);
-                    } else if (caveman.direction.equals("Right")) {
-                        SaxionApp.drawImage(Second.imageCavemanRechts1, caveman.x, caveman.y, 100, 100);
-                    } else if (caveman.direction.equals("Up")) {
-                        SaxionApp.drawImage(Second.imageCavemanBoven1, caveman.x, caveman.y, 100, 100);
-                    } else if (caveman.direction.equals("Down")) {
-                        SaxionApp.drawImage(Second.imageCavemanOnder1, caveman.x, caveman.y, 100, 100);
-                    }
-                }
-
-                // bijhouden slaan niet slaan van enemy
-                if (slaanRefreshCaveman <= 0) {
-                    slaanRefreshCaveman = 15;
-                    heartsFrameCounter--;
+        if (cavemanLeeft) {
+            if (knuppelOpgepakt && heartsFrameCounter > 0) {
+                if (Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80) {
+                    cavemanInRange = true;
                     if (cavemanSlaat) {
-                        cavemanSlaat = false;
+                        if (caveman.direction.equals("Left")) {
+                            SaxionApp.drawImage(Second.imageCavemanSlagLinks, caveman.x, caveman.y, 100, 100);
+                        } else if (caveman.direction.equals("Right")) {
+                            SaxionApp.drawImage(Second.imageCavemanSlagRechts, caveman.x, caveman.y, 100, 100);
+                        } else if (caveman.direction.equals("Up")) {
+                            SaxionApp.drawImage(Second.imageCavemanSlagAchter, caveman.x, caveman.y, 100, 100);
+                        } else if (caveman.direction.equals("Down")) {
+                            SaxionApp.drawImage(Second.imageCavemanSlagVoor, caveman.x, caveman.y, 100, 100);
+                        }
+                        charHIt = true;
+                        hartVol = false;
                     } else {
-                        cavemanSlaat = true;
+                        if (caveman.direction.equals("Left")) {
+                            SaxionApp.drawImage(Second.imageCavemanLinks1, caveman.x, caveman.y, 100, 100);
+                        } else if (caveman.direction.equals("Right")) {
+                            SaxionApp.drawImage(Second.imageCavemanRechts1, caveman.x, caveman.y, 100, 100);
+                        } else if (caveman.direction.equals("Up")) {
+                            SaxionApp.drawImage(Second.imageCavemanBoven1, caveman.x, caveman.y, 100, 100);
+                        } else if (caveman.direction.equals("Down")) {
+                            SaxionApp.drawImage(Second.imageCavemanOnder1, caveman.x, caveman.y, 100, 100);
+                        }
                     }
+
+                    // bijhouden slaan niet slaan van enemy
+                    if (slaanRefreshCaveman <= 0) {
+                        slaanRefreshCaveman = 15;
+                        heartsFrameCounter--;
+                        if (cavemanSlaat) {
+                            cavemanSlaat = false;
+                        } else {
+                            cavemanSlaat = true;
+                        }
+                    }
+                    slaanRefreshCaveman--;
+                } else {
+                    cavemanSlaat = false;
+                    cavemanMoves = true;
+                    String spriteCaveman = switch (caveman.direction) {
+                        case "Up" ->
+                                (caveman.stapCounter % 2 == 0) ? Second.imageCavemanBoven1 : Second.imageCavemanBoven2;
+                        case "Down" ->
+                                (caveman.stapCounter % 2 == 0) ? Second.imageCavemanOnder1 : Second.imageCavemanOnder2;
+                        case "Left" ->
+                                (caveman.stapCounter % 2 == 0) ? Second.imageCavemanLinks1 : Second.imageCavemanLinks2;
+                        case "Right" ->
+                                (caveman.stapCounter % 2 == 0) ? Second.imageCavemanRechts1 : Second.imageCavemanRechts2;
+                        default -> Second.imageCavemanIdle;
+                    };
+                    //Draw enemy sprite
+                    SaxionApp.drawImage(spriteCaveman, caveman.x, caveman.y, 100, 100);
                 }
-                slaanRefreshCaveman--;
-            } else {
-                cavemanSlaat = false;
-                cavemanMoves = true;
-                String spriteCaveman = switch (caveman.direction) {
-                    case "Up" -> (caveman.stapCounter % 2 == 0) ? Second.imageCavemanBoven1 : Second.imageCavemanBoven2;
-                    case "Down" ->
-                            (caveman.stapCounter % 2 == 0) ? Second.imageCavemanOnder1 : Second.imageCavemanOnder2;
-                    case "Left" ->
-                            (caveman.stapCounter % 2 == 0) ? Second.imageCavemanLinks1 : Second.imageCavemanLinks2;
-                    case "Right" ->
-                            (caveman.stapCounter % 2 == 0) ? Second.imageCavemanRechts1 : Second.imageCavemanRechts2;
-                    default -> Second.imageCavemanIdle;
-                };
-                //Draw enemy sprite
-                SaxionApp.drawImage(spriteCaveman, caveman.x, caveman.y, 100, 100);
             }
         }
-
 
         //hit indicator aanmaken
         if (knuppelOpgepakt && heartsFrameCounter > 0) {
@@ -358,7 +384,39 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
-        // Debugging: Draw hitboxesd
+        //caveman death mogelijk maken
+        if (knuppelOpgepakt) {
+            if (Math.abs(shafir.x - caveman.x) < 80 && Math.abs(shafir.y - caveman.y) < 80) {
+                shafirInRange = true;
+                if (ShafirSlaat) {
+                    cavemanLeeft = false;
+                }
+            }
+        }
+
+        if (cavemanDeathdelay > 0 && !cavemanLeeft) {
+            cavemanDeathdelay--;
+        }
+
+        if (cavemanDeathdelay == 0) {
+            cavemanReset();
+            cavemanDeathdelay = 20;
+        }
+
+        //caveman death sprite tekenen
+        if (!cavemanLeeft) {
+            if (caveman.direction.equals("Left")) {
+                SaxionApp.drawImage(Second.imageCavemanDeathLinks, caveman.x, caveman.y, 100, 100);
+            } else if (caveman.direction.equals("Right")) {
+                SaxionApp.drawImage(Second.imageCavemanDeathRechts, caveman.x, caveman.y, 100, 100);
+            } else if (caveman.direction.equals("Up")) {
+                SaxionApp.drawImage(Second.imageCavemanDeathAchter, caveman.x, caveman.y, 100, 100);
+            } else if (caveman.direction.equals("Down")) {
+                SaxionApp.drawImage(Second.imageCavemanDeathVoor, caveman.x, caveman.y, 100, 100);
+            }
+        }
+
+            // Debugging: Draw hitboxesd
   //        SaxionApp.drawRectangle(shafir.getHitbox().x, shafir.getHitbox().y, shafir.getHitbox().width, shafir.getHitbox().height);
   //        SaxionApp.drawRectangle(caveman.getHitbox().x, caveman.getHitbox().y, caveman.getHitbox().width, caveman.getHitbox().height);
 
@@ -462,4 +520,3 @@ public class RiftRaiders implements GameLoop {
     }
 
 }
-
