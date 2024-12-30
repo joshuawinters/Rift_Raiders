@@ -106,7 +106,7 @@ public class RiftRaiders implements GameLoop {
         if (currentScreen.equals("startscreen")) {
             ui.startscreenLoop();
         } else if (gameOverDelay == 0) {
-            gameOverscreenloop();
+            ui.gameOverscreenloop();
             gameOverscreen = true;
         } else {
             gamescreenLoop();
@@ -118,11 +118,6 @@ public class RiftRaiders implements GameLoop {
         return rect1.intersects(rect2);
     }
 
-    //game over screen
-    public void gameOverscreenloop() {
-        SaxionApp.clear();
-        SaxionApp.drawImage(Second.imageGameoverScreen, 0, 0, 1000, 700);
-    }
 
 
     public void gamescreenLoop() {

@@ -8,4 +8,11 @@ public class mainUI {
         SaxionApp.clear();
         SaxionApp.drawImage("Sprites/RRstartscreen.png", 0, 0, 1000, 700);
     }
+
+    public void gameOverscreenloop() {
+        SaxionApp.clear();
+        SaxionApp.drawImage(Second.imageGameoverScreen, 0, 0, 1000, 700);
+    }
+
 }
+
