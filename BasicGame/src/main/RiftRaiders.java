@@ -39,6 +39,9 @@ public class RiftRaiders implements GameLoop {
     boolean gameOver = false;
     boolean gameOverscreen = false;
     boolean shafirInRange = false;
+    boolean cavemanResets = false; //caveman deaths bijhouden voor death counter
+    boolean deathIsCounted = false;
+    boolean bossSpawned = true;
 
     // tiles en level
     TileManager tileM;
@@ -50,6 +53,7 @@ public class RiftRaiders implements GameLoop {
 
     String currentScreen = "startscreen";
 
+    Enemies mainBoss;
     Player shafir;
     Enemies caveman;
     Rectangle staticHitbox;
@@ -62,6 +66,7 @@ public class RiftRaiders implements GameLoop {
     int shafirStijgSpeed = 7;
     int gameOverDelay = 60; //voor de gameover screen
     int cavemanDeathdelay = 20;
+    int cavemanDeathCounter = 0;
 
     @Override
     public void init() {
@@ -94,6 +99,7 @@ public class RiftRaiders implements GameLoop {
         gameOverscreen = false;
         shafirInRange = false;
         cavemanLeeft = true;
+        deathIsCounted = false;
 
         //counters resetten
         x_knuppel = 200;
@@ -105,6 +111,7 @@ public class RiftRaiders implements GameLoop {
         shafirStijgSpeed = 7;
         gameOverDelay = 60;
         cavemanDeathdelay = 20;
+        cavemanDeathCounter = 0;
     }
 
     //reset aanmaken voor caveman death
@@ -118,6 +125,7 @@ public class RiftRaiders implements GameLoop {
         knuppelOpgepakt = true;
         ShafirHeeftKnuppel = true;
         cavemanSlaat = false;
+        deathIsCounted = false;
 
         //counters
         slaanRefreshCaveman = 15;
@@ -270,6 +278,7 @@ public class RiftRaiders implements GameLoop {
 
 
         //caveman laten slaan in range
+        if (cavemanDeathCounter <= 20)
         if (cavemanLeeft) {
             if (knuppelOpgepakt && heartsFrameCounter > 0) {
                 if (Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80) {
@@ -393,13 +402,14 @@ public class RiftRaiders implements GameLoop {
                 }
             }
         }
-
+        //respawn delay aanmaken
         if (cavemanDeathdelay > 0 && !cavemanLeeft) {
             cavemanDeathdelay--;
         }
-
+        //respawn delay resetten
         if (cavemanDeathdelay == 0) {
             cavemanReset();
+            cavemanResets = true;
             cavemanDeathdelay = 20;
         }
 
@@ -414,6 +424,24 @@ public class RiftRaiders implements GameLoop {
             } else if (caveman.direction.equals("Down")) {
                 SaxionApp.drawImage(Second.imageCavemanDeathVoor, caveman.x, caveman.y, 100, 100);
             }
+        }
+
+        //caveman deaths bijhouden voor boss dmv een counter
+        if (!cavemanLeeft && !deathIsCounted) {
+                cavemanDeathCounter++;
+                System.out.println("caveman deaths: " + cavemanDeathCounter);
+                deathIsCounted = true;
+        }
+        if (cavemanResets && cavemanDeathdelay == 0) {
+            cavemanLeeft = true;
+        }
+
+        //boss laten inspawnen bij 20 kills
+        if (cavemanDeathCounter >= 1) {
+            SaxionApp.drawImage(Second.imageBStapOnder1, 450, 150, 100, 100);
+            bossSpawned = true;
+        } if (bossSpawned = true) {
+//            SaxionApp.drawRectangle()
         }
 
             // Debugging: Draw hitboxesd
