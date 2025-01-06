@@ -58,6 +58,12 @@ public class Second {
     static String imageCavemanSlagVoor = "Sprites\\Enemy\\CavemanSlaanVoor.png";
     static String imageCavemanSlagAchter = "Sprites\\Enemy\\CavemanSlaanAchter.png";
 
+    //caveman death sprites
+    static String imageCavemanDeathVoor = "Sprites\\Enemy\\cavemanDeath\\cavemanDeathVoor.png";
+    static String imageCavemanDeathAchter = "Sprites\\Enemy\\cavemanDeath\\cavemanDeathAchter.png";
+    static String imageCavemanDeathLinks = "Sprites\\Enemy\\cavemanDeath\\cavemanDeathLinks.png";
+    static String imageCavemanDeathRechts = "Sprites\\Enemy\\cavemanDeath\\cavemanDeathRechts.png";
+
     //---------------------------------------------------------------------------------------------------------------
 
     //Item & UI sprites
@@ -107,6 +113,24 @@ public class Second {
     static String imageShafirDeathVoor = "Sprites\\Shafir\\ShafirDeath\\ShafirDoodVoor.png";
     static String imageShafirDeathLinks = "Sprites\\Shafir\\ShafirDeath\\ShafirDoodLinks.png";
     static String imageShafirDeathRechts = "Sprites\\Shafir\\ShafirDeath\\ShafirDoodRechts.png";
+
+    //---------------------------------------------------------------------------------------------------------------
+
+    //main boss sprites
+
+    //main boss stappen
+    static String imageBStapBoven1 = "Sprites\\mainBoss1\\mainBStapBoven1.png";
+    static String imageBStapBoven2 = "Sprites\\mainBoss1\\mainBStapBoven2.png";
+    static String imageBStapOnder1 = "Sprites\\mainBoss1\\mainBStapOnder1.png";
+    static String imageBStapOnder2 = "Sprites\\mainBoss1\\mainBStapOnder2.png";
+    static String imageBStapLinks1 = "Sprites\\mainBoss1\\mainBStapLinks1.png";
+    static String imageBStapLinks2 = "Sprites\\mainBoss1\\mainBStapLinks2.png";
+    static String imageBStapRechts1 = "Sprites\\mainBoss1\\mainBStapRechts1.png";
+    static String imageBStapRechts2 = "Sprites\\mainBoss1\\mainBStapRechts2.png";
+
+
+
+
 
 
 
