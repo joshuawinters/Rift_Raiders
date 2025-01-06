@@ -118,8 +118,7 @@ public class RiftRaiders implements GameLoop {
         return rect1.intersects(rect2);
     }
 
-
-
+    
     public void gamescreenLoop() {
         SaxionApp.clear();
         // Draw stage background
