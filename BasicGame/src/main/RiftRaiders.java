@@ -22,6 +22,11 @@ public class RiftRaiders implements GameLoop {
     public int maxScreencol = 16;
     public int maxScreenrow = 12;
 
+    // collisions
+    public CollisionChecker cChecker = new CollisionChecker(this);
+    //public setGame cChecker = new setGame(this);
+
+
 
     //boolean
     boolean cavemanMoves = false;
@@ -158,10 +163,10 @@ public class RiftRaiders implements GameLoop {
         // TODO: make file to create level
         // TODO: each level has a starting posistion, and end position/condition
         // TODO: clear main file and put everything in classes
-        // draw_level();
 
+        draw_level();
         //Stage sprite tekenen
-        SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
+        //SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
         //Health boarder tekenen
         SaxionApp.drawImage(Second.imageHealthBoarder, 0, 0, 160, 200);
 
@@ -258,15 +263,15 @@ public class RiftRaiders implements GameLoop {
                     //follow player (enemy)
                     //positie enemy horizontaal
                     if (shafir.x > caveman.x) {
-                        caveman.move("Right");
+                        caveman.move("Right", this);
                     } else if (shafir.x < caveman.x) {
-                        caveman.move("Left");
+                        caveman.move("Left",this);
                     }
                     //positie enemy verticaal
                     if (shafir.y > caveman.y) {
-                        caveman.move("Down");
+                        caveman.move("Down",this);
                     } else if (shafir.y < caveman.y) {
-                        caveman.move("Up");
+                        caveman.move("Up",this);
                     }
                     if (caveman.shouldUpdateAnimation()) {
                         caveman.stapCounter++; // Advance animation frame
@@ -372,13 +377,6 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
-
-        // Detect collision
-        if (checkCollision(shafir.getHitbox(), caveman.getHitbox())) {
-            System.out.println("Collision detected between player and enemy!");
-            // Handle collision (e.g., reduce health, game over, etc.)
-        }
-
         //shafir death sprites printen bij death
         if (deathAnimation) {
             if (shafir.direction.equals("Left")) {
@@ -449,19 +447,9 @@ public class RiftRaiders implements GameLoop {
 
         // Draw static hitbox
 
-        int hitboxWidth = 100;
-        int hitboxHeight = 100;
-        int centerX = 1000 / 2 - hitboxWidth / 2;
-        int centerY = 1000 / 2 - hitboxHeight / 2;
-        staticHitbox = new Rectangle(centerX, centerY, hitboxWidth, hitboxHeight);
-        //SaxionApp.drawRectangle(centerX, centerY, hitboxWidth, hitboxHeight);
-
-        // Collision with static hitbox
-        if (checkCollision(shafir.getHitbox(), staticHitbox)) {
-            System.out.println("Collision detected with static object!");
-            // Handle collision
-        }
-
+        //staticHitbox = new Rectangle(centerX, centerY, hitboxWidth, hitboxHeight);
+        Rectangle staticHitbox = shafir.getHitbox();
+        SaxionApp.drawRectangle(staticHitbox.x, staticHitbox.y, staticHitbox.width,staticHitbox.height);
 
     }
 
@@ -483,6 +471,7 @@ public class RiftRaiders implements GameLoop {
         } else {
             gamescreenKeyboardEvent(keyboardEvent);
         }
+
     }
 
     //keyboard interaction voor gameover screen
@@ -508,13 +497,13 @@ public class RiftRaiders implements GameLoop {
     public void gamescreenKeyboardEvent(KeyboardEvent keyboardEvent) {
         if (keyboardEvent.isKeyPressed()) {
             if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_A) {
-                shafir.move("Left");
+                shafir.move("Left",this);
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_D) {
-                shafir.move("Right");
+                shafir.move("Right",this);
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_W) {
-                shafir.move("Up");
+                shafir.move("Up",this);
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_S) {
-                shafir.move("Down");
+                shafir.move("Down",this);
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_F) {
                 //knuppel oppakken
                 if ( Math.abs(shafir.x - 200) < 70 && Math.abs(shafir.y - 300) < 70) {

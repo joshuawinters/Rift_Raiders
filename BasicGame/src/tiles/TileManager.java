@@ -10,11 +10,11 @@ import java.io.*;
 
 public class TileManager {
     RiftRaiders game;
-    Tiles[] tile;
+    public Tiles[] tile;
     int tileWidth;  // Width of a single tile
     int tileHeight; // Height of a single tile
     final int num_tiles = 37;
-    int mapTileNumber[][];
+    public int mapTileNumber[][];
     Rectangle staticHitbox;
 
     public TileManager(RiftRaiders game, int tileWidth, int tileHeight) {
@@ -50,7 +50,7 @@ public class TileManager {
         int centerX = x;
         int centerY = y;
         staticHitbox = new Rectangle(centerX, centerY, hitboxWidth, hitboxHeight);
-        SaxionApp.drawRectangle(centerX, centerY, hitboxWidth, hitboxHeight);
+
     }
     public void GetTileImage() {
         try {
