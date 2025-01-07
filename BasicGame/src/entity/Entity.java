@@ -62,8 +62,8 @@ public class Entity{
     }
     // hit box
     public Rectangle getHitbox() {
-        int hitboxX = x + solidArea.x;
-        int hitboxY = y + solidArea.y;
+        int hitboxX = x + solidArea.x*4;
+        int hitboxY = y + solidArea.y*4;
         int hitboxWidth = solidArea.width;
         int hitboxHeight = solidArea.height;
         return new Rectangle(hitboxX, hitboxY, hitboxWidth, hitboxHeight);

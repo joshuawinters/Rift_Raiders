@@ -12,16 +12,16 @@ public class CollisionChecker {
 
     public void CheckTile(Entity entity){
 
-        // let op entity.solidwidth is nodig hier niet entity.width
-        int entityLeftx = entity.x + entity.solidArea.x;
-        int entityRightx = entity.x + entity.solidArea.x + entity.solidArea.width;
-        int entityTopy = entity.y + entity.solidArea.y;
-        int entityBottomy = entity.y + entity.solidArea.y + entity.solidArea.height;
+        // setting entity location hitbox
+        int entityLeftx = entity.x + entity.solidArea.x*4;
+        int entityRightx = entity.x + entity.solidArea.x*4 + entity.solidArea.width;
+        int entityTopy = entity.y + entity.solidArea.y*4;
+        int entityBottomy = entity.y + entity.solidArea.y*4 + entity.solidArea.height;
 
-        int entityLeftCol = entity.x/game.tileWidth;
-        int entityRightCol = entity.x/game.tileWidth;
-        int entityTopRow = entity.y/game.tileHeight;
-        int entityBottomyRow = entity.y/game.tileHeight;
+        int entityLeftCol = entityLeftx/game.tileWidth;
+        int entityRightCol = entityRightx/game.tileWidth;
+        int entityTopRow = entityTopy/game.tileHeight;
+        int entityBottomyRow = entityBottomy/game.tileHeight;
 
         int tileNum1, tileNum2;
         switch (entity.direction){
