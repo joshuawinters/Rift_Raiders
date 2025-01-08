@@ -440,14 +440,6 @@ public class RiftRaiders implements GameLoop {
         } if (bossSpawned = true) {
 //            SaxionApp.drawRectangle()
         }
-
-            // Debugging: Draw hitboxesd
-  //        SaxionApp.drawRectangle(shafir.getHitbox().x, shafir.getHitbox().y, shafir.getHitbox().width, shafir.getHitbox().height);
-  //        SaxionApp.drawRectangle(caveman.getHitbox().x, caveman.getHitbox().y, caveman.getHitbox().width, caveman.getHitbox().height);
-
-        // Draw static hitbox
-
-        //staticHitbox = new Rectangle(centerX, centerY, hitboxWidth, hitboxHeight);
         Rectangle staticHitbox = shafir.getHitbox();
         SaxionApp.drawRectangle(staticHitbox.x, staticHitbox.y, staticHitbox.width,staticHitbox.height);
 

@@ -50,7 +50,7 @@ public class TileManager {
         int centerX = x;
         int centerY = y;
         staticHitbox = new Rectangle(centerX, centerY, hitboxWidth, hitboxHeight);
-        //SaxionApp.drawRectangle(centerX, centerY, hitboxWidth, hitboxHeight);
+        SaxionApp.drawRectangle(centerX, centerY, hitboxWidth, hitboxHeight);
     }
     public void GetTileImage() {
         try {
