@@ -84,6 +84,9 @@ public class Second {
     //gameover screen
     static String imageGameoverScreen = "Sprites\\gameOverScreen.png";
 
+    //main boss hoofd voor dialoge
+    static String imageMainBHoofd = "Sprites\\mainBoss1\\mainBossHoofd.png";
+
     //---------------------------------------------------------------------------------------------------------------
 
     //Shafir met knuppel sprites

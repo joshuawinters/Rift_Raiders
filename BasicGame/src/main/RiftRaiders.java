@@ -41,14 +41,15 @@ public class RiftRaiders implements GameLoop {
     boolean shafirInRange = false;
     boolean cavemanResets = false; //caveman deaths bijhouden voor death counter
     boolean deathIsCounted = false;
-    boolean bossSpawned = true;
+    boolean bossSpawned = false;
+    boolean dialoge = false;
 
     // tiles en level
     TileManager tileM;
     mainUI ui = new mainUI();
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
-        SaxionApp.startGameLoop(new RiftRaiders(), screenWidth, screenHeight, 40);
+        SaxionApp.startGameLoop(new RiftRaiders(), screenWidth, 600, 40);
     }
 
     String currentScreen = "startscreen";
@@ -440,8 +441,20 @@ public class RiftRaiders implements GameLoop {
         if (cavemanDeathCounter >= 1) {
             SaxionApp.drawImage(Second.imageBStapOnder1, 450, 150, 100, 100);
             bossSpawned = true;
-        } if (bossSpawned = true) {
-//            SaxionApp.drawRectangle()
+        }
+        //blokje dialoge inspawnen
+        if (bossSpawned) {
+            dialoge = true;
+            int dialogeCounter = 15;
+            dialogeCounter--;
+            if (dialoge && dialogeCounter > 0) {
+                SaxionApp.setFill(Color.DARK_GRAY);
+                SaxionApp.setBorderColor(Color.WHITE);
+                SaxionApp.drawRectangle(280, 470, 430, 75);
+                SaxionApp.drawImage(Second.imageMainBHoofd, 280, 470, 130, 130);
+                SaxionApp.setTextDrawingColor(Color.WHITE);
+                SaxionApp.drawText("Nu ben ik klaar met jou", 420, 490, 15);
+            }
         }
 
             // Debugging: Draw hitboxesd
