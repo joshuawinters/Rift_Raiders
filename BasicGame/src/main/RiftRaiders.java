@@ -170,7 +170,6 @@ public class RiftRaiders implements GameLoop {
         // Draw stage background
         // TODO: make someting to choose level
         // draw tiles before player
-        // TODO: make function to load level
         // TODO: make file to create level
         // TODO: each level has a starting posistion, and end position/condition
         // TODO: clear main file and put everything in classes
@@ -476,7 +475,7 @@ public class RiftRaiders implements GameLoop {
         }
 
 
-        if (bossSpawned && dialogeCounter <= 0 && !mainBossInRange) {
+        if (bossSpawned && dialogeCounter <= 0 && holdCounter > 0) {
             String sprite2 = switch (mainBoss.direction) {
                 case "Up" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenAchter1 : Second.imageBStapWapenAchter2;
                 case "Down" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenVoor1 : Second.imageBStapWapenVoor2;
