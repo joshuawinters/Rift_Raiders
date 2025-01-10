@@ -150,6 +150,13 @@ public class Second {
     static String imageMainBHoldLinks = "Sprites\\mainBoss1\\mainBossAttack\\mainBossHoldLinks.png";
     static String imageMainBHoldRechts = "Sprites\\mainBoss1\\mainBossAttack\\mainBossHoldRechts.png";
 
+    //main boss attack sprites
+    static String imageBossAttackVoor = "Sprites\\mainBoss1\\mainBossAttack\\mainBossAttackVoor.png";
+    static String imageBossAttackAchter = "Sprites\\mainBoss1\\mainBossAttack\\mainBossAttackAchter.png";
+    static String imageBossAttackLinks = "Sprites\\mainBoss1\\mainBossAttack\\mainBossAttackLinks.png";
+    static String imageBossAttackRechts = "Sprites\\mainBoss1\\mainBossAttack\\mainBossAttackRechts.png";
+
+
 
 
 

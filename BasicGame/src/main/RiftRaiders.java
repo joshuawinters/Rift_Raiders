@@ -49,6 +49,9 @@ public class RiftRaiders implements GameLoop {
     boolean bossSpawned = false;
     boolean dialoge = false;
     boolean mainBossLeeft = false;
+    boolean mainBossInRange = false;
+    boolean bossAttack = false;
+
 
     // tiles en level
     TileManager tileM;
@@ -75,6 +78,8 @@ public class RiftRaiders implements GameLoop {
     int cavemanDeathdelay = 20;
     int cavemanDeathCounter = 0;
     int dialogeCounter = 25;
+    int holdCounter = 25;
+    int attackCounter = 25;
 
 
     @Override
@@ -442,7 +447,7 @@ public class RiftRaiders implements GameLoop {
         }
 
         //boss laten inspawnen bij 5 kills
-        if (cavemanDeathCounter >= 5 && !bossSpawned) { // Controleer of boss nog niet gespawned is
+        if (cavemanDeathCounter >= 1 && !bossSpawned) { // Controleer of boss nog niet gespawned is
             SaxionApp.drawImage(Second.imageBossIdle, mainBoss.x, mainBoss.y, 100, 100);
             bossSpawned = true;
             mainBossLeeft = true;
@@ -471,7 +476,7 @@ public class RiftRaiders implements GameLoop {
         }
 
 
-        if (bossSpawned && dialogeCounter <= 0) {
+        if (bossSpawned && dialogeCounter <= 0 && !mainBossInRange) {
             String sprite2 = switch (mainBoss.direction) {
                 case "Up" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenAchter1 : Second.imageBStapWapenAchter2;
                 case "Down" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenVoor1 : Second.imageBStapWapenVoor2;
@@ -484,7 +489,7 @@ public class RiftRaiders implements GameLoop {
         }
 
         //mainBoss laten volgen
-        if (bossSpawned && dialogeCounter <= 0) { // Check dat de dialoog is afgelopen
+        if (bossSpawned && dialogeCounter <= 0 && !mainBossInRange) { // Check dat de dialoog is afgelopen
             // Laat de boss de speler volgen
             boolean kb = moving_boss(); // Gebruik dit voor caveman, maar we moeten hier boss movement implementeren
             if (!kb) {
@@ -507,6 +512,48 @@ public class RiftRaiders implements GameLoop {
                 }
             }
         }
+
+        //mainBoss attack sprites
+        if (bossSpawned && shafirLeeft) {
+           if (Math.abs(mainBoss.x - shafir.x) < 80 && Math.abs(mainBoss.y - shafir.y) < 80) {
+               mainBossInRange = true;
+               holdCounter--;
+           }
+           if (mainBossInRange && !bossAttack) {
+               if (mainBoss.direction.equals("Up")) {
+                   SaxionApp.drawImage(Second.imageMainBHoldAchter, mainBoss.x, mainBoss.y, 100, 100);
+               } else if (mainBoss.direction.equals("Down")) {
+                   SaxionApp.drawImage(Second.imageMainBHoldVoor, mainBoss.x, mainBoss.y, 100, 100);
+               } else if (mainBoss.direction.equals("Left")) {
+                   SaxionApp.drawImage(Second.imageMainBHoldLinks, mainBoss.x, mainBoss.y, 100, 100);
+               } else if (mainBoss.direction.equals("Right")) {
+                   SaxionApp.drawImage(Second.imageMainBHoldRechts, mainBoss.x, mainBoss.y, 100, 100);
+               }
+           }
+        }
+
+        //mainBoss laten slaan
+        if (mainBossInRange && holdCounter <= 0) {
+            bossAttack = true;
+            attackCounter--;
+            if(attackCounter >= 0) {
+                if (mainBoss.direction.equals("Up")) {
+                    SaxionApp.drawImage(Second.imageBossAttackAchter, mainBoss.x, mainBoss.y, 100, 100);
+                } else if (mainBoss.direction.equals("Down")) {
+                    SaxionApp.drawImage(Second.imageBossAttackVoor, mainBoss.x, mainBoss.y, 100, 100);
+                } else if (mainBoss.direction.equals("Left")) {
+                    SaxionApp.drawImage(Second.imageBossAttackLinks, mainBoss.x, mainBoss.y, 100, 100);
+                } else if (mainBoss.direction.equals("Right")) {
+                    SaxionApp.drawImage(Second.imageBossAttackRechts, mainBoss.x, mainBoss.y, 100, 100);
+                }
+            } else {
+                holdCounter = 25;
+                bossAttack = false;
+                attackCounter = 25;
+            }
+        }
+
+
 
         //shafir hitbox
         Rectangle staticHitbox = shafir.getHitbox();
