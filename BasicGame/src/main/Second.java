@@ -121,6 +121,9 @@ public class Second {
 
     //main boss sprites
 
+    //main boss idle
+    static String imageBossIdle = "Sprites\\mainBoss1\\mainBossIdle.png";
+
     //main boss stappen
     static String imageBStapBoven1 = "Sprites\\mainBoss1\\mainBStapBoven1.png";
     static String imageBStapBoven2 = "Sprites\\mainBoss1\\mainBStapBoven2.png";
@@ -130,6 +133,27 @@ public class Second {
     static String imageBStapLinks2 = "Sprites\\mainBoss1\\mainBStapLinks2.png";
     static String imageBStapRechts1 = "Sprites\\mainBoss1\\mainBStapRechts1.png";
     static String imageBStapRechts2 = "Sprites\\mainBoss1\\mainBStapRechts2.png";
+
+    //main boss sprites stappen met wapen
+    static String imageBStapWapenVoor1 = "Sprites\\mainBoss1\\mainBossWapen\\mainBStapWapenVoor1.png";
+    static String imageBStapWapenVoor2 = "Sprites\\mainBoss1\\mainBossWapen\\mainBStapWapenVoor2.png";
+    static String imageBStapWapenAchter1 = "Sprites\\mainBoss1\\mainBossWapen\\mainBStapWapenAchter1.png";
+    static String imageBStapWapenAchter2 = "Sprites\\mainBoss1\\mainBossWapen\\mainBStapWapenAchter2.png";
+    static String imageBStapWapenLinks1 = "Sprites\\mainBoss1\\mainBossWapen\\mainBStapWapenLinks1.png";
+    static String imageBStapWapenLinks2 = "Sprites\\mainBoss1\\mainBossWapen\\mainBStapWapenLinks2.png";
+    static String imageBStapWapenRechts1 = "Sprites\\mainBoss1\\mainBossWapen\\mainBStapWapenRechts1.png";
+    static String imageBStapWapenRechts2 = "Sprites\\mainBoss1\\mainBossWapen\\mainBStapWapenRechts2.png";
+
+    //main boss hold sprites
+    static String imageMainBHoldVoor = "Sprites\\mainBoss1\\mainBossAttack\\mainBossHoldVoor.png";
+    static String imageMainBHoldAchter = "Sprites\\mainBoss1\\mainBossAttack\\mainBossHoldAchter.png";
+    static String imageMainBHoldLinks = "Sprites\\mainBoss1\\mainBossAttack\\mainBossHoldLinks.png";
+    static String imageMainBHoldRechts = "Sprites\\mainBoss1\\mainBossAttack\\mainBossHoldAchter.png";
+
+
+
+
+
 
 
 
