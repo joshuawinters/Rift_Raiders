@@ -437,26 +437,27 @@ public class RiftRaiders implements GameLoop {
                 System.out.println("caveman deaths: " + cavemanDeathCounter);
                 deathIsCounted = true;
         }
-
-        //caveman delay resetten
         if (cavemanResets && cavemanDeathdelay == 0) {
             cavemanLeeft = true;
         }
 
-        //boss laten inspawnen bij 20 kills
+        //boss laten inspawnen bij 5 kills
         if (cavemanDeathCounter >= 5 && !bossSpawned) { // Controleer of boss nog niet gespawned is
             SaxionApp.drawImage(Second.imageBossIdle, mainBoss.x, mainBoss.y, 100, 100);
             bossSpawned = true;
             mainBossLeeft = true;
             cavemanLeeft = false; // Stop caveman acties
+            System.out.println("boss spawned");
         }
         //caveman spawn laten stoppen
         if (bossSpawned) {
-            cavemanDeathCounter = 21; // Zorg dat de counter niet meer verandert
+            cavemanLeeft = false; // Zet caveman acties uit
+            cavemanDeathCounter = 5; // Zorg dat de counter niet meer verandert
         }
 
         //blokje dialoge inspawnen
         if (bossSpawned) {
+            cavemanLeeft = false;
             dialoge = true;
             dialogeCounter--;
             if (dialoge && dialogeCounter > 0) {
@@ -469,8 +470,9 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
-        if (bossSpawned && dialogeCounter == 0) {
-            String sprite = switch (mainBoss.direction) {
+
+        if (bossSpawned && dialogeCounter <= 0) {
+            String sprite2 = switch (mainBoss.direction) {
                 case "Up" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenAchter1 : Second.imageBStapWapenAchter2;
                 case "Down" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenVoor1 : Second.imageBStapWapenVoor2;
                 case "Left" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenLinks1 : Second.imageBStapWapenLinks2;
@@ -478,7 +480,7 @@ public class RiftRaiders implements GameLoop {
                 default -> Second.imageBStapOnder1;
             };
             // Draw the player sprite
-            SaxionApp.drawImage(sprite, mainBoss.x, mainBoss.y, 100, 100);
+            SaxionApp.drawImage(sprite2, mainBoss.x, mainBoss.y, 100, 100);
         }
 
         //mainBoss laten volgen
@@ -515,9 +517,9 @@ public class RiftRaiders implements GameLoop {
     }
 
 
-    //mainBoss laten stoppen als hij in range is
+    //caveman laten stoppen als hij in range is
     public boolean moving(){
-        if (Math.abs(mainBoss.x - shafir.x) < 80 && Math.abs(mainBoss.y - shafir.y) < 80){
+        if(Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80){
             return true;
         }
         return false;
