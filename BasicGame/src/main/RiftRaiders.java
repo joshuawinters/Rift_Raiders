@@ -437,6 +437,8 @@ public class RiftRaiders implements GameLoop {
                 System.out.println("caveman deaths: " + cavemanDeathCounter);
                 deathIsCounted = true;
         }
+
+        //caveman delay resetten
         if (cavemanResets && cavemanDeathdelay == 0) {
             cavemanLeeft = true;
         }
@@ -450,13 +452,11 @@ public class RiftRaiders implements GameLoop {
         }
         //caveman spawn laten stoppen
         if (bossSpawned) {
-            cavemanLeeft = false; // Zet caveman acties uit
-            cavemanDeathCounter = 5; // Zorg dat de counter niet meer verandert
+            cavemanDeathCounter = 21; // Zorg dat de counter niet meer verandert
         }
 
         //blokje dialoge inspawnen
         if (bossSpawned) {
-            cavemanLeeft = false;
             dialoge = true;
             dialogeCounter--;
             if (dialoge && dialogeCounter > 0) {
@@ -469,7 +469,6 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
-        if (cavemanDeathCounter == 1)
         if (bossSpawned && dialogeCounter == 0) {
             String sprite = switch (mainBoss.direction) {
                 case "Up" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenAchter1 : Second.imageBStapWapenAchter2;
@@ -516,9 +515,9 @@ public class RiftRaiders implements GameLoop {
     }
 
 
-    //caveman laten stoppen als hij in range is
+    //mainBoss laten stoppen als hij in range is
     public boolean moving(){
-        if(Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80){
+        if (Math.abs(mainBoss.x - shafir.x) < 80 && Math.abs(mainBoss.y - shafir.y) < 80){
             return true;
         }
         return false;
