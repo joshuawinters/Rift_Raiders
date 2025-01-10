@@ -475,7 +475,7 @@ public class RiftRaiders implements GameLoop {
         }
 
 
-        if (bossSpawned && dialogeCounter <= 0 && !mainBossInRange) {
+        if (bossSpawned && dialogeCounter <= 0 && !mainBossInRange&& !hold) {
             String sprite2 = switch (mainBoss.direction) {
                 case "Up" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenAchter1 : Second.imageBStapWapenAchter2;
                 case "Down" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenVoor1 : Second.imageBStapWapenVoor2;
@@ -488,11 +488,12 @@ public class RiftRaiders implements GameLoop {
         }
 
         //mainBoss laten volgen
-        if (bossSpawned && dialogeCounter <= 0 && !mainBossInRange) { // Check dat de dialoog is afgelopen
+        if (bossSpawned && dialogeCounter <= 0 && !mainBossInRange && !hold) { // Check dat de dialoog is afgelopen
             // Laat de boss de speler volgen
             boolean kb = moving_boss(); // Gebruik dit voor caveman, maar we moeten hier boss movement implementeren
-            if (!kb && !hold) {
+            if (!kb) {
                 // Volg de speler (shafir)
+
                 if (shafir.x > mainBoss.x) {
                     mainBoss.move("Right", this);
                 } else if (shafir.x < mainBoss.x) {
