@@ -148,7 +148,7 @@ public class Second {
     static String imageMainBHoldVoor = "Sprites\\mainBoss1\\mainBossAttack\\mainBossHoldVoor.png";
     static String imageMainBHoldAchter = "Sprites\\mainBoss1\\mainBossAttack\\mainBossHoldAchter.png";
     static String imageMainBHoldLinks = "Sprites\\mainBoss1\\mainBossAttack\\mainBossHoldLinks.png";
-    static String imageMainBHoldRechts = "Sprites\\mainBoss1\\mainBossAttack\\mainBossHoldAchter.png";
+    static String imageMainBHoldRechts = "Sprites\\mainBoss1\\mainBossAttack\\mainBossHoldRechter.png";
 
 
 
