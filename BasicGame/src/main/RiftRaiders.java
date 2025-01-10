@@ -475,7 +475,7 @@ public class RiftRaiders implements GameLoop {
         }
 
 
-        if (bossSpawned && dialogeCounter <= 0 && holdCounter > 0) {
+        if (bossSpawned && dialogeCounter <= 0 && !mainBossInRange) {
             String sprite2 = switch (mainBoss.direction) {
                 case "Up" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenAchter1 : Second.imageBStapWapenAchter2;
                 case "Down" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenVoor1 : Second.imageBStapWapenVoor2;
@@ -517,6 +517,8 @@ public class RiftRaiders implements GameLoop {
            if (Math.abs(mainBoss.x - shafir.x) < 80 && Math.abs(mainBoss.y - shafir.y) < 80) {
                mainBossInRange = true;
                holdCounter--;
+           } else if (holdCounter <= 0) {
+               mainBossInRange = false;
            }
            if (mainBossInRange && !bossAttack) {
                if (mainBoss.direction.equals("Up")) {
