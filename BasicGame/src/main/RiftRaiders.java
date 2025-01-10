@@ -418,14 +418,16 @@ public class RiftRaiders implements GameLoop {
 
         //caveman death sprite tekenen
         if (!cavemanLeeft) {
-            if (caveman.direction.equals("Left")) {
-                SaxionApp.drawImage(Second.imageCavemanDeathLinks, caveman.x, caveman.y, 100, 100);
-            } else if (caveman.direction.equals("Right")) {
-                SaxionApp.drawImage(Second.imageCavemanDeathRechts, caveman.x, caveman.y, 100, 100);
-            } else if (caveman.direction.equals("Up")) {
-                SaxionApp.drawImage(Second.imageCavemanDeathAchter, caveman.x, caveman.y, 100, 100);
-            } else if (caveman.direction.equals("Down")) {
-                SaxionApp.drawImage(Second.imageCavemanDeathVoor, caveman.x, caveman.y, 100, 100);
+            if(cavemanDeathCounter<5) {
+                if (caveman.direction.equals("Left")) {
+                    SaxionApp.drawImage(Second.imageCavemanDeathLinks, caveman.x, caveman.y, 100, 100);
+                } else if (caveman.direction.equals("Right")) {
+                    SaxionApp.drawImage(Second.imageCavemanDeathRechts, caveman.x, caveman.y, 100, 100);
+                } else if (caveman.direction.equals("Up")) {
+                    SaxionApp.drawImage(Second.imageCavemanDeathAchter, caveman.x, caveman.y, 100, 100);
+                } else if (caveman.direction.equals("Down")) {
+                    SaxionApp.drawImage(Second.imageCavemanDeathVoor, caveman.x, caveman.y, 100, 100);
+                }
             }
         }
 
