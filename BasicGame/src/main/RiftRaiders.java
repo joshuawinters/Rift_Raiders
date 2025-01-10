@@ -17,8 +17,8 @@ public class RiftRaiders implements GameLoop {
     // Define tile size and screen dimensions
     final int tileWidth = 48;  // Width of each tile
     final int tileHeight = 48; // Height of each tile
-    static int screenWidth = 1000; // Screen width in pixels
-    static int screenHeight = 1000; // Screen height in pixels
+    static int screenWidth = 1500; // Screen width in pixels
+    static int screenHeight = 1500; // Screen height in pixels
     public int maxScreencol = 16;
     public int maxScreenrow = 12;
 
@@ -46,14 +46,16 @@ public class RiftRaiders implements GameLoop {
     boolean shafirInRange = false;
     boolean cavemanResets = false; //caveman deaths bijhouden voor death counter
     boolean deathIsCounted = false;
-    boolean bossSpawned = true;
+    boolean bossSpawned = false;
+    boolean dialoge = false;
+    boolean mainBossLeeft = false;
 
     // tiles en level
     TileManager tileM;
     mainUI ui = new mainUI();
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
-        SaxionApp.startGameLoop(new RiftRaiders(), screenWidth, screenHeight, 40);
+        SaxionApp.startGameLoop(new RiftRaiders(), screenWidth, 600, 40);
     }
 
     String currentScreen = "startscreen";
@@ -72,12 +74,15 @@ public class RiftRaiders implements GameLoop {
     int gameOverDelay = 60; //voor de gameover screen
     int cavemanDeathdelay = 20;
     int cavemanDeathCounter = 0;
+    int dialogeCounter = 25;
+
 
     @Override
     public void init() {
         // Initialize Player with position, speed, and animation delay
         shafir = new Player(0, 280, 8, 200, 50, 50);
-        caveman = new Enemies(450, 200, 8, 200, 50, 50);
+        caveman = new Enemies(280, 0, 8, 200, 50, 50);
+        mainBoss = new Enemies(280, 0, 8, 200, 50, 50);
         tileM = new TileManager(this, tileWidth, tileHeight);
     }
 
@@ -86,6 +91,7 @@ public class RiftRaiders implements GameLoop {
         //posities resetten
         shafir = new Player(0, 280, 8, 200, 50, 50);
         caveman = new Enemies(450, 200, 8, 200, 50, 50);
+        mainBoss = new Enemies(280, 0, 8, 200, 50, 50);
         tileM = new TileManager(this, tileWidth, tileHeight);
 
         //booleans resetten
@@ -122,7 +128,7 @@ public class RiftRaiders implements GameLoop {
     //reset aanmaken voor caveman death
     public void cavemanReset() {
         //sprite reset
-        caveman = new Enemies(450, 200, 8, 200, 50, 50);
+        caveman = new Enemies(280, 0, 8, 200, 50, 50);
 
         //booleans reset
         cavemanLeeft = true;
@@ -153,7 +159,7 @@ public class RiftRaiders implements GameLoop {
         return rect1.intersects(rect2);
     }
 
-    
+
     public void gamescreenLoop() {
         SaxionApp.clear();
         // Draw stage background
@@ -400,11 +406,11 @@ public class RiftRaiders implements GameLoop {
             }
         }
         //respawn delay aanmaken
-        if (cavemanDeathdelay > 0 && !cavemanLeeft) {
+        if (!bossSpawned && cavemanDeathdelay > 0 && !cavemanLeeft) {
             cavemanDeathdelay--;
         }
         //respawn delay resetten
-        if (cavemanDeathdelay == 0) {
+        if (!bossSpawned && cavemanDeathdelay == 0) {
             cavemanReset();
             cavemanResets = true;
             cavemanDeathdelay = 20;
@@ -434,14 +440,76 @@ public class RiftRaiders implements GameLoop {
         }
 
         //boss laten inspawnen bij 20 kills
-        if (cavemanDeathCounter >= 1) {
-            SaxionApp.drawImage(Second.imageBStapOnder1, 450, 150, 100, 100);
+        if (cavemanDeathCounter >= 5 && !bossSpawned) { // Controleer of boss nog niet gespawned is
+            SaxionApp.drawImage(Second.imageBossIdle, mainBoss.x, mainBoss.y, 100, 100);
             bossSpawned = true;
-        } if (bossSpawned = true) {
-//            SaxionApp.drawRectangle()
+            mainBossLeeft = true;
+            cavemanLeeft = false; // Stop caveman acties
         }
+        //caveman spawn laten stoppen
+        if (bossSpawned) {
+            cavemanLeeft = false; // Zet caveman acties uit
+            cavemanDeathCounter = 5; // Zorg dat de counter niet meer verandert
+        }
+
+        //blokje dialoge inspawnen
+        if (bossSpawned) {
+            cavemanLeeft = false;
+            dialoge = true;
+            dialogeCounter--;
+            if (dialoge && dialogeCounter > 0) {
+                SaxionApp.setFill(Color.DARK_GRAY);
+                SaxionApp.setBorderColor(Color.WHITE);
+                SaxionApp.drawRectangle(280, 470, 430, 75);
+                SaxionApp.drawImage(Second.imageMainBHoofd, 280, 470, 130, 130);
+                SaxionApp.setTextDrawingColor(Color.WHITE);
+                SaxionApp.drawText("Nu ben ik klaar met jou", 420, 490, 15);
+            }
+        }
+
+        if (cavemanDeathCounter == 1)
+        if (bossSpawned && dialogeCounter == 0) {
+            String sprite = switch (mainBoss.direction) {
+                case "Up" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenAchter1 : Second.imageBStapWapenAchter2;
+                case "Down" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenVoor1 : Second.imageBStapWapenVoor2;
+                case "Left" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenLinks1 : Second.imageBStapWapenLinks2;
+                case "Right" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenRechts1 : Second.imageBStapWapenRechts2;
+                default -> Second.imageBStapOnder1;
+            };
+            // Draw the player sprite
+            SaxionApp.drawImage(sprite, mainBoss.x, mainBoss.y, 100, 100);
+        }
+
+        //mainBoss laten volgen
+        if (bossSpawned && dialogeCounter <= 0) { // Check dat de dialoog is afgelopen
+            // Laat de boss de speler volgen
+            boolean kb = moving(); // Gebruik dit voor caveman, maar we moeten hier boss movement implementeren
+            if (!kb) {
+                // Volg de speler (shafir)
+                if (shafir.x > mainBoss.x) {
+                    mainBoss.move("Right", this);
+                } else if (shafir.x < mainBoss.x) {
+                    mainBoss.move("Left", this);
+                }
+
+                if (shafir.y > mainBoss.y) {
+                    mainBoss.move("Down", this);
+                } else if (shafir.y < mainBoss.y) {
+                    mainBoss.move("Up", this);
+                }
+
+                // Update de animatie van de boss
+                if (mainBoss.shouldUpdateAnimation()) {
+                    mainBoss.stapCounter++;
+                }
+            }
+        }
+
+        //shafir hitbox
         Rectangle staticHitbox = shafir.getHitbox();
-        SaxionApp.drawRectangle(staticHitbox.x, staticHitbox.y, staticHitbox.width,staticHitbox.height);
+
+        //HITBOX tekenen
+        //SaxionApp.drawRectangle(staticHitbox.x, staticHitbox.y, staticHitbox.width,staticHitbox.height);
 
     }
 
@@ -503,8 +571,8 @@ public class RiftRaiders implements GameLoop {
                     ShafirHeeftKnuppel = true;
                     cavemanMoves = true;
 
-                    caveman.x = 450;
-                    caveman.y = 200;
+                    caveman.x = 380;
+                    caveman.y = 0;
                 }
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_E) {
                 ShafirSlaat = true;
