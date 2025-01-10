@@ -31,7 +31,6 @@ public class CollisionChecker {
                 tileNum2 = game.tileM.mapTileNumber[entityRightCol][entityTopRow];
                 if (game.tileM.tile[tileNum1].collision == true || game.tileM.tile[tileNum2].collision == true) {
                     entity.collisionOn = true;
-                    System.out.println("collision above");
                 }
                 break;
             case "Down":
@@ -40,7 +39,6 @@ public class CollisionChecker {
                 tileNum2 = game.tileM.mapTileNumber[entityRightCol][entityBottomyRow];
                 if (game.tileM.tile[tileNum1].collision == true || game.tileM.tile[tileNum2].collision == true) {
                     entity.collisionOn = true;
-                    System.out.println("collision down");
                 }
                 break;
             case "Left":
@@ -49,7 +47,6 @@ public class CollisionChecker {
                 tileNum2 = game.tileM.mapTileNumber[entityLeftCol][entityBottomyRow];
                 if (game.tileM.tile[tileNum1].collision == true || game.tileM.tile[tileNum2].collision == true) {
                     entity.collisionOn = true;
-                    System.out.println("collision left");
                 }
                 break;
             case "Right":
@@ -58,7 +55,6 @@ public class CollisionChecker {
                 tileNum2 = game.tileM.mapTileNumber[entityRightCol][entityBottomyRow];
                 if (game.tileM.tile[tileNum1].collision == true || game.tileM.tile[tileNum2].collision == true) {
                     entity.collisionOn = true;
-                    System.out.println("collision right");
                 }
                 break;
         }
