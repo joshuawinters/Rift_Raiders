@@ -51,7 +51,7 @@ public class RiftRaiders implements GameLoop {
     boolean mainBossLeeft = false;
     boolean mainBossInRange = false;
     boolean bossAttack = false;
-
+    boolean hold = false;
 
     // tiles en level
     TileManager tileM;
@@ -491,7 +491,7 @@ public class RiftRaiders implements GameLoop {
         if (bossSpawned && dialogeCounter <= 0 && !mainBossInRange) { // Check dat de dialoog is afgelopen
             // Laat de boss de speler volgen
             boolean kb = moving_boss(); // Gebruik dit voor caveman, maar we moeten hier boss movement implementeren
-            if (!kb) {
+            if (!kb && !hold) {
                 // Volg de speler (shafir)
                 if (shafir.x > mainBoss.x) {
                     mainBoss.move("Right", this);
@@ -516,11 +516,14 @@ public class RiftRaiders implements GameLoop {
         if (bossSpawned && shafirLeeft) {
            if (Math.abs(mainBoss.x - shafir.x) < 80 && Math.abs(mainBoss.y - shafir.y) < 80) {
                mainBossInRange = true;
-               holdCounter--;
-           } else if (holdCounter <= 0) {
+           } else{
                mainBossInRange = false;
            }
-           if (mainBossInRange && !bossAttack) {
+           if (mainBossInRange){
+               hold = true;
+           }
+           if (hold && !bossAttack) {
+               holdCounter--;
                if (mainBoss.direction.equals("Up")) {
                    SaxionApp.drawImage(Second.imageMainBHoldAchter, mainBoss.x, mainBoss.y, 100, 100);
                } else if (mainBoss.direction.equals("Down")) {
@@ -531,10 +534,12 @@ public class RiftRaiders implements GameLoop {
                    SaxionApp.drawImage(Second.imageMainBHoldRechts, mainBoss.x, mainBoss.y, 100, 100);
                }
            }
+
+
         }
 
         //mainBoss laten slaan
-        if (mainBossInRange && holdCounter <= 0) {
+        if (hold && holdCounter <= 0) {
             bossAttack = true;
             attackCounter--;
             if(attackCounter >= 0) {
@@ -551,6 +556,7 @@ public class RiftRaiders implements GameLoop {
                 holdCounter = 25;
                 bossAttack = false;
                 attackCounter = 25;
+                hold = false;
             }
         }
 
