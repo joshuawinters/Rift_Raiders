@@ -486,7 +486,7 @@ public class RiftRaiders implements GameLoop {
         //mainBoss laten volgen
         if (bossSpawned && dialogeCounter <= 0) { // Check dat de dialoog is afgelopen
             // Laat de boss de speler volgen
-            boolean kb = moving(); // Gebruik dit voor caveman, maar we moeten hier boss movement implementeren
+            boolean kb = moving_boss(); // Gebruik dit voor caveman, maar we moeten hier boss movement implementeren
             if (!kb) {
                 // Volg de speler (shafir)
                 if (shafir.x > mainBoss.x) {
@@ -520,6 +520,13 @@ public class RiftRaiders implements GameLoop {
     //caveman laten stoppen als hij in range is
     public boolean moving(){
         if(Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80){
+            return true;
+        }
+        return false;
+    }
+    //caveman laten stoppen als hij in range is
+    public boolean moving_boss(){
+        if(Math.abs(mainBoss.x - shafir.x) < 80 && Math.abs(mainBoss.y - shafir.y) < 80){
             return true;
         }
         return false;
