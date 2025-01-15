@@ -83,6 +83,7 @@ public class RiftRaiders implements GameLoop {
     int dialogeCounter = 25;
     int holdCounter = 25;
     int attackCounter = 25;
+    int hitCounter = 0;
 
 
     @Override
@@ -246,6 +247,11 @@ public class RiftRaiders implements GameLoop {
                 default -> Second.imageShafirIdle;
             };
             SaxionApp.drawImage(sprite2, shafir.x, shafir.y, 100, 100);
+        }
+
+        if (ShafirSlaat && slaanRefresh == 0 && bossSpawned) {
+            hitCounter++;
+            System.out.println(hitCounter);
         }
 
 
@@ -557,6 +563,11 @@ public class RiftRaiders implements GameLoop {
                 attackCounter = 25;
                 hold = false;
             }
+        }
+
+        //main boss health toevoegen
+        if (bossSpawned && dialogeCounter == 0) {
+            SaxionApp.drawImage(Second.imageHealthBossVol, 280, 470, 200, 200);
         }
 
         //death animation toevoegen
