@@ -62,6 +62,7 @@ public class RiftRaiders implements GameLoop {
     // tiles en level
     TileManager tileM;
     mainUI ui = new mainUI();
+    audio ad = new audio();
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
         SaxionApp.startGameLoop(new RiftRaiders(), screenWidth, 600, 40);
@@ -91,7 +92,8 @@ public class RiftRaiders implements GameLoop {
 
     //end game
     boolean gameCompleted = false;
-
+    boolean gameEndHitBox = false;
+    private Rectangle rectangle;
 
     @Override
     public void init() {
@@ -650,13 +652,18 @@ public class RiftRaiders implements GameLoop {
         }
 
 
-        if(mainBossDood ){
-            gameCompleted = true;
-        }
+
 
         //shafir hitbox
         Rectangle staticHitbox = shafir.getHitbox();
-        drawRectangle();
+        Rectangle rectangle2 = drawRectangle();
+
+
+
+        if(mainBossDood && gameEndHitBox){
+            gameCompleted = true;
+        }
+
         //HITBOX tekenen
         //SaxionApp.drawRectangle(staticHitbox.x, staticHitbox.y, staticHitbox.width,staticHitbox.height);
 
@@ -753,7 +760,7 @@ public class RiftRaiders implements GameLoop {
         }
     }
 
-    public void drawRectangle() {
+    public Rectangle drawRectangle() {
         int row = 1; // The row where you want to draw the rectangle
         int column = 7; // The column where you want to draw the rectangle
 
@@ -764,6 +771,9 @@ public class RiftRaiders implements GameLoop {
         // Rectangle size
         int width = tileWidth;  // Width of the rectangle (1 tile)
         int height = tileWidth; // Height of the rectangle (1 tile)
+        rectangle = new Rectangle(x, y, width, height);
+
+        return rectangle;
     }
 
 
