@@ -89,6 +89,10 @@ public class Second {
 
     //---------------------------------------------------------------------------------------------------------------
 
+    //shaifr emote
+    static String imageShafirEmote = "Sprites\\Shafir\\shafirDuim.png";
+
+
     //Shafir met knuppel sprites
     static String shafirKnuppelBoven1 = "Sprites\\Shafir\\ShafirMetKnuppel\\McKNuppelBoven1.png";
     static String shafirKnuppelBoven2 = "Sprites\\Shafir\\ShafirMetKnuppel\\McKNuppelBoven2.png";

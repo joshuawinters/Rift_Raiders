@@ -52,6 +52,9 @@ public class RiftRaiders implements GameLoop {
     boolean mainBossInRange = false;
     boolean bossAttack = false;
     boolean hold = false;
+    boolean doodDoorCaveman = false;
+    boolean doodDoorBoss = false;
+    boolean shafirDuim = false;
 
     // tiles en level
     TileManager tileM;
@@ -199,9 +202,10 @@ public class RiftRaiders implements GameLoop {
         }
 
         //game over animations
-        if (heartsFrameCounter == 0) {
+        if (heartsFrameCounter <= 0 && cavemanLeeft) {
             gameOver = true;
             deathAnimation = true;
+
             SaxionApp.drawImage(Second.imageCavemanIdle, caveman.x, caveman.y, 100, 100);
             shafirLeeft = false;
             if (!shafirLeeft) {
@@ -251,7 +255,7 @@ public class RiftRaiders implements GameLoop {
         }
 
         // Determine the sprite based on direction and animation frame
-        if (!ShafirHeeftKnuppel) {
+        if (!ShafirHeeftKnuppel && !shafirDuim) {
             String sprite = switch (shafir.direction) {
                 case "Up" ->
                         (shafir.stapCounter % 2 == 0) ? Second.imageShafirAchterkant1 : Second.imageShafirAchterkant2;
@@ -387,19 +391,6 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
-        //shafir death sprites printen bij death
-        if (deathAnimation) {
-            if (shafir.direction.equals("Left")) {
-                SaxionApp.drawImage(Second.imageShafirDeathLinks, shafir.x, shafir.y, 100, 100);
-            } else if (shafir.direction.equals("Right")) {
-                SaxionApp.drawImage(Second.imageShafirDeathRechts, shafir.x, shafir.y, 100, 100);
-            } else if (shafir.direction.equals("Up")) {
-                SaxionApp.drawImage(Second.imageShafirDeathAchter, shafir.x, shafir.y, 100, 100);
-            } else if (shafir.direction.equals("Down")) {
-                SaxionApp.drawImage(Second.imageShafirDeathVoor, shafir.x, shafir.y, 100, 100);
-            }
-        }
-
         //caveman death mogelijk maken
         if (knuppelOpgepakt) {
             if (Math.abs(shafir.x - caveman.x) < 80 && Math.abs(shafir.y - caveman.y) < 80) {
@@ -418,6 +409,11 @@ public class RiftRaiders implements GameLoop {
             cavemanReset();
             cavemanResets = true;
             cavemanDeathdelay = 20;
+        }
+
+        //shaifr emote tekenen (werkt niet goed)
+        if (shafirDuim) {
+            SaxionApp.drawImage(Second.imageShafirEmote, shafir.x, shafir.y, 100, 100);
         }
 
         //caveman death sprite tekenen
@@ -540,8 +536,10 @@ public class RiftRaiders implements GameLoop {
         }
 
         //mainBoss laten slaan
-        if (hold && holdCounter <= 0) {
+        if (hold && holdCounter <= 0 && attackCounter > 0) {
             bossAttack = true;
+            heartsFrameCounter--;
+            doodDoorBoss = true;
             attackCounter--;
             if(attackCounter >= 0) {
                 if (mainBoss.direction.equals("Up")) {
@@ -558,6 +556,36 @@ public class RiftRaiders implements GameLoop {
                 bossAttack = false;
                 attackCounter = 25;
                 hold = false;
+            }
+        }
+
+        //death animation toevoegen
+        if (heartsFrameCounter <= 0 && doodDoorBoss) {
+            gameOver = true;
+            deathAnimation = true;
+            if (attackCounter <= 0) {
+                SaxionApp.drawImage(Second.imageBossIdle, mainBoss.x, mainBoss.y, 100, 100);
+            }
+            shafirLeeft = false;
+            if (!shafirLeeft) {
+                shafir.y -= shafirStijgSpeed;
+            }
+            // Begin aftellen van de delay
+            if (gameOverDelay > 0) {
+                gameOverDelay--; // Verlaag de delay-timer
+            }
+        }
+
+        //shafir death sprites printen bij death
+        if (deathAnimation) {
+            if (shafir.direction.equals("Left")) {
+                SaxionApp.drawImage(Second.imageShafirDeathLinks, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Right")) {
+                SaxionApp.drawImage(Second.imageShafirDeathRechts, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Up")) {
+                SaxionApp.drawImage(Second.imageShafirDeathAchter, shafir.x, shafir.y, 100, 100);
+            } else if (shafir.direction.equals("Down")) {
+                SaxionApp.drawImage(Second.imageShafirDeathVoor, shafir.x, shafir.y, 100, 100);
             }
         }
 
@@ -643,6 +671,8 @@ public class RiftRaiders implements GameLoop {
                 ShafirSlaat = true;
                 // int shafirSlaatAantalFrames = 25
                 slaanRefresh = 8;
+            } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_V) {
+                shafirDuim = true;
             }
 
         }
