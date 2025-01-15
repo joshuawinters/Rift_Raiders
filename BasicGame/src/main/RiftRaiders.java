@@ -177,6 +177,7 @@ public class RiftRaiders implements GameLoop {
     public void loop() {
         if (currentScreen.equals("startscreen")) {
             ui.startscreenLoop();
+
         } else if (gameOverDelay == 0) {
             ui.gameOverscreenloop();
             gameOverscreen = true;
