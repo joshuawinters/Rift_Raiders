@@ -117,11 +117,22 @@ public class RiftRaiders implements GameLoop {
         charHIt = false;
         deathAnimation = false;
         shafirLeeft = true;
+        cavemanLeeft = true;
         gameOver = false;
         gameOverscreen = false;
         shafirInRange = false;
-        cavemanLeeft = true;
+        cavemanResets = false; //caveman deaths bijhouden voor death counter
         deathIsCounted = false;
+        bossSpawned = false;
+        dialoge = false;
+        mainBossLeeft = false;
+        mainBossInRange = false;
+        bossAttack = false;
+        hold = false;
+        doodDoorCaveman = false;
+        doodDoorBoss = false;
+        shafirDuim = false;
+        mainBossDood = false;
 
         //counters resetten
         x_knuppel = 200;
@@ -131,9 +142,13 @@ public class RiftRaiders implements GameLoop {
         damageRefreshChar = 5;
         heartsFrameCounter = 6;
         shafirStijgSpeed = 7;
-        gameOverDelay = 60;
+        gameOverDelay = 60; //voor de gameover screen
         cavemanDeathdelay = 20;
         cavemanDeathCounter = 0;
+        dialogeCounter = 25;
+        holdCounter = 25;
+        attackCounter = 25;
+        hitCounter = 0;
     }
 
     //reset aanmaken voor caveman death
