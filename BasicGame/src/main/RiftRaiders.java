@@ -181,6 +181,7 @@ public class RiftRaiders implements GameLoop {
             gameOverscreen = true;
         } else if (!gameCompleted){
             gamescreenLoop();
+
         } else{
             ui.GameCompleted();
         }
