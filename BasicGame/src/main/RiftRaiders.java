@@ -57,7 +57,6 @@ public class RiftRaiders implements GameLoop {
     boolean shafirDuim = false;
     boolean mainBossDood = false;
     boolean gameScreenLoop = false;
-    boolean startScreen = false;
 
 
     // tiles en level
@@ -177,9 +176,6 @@ public class RiftRaiders implements GameLoop {
     @Override
     public void loop() {
         if (currentScreen.equals("startscreen")) {
-            startScreen = true;
-            gameOverscreen = false;
-            gameScreenLoop = false;
             ui.startscreenLoop();
         } else if (gameOverDelay == 0) {
             ui.gameOverscreenloop();
@@ -187,8 +183,6 @@ public class RiftRaiders implements GameLoop {
         } else if (!gameCompleted){
             gamescreenLoop();
             gameScreenLoop = true;
-            startScreen = false;
-            gameOverscreen = false;
         } else{
             ui.GameCompleted();
         }
@@ -198,7 +192,6 @@ public class RiftRaiders implements GameLoop {
     public boolean checkCollision(Rectangle rect1, Rectangle rect2) {
         return rect1.intersects(rect2);
     }
-
 
 
     public void gamescreenLoop() {
@@ -215,6 +208,8 @@ public class RiftRaiders implements GameLoop {
         //SaxionApp.drawImage(Second.imageStage, 0, 0, 1000, 600);
         //Health boarder tekenen
         SaxionApp.drawImage(Second.imageHealthBoarder, 0, 0, 160, 200);
+
+
 
 
         //hart sprites toevoegen
@@ -653,13 +648,14 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
-        if(mainBossDood){
+
+        if(mainBossDood ){
             gameCompleted = true;
         }
 
         //shafir hitbox
         Rectangle staticHitbox = shafir.getHitbox();
-
+        drawRectangle();
         //HITBOX tekenen
         //SaxionApp.drawRectangle(staticHitbox.x, staticHitbox.y, staticHitbox.width,staticHitbox.height);
 
@@ -755,6 +751,20 @@ public class RiftRaiders implements GameLoop {
             tileM.drawTiles();
         }
     }
+
+    public void drawRectangle() {
+        int row = 1; // The row where you want to draw the rectangle
+        int column = 7; // The column where you want to draw the rectangle
+
+        // Calculate pixel coordinates
+        int x = column * tileWidth; // x-coordinate based on the column
+        int y = row * tileWidth;    // y-coordinate based on the row
+
+        // Rectangle size
+        int width = tileWidth;  // Width of the rectangle (1 tile)
+        int height = tileWidth; // Height of the rectangle (1 tile)
+    }
+
 
 
 }
