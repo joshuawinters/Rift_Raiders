@@ -13,6 +13,9 @@ public class mainUI {
         SaxionApp.clear();
         SaxionApp.drawImage(Second.imageGameoverScreen, 0, 0, 1000, 600);
     }
-
+    public void GameCompleted(){
+        SaxionApp.clear();
+        SaxionApp.drawImage(Second.imageGameoverScreen, 0, 0, 1000, 600);
+    }
 }
 

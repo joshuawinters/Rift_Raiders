@@ -164,8 +164,10 @@ public class RiftRaiders implements GameLoop {
         } else if (gameOverDelay == 0) {
             ui.gameOverscreenloop();
             gameOverscreen = true;
-        } else {
+        } else if (!gameCompleted){
             gamescreenLoop();
+        } else{
+            ui.GameCompleted();
         }
     }
 
@@ -627,7 +629,9 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
-
+        if(mainBossDood){
+            gameCompleted = true;
+        }
 
         //shafir hitbox
         Rectangle staticHitbox = shafir.getHitbox();
@@ -727,5 +731,6 @@ public class RiftRaiders implements GameLoop {
             tileM.drawTiles();
         }
     }
+
 
 }
