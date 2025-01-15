@@ -85,6 +85,10 @@ public class RiftRaiders implements GameLoop {
     int attackCounter = 25;
 
 
+    //end game
+    boolean gameCompleted = false;
+
+
     @Override
     public void init() {
         // Initialize Player with position, speed, and animation delay
