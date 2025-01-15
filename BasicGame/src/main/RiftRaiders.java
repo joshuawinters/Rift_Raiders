@@ -57,6 +57,7 @@ public class RiftRaiders implements GameLoop {
     boolean shafirDuim = false;
     boolean mainBossDood = false;
     boolean gameScreenLoop = false;
+    boolean startScreen = false;
 
 
     // tiles en level
@@ -176,6 +177,9 @@ public class RiftRaiders implements GameLoop {
     @Override
     public void loop() {
         if (currentScreen.equals("startscreen")) {
+            startScreen = true;
+            gameOverscreen = false;
+            gameScreenLoop = false;
             ui.startscreenLoop();
         } else if (gameOverDelay == 0) {
             ui.gameOverscreenloop();
@@ -183,6 +187,8 @@ public class RiftRaiders implements GameLoop {
         } else if (!gameCompleted){
             gamescreenLoop();
             gameScreenLoop = true;
+            startScreen = false;
+            gameOverscreen = false;
         } else{
             ui.GameCompleted();
         }
@@ -192,6 +198,7 @@ public class RiftRaiders implements GameLoop {
     public boolean checkCollision(Rectangle rect1, Rectangle rect2) {
         return rect1.intersects(rect2);
     }
+
 
 
     public void gamescreenLoop() {
@@ -209,11 +216,6 @@ public class RiftRaiders implements GameLoop {
         //Health boarder tekenen
         SaxionApp.drawImage(Second.imageHealthBoarder, 0, 0, 160, 200);
 
-
-        //sounds afspelen
-        if (gameScreenLoop){
-            SaxionApp.playSound(sounds.sound1);
-        }
 
         //hart sprites toevoegen
         if (heartsFrameCounter > 0) {
