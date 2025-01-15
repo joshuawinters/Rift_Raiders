@@ -538,12 +538,14 @@ public class RiftRaiders implements GameLoop {
         //mainBoss laten slaan
         if (hold && holdCounter <= 0 && attackCounter > 0) {
             bossAttack = true;
-            heartsFrameCounter--;
-            doodDoorBoss = true;
+            if (mainBossInRange){
+                doodDoorBoss = true;
+                heartsFrameCounter--;
+            }
             attackCounter--;
-            if(attackCounter >= 0) {
+            if(attackCounter > 0) {
                 if (mainBoss.direction.equals("Up")) {
-                    SaxionApp.drawImage(Second.imageBossAttackAchter, mainBoss.x, mainBoss.y, 100, 100);
+                        SaxionApp.drawImage(Second.imageBossAttackAchter, mainBoss.x, mainBoss.y, 100, 100);
                 } else if (mainBoss.direction.equals("Down")) {
                     SaxionApp.drawImage(Second.imageBossAttackVoor, mainBoss.x, mainBoss.y, 100, 100);
                 } else if (mainBoss.direction.equals("Left")) {
@@ -552,6 +554,7 @@ public class RiftRaiders implements GameLoop {
                     SaxionApp.drawImage(Second.imageBossAttackRechts, mainBoss.x, mainBoss.y, 100, 100);
                 }
             } else {
+
                 holdCounter = 25;
                 bossAttack = false;
                 attackCounter = 25;
