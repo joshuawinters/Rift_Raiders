@@ -55,6 +55,8 @@ public class RiftRaiders implements GameLoop {
     boolean doodDoorCaveman = false;
     boolean doodDoorBoss = false;
     boolean shafirDuim = false;
+    boolean mainBossDood = false;
+
 
     // tiles en level
     TileManager tileM;
@@ -83,6 +85,7 @@ public class RiftRaiders implements GameLoop {
     int dialogeCounter = 25;
     int holdCounter = 25;
     int attackCounter = 25;
+    int hitCounter = 0;
 
 
     //end game
@@ -250,6 +253,11 @@ public class RiftRaiders implements GameLoop {
                 default -> Second.imageShafirIdle;
             };
             SaxionApp.drawImage(sprite2, shafir.x, shafir.y, 100, 100);
+        }
+
+        if (ShafirSlaat && slaanRefresh == 0 && bossSpawned && mainBossInRange) {
+            hitCounter++;
+            System.out.println(hitCounter);
         }
 
 
@@ -475,7 +483,7 @@ public class RiftRaiders implements GameLoop {
         }
 
 
-        if (bossSpawned && dialogeCounter <= 0 && !mainBossInRange&& !hold) {
+        if (bossSpawned && dialogeCounter <= 0 && !mainBossInRange && !hold) {
             String sprite2 = switch (mainBoss.direction) {
                 case "Up" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenAchter1 : Second.imageBStapWapenAchter2;
                 case "Down" -> (mainBoss.stapCounter % 2 == 0) ? Second.imageBStapWapenVoor1 : Second.imageBStapWapenVoor2;
@@ -488,7 +496,7 @@ public class RiftRaiders implements GameLoop {
         }
 
         //mainBoss laten volgen
-        if (bossSpawned && dialogeCounter <= 0 && !mainBossInRange && !hold) { // Check dat de dialoog is afgelopen
+        if (bossSpawned && dialogeCounter <= 0 && !mainBossInRange && !hold && !mainBossDood) { // Check dat de dialoog is afgelopen
             // Laat de boss de speler volgen
             boolean kb = moving_boss(); // Gebruik dit voor caveman, maar we moeten hier boss movement implementeren
             if (!kb) {
@@ -523,7 +531,7 @@ public class RiftRaiders implements GameLoop {
            if (mainBossInRange){
                hold = true;
            }
-           if (hold && !bossAttack) {
+           if (hold && !bossAttack && !mainBossDood) {
                holdCounter--;
                if (mainBoss.direction.equals("Up")) {
                    SaxionApp.drawImage(Second.imageMainBHoldAchter, mainBoss.x, mainBoss.y, 100, 100);
@@ -540,7 +548,7 @@ public class RiftRaiders implements GameLoop {
         }
 
         //mainBoss laten slaan
-        if (hold && holdCounter <= 0 && attackCounter > 0) {
+        if (hold && holdCounter <= 0 && attackCounter > 0 && !mainBossDood) {
             bossAttack = true;
             if (mainBossInRange){
                 doodDoorBoss = true;
@@ -564,6 +572,29 @@ public class RiftRaiders implements GameLoop {
                 attackCounter = 25;
                 hold = false;
             }
+        }
+
+
+        //main boss health toevoegen
+        if (bossSpawned && dialogeCounter < 0 && hitCounter == 0) {
+            SaxionApp.drawImage(Second.imageHealthBossVol, 350, 440, 250, 200);
+            SaxionApp.drawImage(Second.imageMainBHoofd, 290, 490, 100, 100);
+        } else if (bossSpawned && dialogeCounter < 0 && hitCounter == 1) {
+            SaxionApp.drawImage(Second.imageHealthBoss1Hit, 350, 440, 250, 200);
+            SaxionApp.drawImage(Second.imageMainBHoofd, 290, 490, 100, 100);
+        } else if (bossSpawned && dialogeCounter < 0 && hitCounter == 2) {
+            SaxionApp.drawImage(Second.imageHealthBoss2Hit, 350, 440, 250, 200);
+            SaxionApp.drawImage(Second.imageMainBHoofd, 290, 490, 100, 100);
+        } else if (bossSpawned && dialogeCounter < 0 && hitCounter == 3) {
+            SaxionApp.drawImage(Second.imageHealthBoss3Hit, 350, 440, 250, 200);
+            SaxionApp.drawImage(Second.imageMainBHoofd, 290, 490, 100, 100);
+        } else if (bossSpawned && dialogeCounter < 0 && hitCounter == 4) {
+            SaxionApp.drawImage(Second.imageHealthBoss4Hit, 350, 440, 250, 200);
+            SaxionApp.drawImage(Second.imageMainBHoofd, 290, 490, 100, 100);
+        } else if (bossSpawned && dialogeCounter < 0 && hitCounter == 5) {
+            SaxionApp.drawImage(Second.imageHealthBossLeeg, 350, 440, 250, 200);
+            SaxionApp.drawImage(Second.imageMainBHoofd, 290, 490, 100, 100);
+            mainBossDood = true;
         }
 
         //death animation toevoegen

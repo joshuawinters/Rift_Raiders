@@ -87,6 +87,18 @@ public class Second {
     //main boss hoofd voor dialoge
     static String imageMainBHoofd = "Sprites\\mainBoss1\\mainBossHoofd.png";
 
+    //main boss health bar
+    static String imageHealthBossVol = "Sprites\\UI&Items\\bossHealthVol.png";
+    static String imageHealthBoss1Hit = "Sprites\\UI&Items\\bossHealth4.5.png";
+    static String imageHealthBoss2Hit = "Sprites\\UI&Items\\bossHealth3.5.png";
+    static String imageHealthBoss3Hit = "Sprites\\UI&Items\\bossHealth2.5.png";
+    static String imageHealthBoss4Hit = "Sprites\\UI&Items\\bossHealth1.5.png";
+    static String imageHealthBossLeeg = "Sprites\\UI&Items\\bossHealthLeeg.png";
+
+
+
+
+
     //---------------------------------------------------------------------------------------------------------------
 
     //shaifr emote
