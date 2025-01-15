@@ -19,8 +19,8 @@ public class RiftRaiders implements GameLoop {
     final int tileHeight = 48; // Height of each tile
     static int screenWidth = 1500; // Screen width in pixels
     static int screenHeight = 1500; // Screen height in pixels
-    public int maxScreencol = 30;
-    public int maxScreenrow = 30;
+    public int maxScreencol = 25;
+    public int maxScreenrow = 25;
 
     // collisions
     public CollisionChecker cChecker = new CollisionChecker(this);
