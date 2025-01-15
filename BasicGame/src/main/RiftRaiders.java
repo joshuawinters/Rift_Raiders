@@ -210,10 +210,7 @@ public class RiftRaiders implements GameLoop {
         SaxionApp.drawImage(Second.imageHealthBoarder, 0, 0, 160, 200);
 
 
-        //sounds afspelen
-        if (gameScreenLoop){
-            SaxionApp.playSound(sounds.sound1);
-        }
+
 
         //hart sprites toevoegen
         if (heartsFrameCounter > 0) {
@@ -651,13 +648,14 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
-        if(mainBossDood){
+
+        if(mainBossDood ){
             gameCompleted = true;
         }
 
         //shafir hitbox
         Rectangle staticHitbox = shafir.getHitbox();
-
+        drawRectangle();
         //HITBOX tekenen
         //SaxionApp.drawRectangle(staticHitbox.x, staticHitbox.y, staticHitbox.width,staticHitbox.height);
 
@@ -753,6 +751,20 @@ public class RiftRaiders implements GameLoop {
             tileM.drawTiles();
         }
     }
+
+    public void drawRectangle() {
+        int row = 1; // The row where you want to draw the rectangle
+        int column = 7; // The column where you want to draw the rectangle
+
+        // Calculate pixel coordinates
+        int x = column * tileWidth; // x-coordinate based on the column
+        int y = row * tileWidth;    // y-coordinate based on the row
+
+        // Rectangle size
+        int width = tileWidth;  // Width of the rectangle (1 tile)
+        int height = tileWidth; // Height of the rectangle (1 tile)
+    }
+
 
 
 }
