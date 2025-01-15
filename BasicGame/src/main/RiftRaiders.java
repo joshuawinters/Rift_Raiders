@@ -19,8 +19,8 @@ public class RiftRaiders implements GameLoop {
     final int tileHeight = 48; // Height of each tile
     static int screenWidth = 1500; // Screen width in pixels
     static int screenHeight = 1500; // Screen height in pixels
-    public int maxScreencol = 16;
-    public int maxScreenrow = 12;
+    public int maxScreencol = 25;
+    public int maxScreenrow = 25;
 
     // collisions
     public CollisionChecker cChecker = new CollisionChecker(this);
@@ -544,12 +544,14 @@ public class RiftRaiders implements GameLoop {
         //mainBoss laten slaan
         if (hold && holdCounter <= 0 && attackCounter > 0) {
             bossAttack = true;
-            heartsFrameCounter--;
-            doodDoorBoss = true;
+            if (mainBossInRange){
+                doodDoorBoss = true;
+                heartsFrameCounter--;
+            }
             attackCounter--;
-            if(attackCounter >= 0) {
+            if(attackCounter > 0) {
                 if (mainBoss.direction.equals("Up")) {
-                    SaxionApp.drawImage(Second.imageBossAttackAchter, mainBoss.x, mainBoss.y, 100, 100);
+                        SaxionApp.drawImage(Second.imageBossAttackAchter, mainBoss.x, mainBoss.y, 100, 100);
                 } else if (mainBoss.direction.equals("Down")) {
                     SaxionApp.drawImage(Second.imageBossAttackVoor, mainBoss.x, mainBoss.y, 100, 100);
                 } else if (mainBoss.direction.equals("Left")) {
@@ -558,6 +560,7 @@ public class RiftRaiders implements GameLoop {
                     SaxionApp.drawImage(Second.imageBossAttackRechts, mainBoss.x, mainBoss.y, 100, 100);
                 }
             } else {
+
                 holdCounter = 25;
                 bossAttack = false;
                 attackCounter = 25;

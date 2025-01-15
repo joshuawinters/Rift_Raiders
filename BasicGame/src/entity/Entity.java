@@ -58,7 +58,6 @@ public class Entity{
         this.width = width;
         this.height = height;
 
-
     }
     // hit box
     public Rectangle getHitbox() {
