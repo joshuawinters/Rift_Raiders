@@ -665,6 +665,7 @@ public class RiftRaiders implements GameLoop {
 
         if(mainBossDood && gameEndHitBox){
             gameCompleted = true;
+
         }
 
         //HITBOX tekenen
