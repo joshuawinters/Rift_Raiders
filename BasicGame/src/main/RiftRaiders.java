@@ -658,6 +658,7 @@ public class RiftRaiders implements GameLoop {
         Rectangle staticHitbox = shafir.getHitbox();
         Rectangle endGameHitbox = drawRectangle();
 
+
         if(endGameHitbox.intersects(staticHitbox)) {
             gameEndHitBox = true;
         }
