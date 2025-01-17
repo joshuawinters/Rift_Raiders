@@ -92,6 +92,7 @@ public class RiftRaiders implements GameLoop {
     int attackCounter = 25;
     int hitCounter = 0;
     int rounds = 5;
+    int emoteTimer = 15;
 
 
     //end game
@@ -146,6 +147,9 @@ public class RiftRaiders implements GameLoop {
         doodDoorBoss = false;
         shafirDuim = false;
         mainBossDood = false;
+        gameScreenLoop = false;
+        mainOST = false;
+        cavemanGeluid = false;
 
         //counters resetten
         x_knuppel = 200;
@@ -162,6 +166,8 @@ public class RiftRaiders implements GameLoop {
         holdCounter = 25;
         attackCounter = 25;
         hitCounter = 0;
+        rounds = 5;
+        emoteTimer = 5;
     }
 
     //reset aanmaken voor caveman death
@@ -488,6 +494,11 @@ public class RiftRaiders implements GameLoop {
         //shaifr emote tekenen (werkt niet goed)
         if (shafirDuim) {
             SaxionApp.drawImage(Second.imageShafirEmote, shafir.x, shafir.y, 100, 100);
+            emoteTimer--;
+        }
+        if (emoteTimer <= 0) {
+            shafirDuim = false;
+            emoteTimer = 15;
         }
 
         //caveman death sprite tekenen
@@ -699,7 +710,6 @@ public class RiftRaiders implements GameLoop {
 
         if(mainBossDood && gameEndHitBox){
             gameCompleted = true;
-
         }
 
         //HITBOX tekenen
