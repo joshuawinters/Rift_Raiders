@@ -71,6 +71,8 @@ public class TileManager {
             tile[16].collision = true;
             tile[17].collision = true;
             tile[18].collision = true;
+            tile[20].collision = true;
+            tile[22].collision = true;
             /*
             tile[0] = new Tiles();
             tile[0].image = "Sprites/Tiles/New version (with numbers)/017.png";
