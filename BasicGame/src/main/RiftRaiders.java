@@ -44,6 +44,7 @@ public class RiftRaiders implements GameLoop {
     boolean gameOver = false;
     boolean gameOverscreen = false;
     boolean shafirInRange = false;
+    boolean indicator = false;
     boolean cavemanResets = false; //caveman deaths bijhouden voor death counter
     boolean deathIsCounted = false;
     boolean bossSpawned = false;
@@ -58,6 +59,7 @@ public class RiftRaiders implements GameLoop {
     boolean mainBossDood = false;
     boolean gameScreenLoop = false;
     boolean mainOST = false;
+    boolean cavemanGeluid = false;
 
 
     // tiles en level
@@ -66,7 +68,7 @@ public class RiftRaiders implements GameLoop {
     audio ad = new audio();
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
-        SaxionApp.startGameLoop(new RiftRaiders(), screenWidth, 600, 40);
+        SaxionApp.startGameLoop(new RiftRaiders(), screenWidth, 600, 1);
     }
 
     String currentScreen = "startscreen";
@@ -89,6 +91,7 @@ public class RiftRaiders implements GameLoop {
     int holdCounter = 25;
     int attackCounter = 25;
     int hitCounter = 0;
+    int rounds = 5;
 
 
     //end game
@@ -103,6 +106,8 @@ public class RiftRaiders implements GameLoop {
         caveman = new Enemies(280, 0, 8, 200, 50, 50);
         mainBoss = new Enemies(280, 0, 8, 200, 50, 50);
         tileM = new TileManager(this, tileWidth, tileHeight);
+        audio.setVolume(0.1F);
+        SaxionApp.playSound(sounds.Loop, true);
     }
 
     //game resetten bij death
@@ -219,15 +224,28 @@ public class RiftRaiders implements GameLoop {
             mainOST = true;
         }
 
-        if (!bossSpawned && shafirLeeft && mainOST) {
-            //SaxionApp.playSound(sounds.mainOST, true);
-        } else if (bossSpawned && !mainBossDood) {
-            audio.play(sounds.bossTheme, true);
-        }
 
-        if (ShafirSlaat) {
+        //sound voor slaan
+        if (ShafirSlaat || cavemanSlaat) {
             audio.play(sounds.slaan, false);
         }
+        //sound voor caveman death
+        if (cavemanDeathdelay == 3) {
+            audio.play(sounds.cavemanHit, false);
+        }
+        //sound voor boss attack
+        if (bossAttack) {
+            audio.play(sounds.bossAttack, false);
+        }
+        //gameOver
+        if (gameOverDelay == 1) {
+            audio.play(sounds.gameOver, false);
+        }
+        if (indicator) {
+            audio.play(sounds.damage, false);
+        }
+
+
         //hart sprites toevoegen
         if (heartsFrameCounter > 0) {
             SaxionApp.drawImage(Second.imageHartVol1, 25, 55, 30, 30);
@@ -345,7 +363,7 @@ public class RiftRaiders implements GameLoop {
 
 
         //caveman laten slaan in range
-        if (cavemanDeathCounter <= 20)
+        if (cavemanDeathCounter <= rounds + 1)
         if (cavemanLeeft) {
             if (knuppelOpgepakt && heartsFrameCounter > 0) {
                 if (Math.abs(caveman.x - shafir.x) < 80 && Math.abs(caveman.y - shafir.y) < 80) {
@@ -408,6 +426,9 @@ public class RiftRaiders implements GameLoop {
         //hit indicator aanmaken
         if (knuppelOpgepakt && heartsFrameCounter > 0) {
             if (charHIt && damageRefreshChar > 0) {
+                if (shafirLeeft) {
+                    indicator = true;
+                }
                 if (shafir.direction.equals("Left")) {
                     SaxionApp.drawImage(Second.imageShafirDamageLinks, shafir.x, shafir.y, 100, 100);
                 } else if (shafir.direction.equals("Right")) {
@@ -467,7 +488,7 @@ public class RiftRaiders implements GameLoop {
 
         //caveman death sprite tekenen
         if (!cavemanLeeft) {
-            if(cavemanDeathCounter<5) {
+            if(cavemanDeathCounter< rounds - 1) {
                 if (caveman.direction.equals("Left")) {
                     SaxionApp.drawImage(Second.imageCavemanDeathLinks, caveman.x, caveman.y, 100, 100);
                 } else if (caveman.direction.equals("Right")) {
@@ -486,13 +507,13 @@ public class RiftRaiders implements GameLoop {
                 System.out.println("caveman deaths: " + cavemanDeathCounter);
                 deathIsCounted = true;
         }
-        if (cavemanResets && cavemanDeathdelay == 0) {
-            cavemanLeeft = true;
+        if (cavemanDeathCounter == rounds) {
+            cavemanGeluid = false;
         }
 
+
         //boss laten inspawnen bij 5 kills
-        if (cavemanDeathCounter >= 1 && !bossSpawned) { // Controleer of boss nog niet gespawned is
-            SaxionApp.drawImage(Second.imageBossIdle, mainBoss.x, mainBoss.y, 100, 100);
+        if (cavemanDeathCounter >= rounds && !bossSpawned) { // Controleer of boss nog niet gespawned is
             bossSpawned = true;
             mainBossLeeft = true;
             cavemanLeeft = false; // Stop caveman acties
@@ -506,7 +527,6 @@ public class RiftRaiders implements GameLoop {
 
         //blokje dialoge inspawnen
         if (bossSpawned) {
-            cavemanLeeft = false;
             dialoge = true;
             dialogeCounter--;
             if (dialoge && dialogeCounter > 0) {
@@ -560,7 +580,7 @@ public class RiftRaiders implements GameLoop {
 
         //mainBoss attack sprites
         if (bossSpawned && shafirLeeft) {
-           if (Math.abs(mainBoss.x - shafir.x) < 80 && Math.abs(mainBoss.y - shafir.y) < 80) {
+           if (Math.abs(mainBoss.x - shafir.x) < 90 && Math.abs(mainBoss.y - shafir.y) < 90) {
                mainBossInRange = true;
            } else{
                mainBossInRange = false;
@@ -664,9 +684,6 @@ public class RiftRaiders implements GameLoop {
             }
         }
 
-
-
-
         //shafir hitbox
         Rectangle staticHitbox = shafir.getHitbox();
         Rectangle endGameHitbox = drawRectangle();
@@ -748,6 +765,7 @@ public class RiftRaiders implements GameLoop {
             } else if (keyboardEvent.getKeyCode() == KeyboardEvent.VK_F) {
                 //knuppel oppakken
                 if ( Math.abs(shafir.x - 200) < 70 && Math.abs(shafir.y - 300) < 70) {
+                    audio.play(sounds.knuppelOppak, false);
                     knuppelOpgepakt = true;
                     ShafirHeeftKnuppel = true;
                     cavemanMoves = true;

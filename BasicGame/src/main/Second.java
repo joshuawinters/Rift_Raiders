@@ -98,8 +98,8 @@ public class Second {
     static String imageHealthBoss4Hit = "Sprites\\UI&Items\\bossHealth1.5.png";
     static String imageHealthBossLeeg = "Sprites\\UI&Items\\bossHealthLeeg.png";
 
-
-
+    //main boss wapen
+    static String imageBijl = "Sprites\\UI&Items\\bijl.png";
 
 
     //---------------------------------------------------------------------------------------------------------------
