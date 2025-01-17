@@ -88,8 +88,8 @@ public class RiftRaiders implements GameLoop {
     int cavemanDeathdelay = 20;
     int cavemanDeathCounter = 0;
     int dialogeCounter = 25;
-    int holdCounter = 25;
-    int attackCounter = 25;
+    int holdCounter = 40;
+    int attackCounter = 40;
     int hitCounter = 0;
     int rounds = 5;
     int emoteTimer = 15;
@@ -163,8 +163,8 @@ public class RiftRaiders implements GameLoop {
         cavemanDeathdelay = 20;
         cavemanDeathCounter = 0;
         dialogeCounter = 25;
-        holdCounter = 25;
-        attackCounter = 25;
+        holdCounter = 40;
+        attackCounter = 40;
         hitCounter = 0;
         rounds = 5;
         emoteTimer = 5;
@@ -247,9 +247,9 @@ public class RiftRaiders implements GameLoop {
         if (gameOverDelay == 1) {
             audio.play(sounds.gameOver, false);
         }
-        if (indicator) {
-            audio.play(sounds.damage, false);
-        }
+//        if (indicator) {
+//            audio.play(sounds.damage, false);
+//        }
         //victory sounds
         if (gameCompleted) {
             audio.play(sounds.victory, false);
@@ -595,7 +595,7 @@ public class RiftRaiders implements GameLoop {
 
         //mainBoss attack sprites
         if (bossSpawned && shafirLeeft) {
-           if (Math.abs(mainBoss.x - shafir.x) < 90 && Math.abs(mainBoss.y - shafir.y) < 90) {
+           if (Math.abs(mainBoss.x - shafir.x) < 80 && Math.abs(mainBoss.y - shafir.y) < 80) {
                mainBossInRange = true;
            } else{
                mainBossInRange = false;
@@ -623,8 +623,10 @@ public class RiftRaiders implements GameLoop {
         if (hold && holdCounter <= 0 && attackCounter > 0 && !mainBossDood) {
             bossAttack = true;
             if (mainBossInRange){
-                doodDoorBoss = true;
                 heartsFrameCounter--;
+            }
+            if (heartsFrameCounter == 0) {
+                doodDoorBoss = true;
             }
             attackCounter--;
             if(attackCounter > 0) {
