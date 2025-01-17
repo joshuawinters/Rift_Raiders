@@ -17,8 +17,8 @@ public class RiftRaiders implements GameLoop {
     // Define tile size and screen dimensions
     final int tileWidth = 48;  // Width of each tile
     final int tileHeight = 48; // Height of each tile
-    static int screenWidth = 1500; // Screen width in pixels
-    static int screenHeight = 1500; // Screen height in pixels
+    static int screenWidth = 1920; // Screen width in pixels
+    static int screenHeight = 1080; // Screen height in pixels
     public int maxScreencol = 25;
     public int maxScreenrow = 25;
 
@@ -65,7 +65,7 @@ public class RiftRaiders implements GameLoop {
     audio ad = new audio();
     //gameloop aanroepen en starten via main
     public static void main(String[] args) {
-        SaxionApp.startGameLoop(new RiftRaiders(), screenWidth, 600, 40);
+        SaxionApp.startGameLoop(new RiftRaiders(), screenWidth, screenHeight, 40);
     }
 
     String currentScreen = "startscreen";
