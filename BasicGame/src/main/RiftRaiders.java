@@ -88,7 +88,7 @@ public class RiftRaiders implements GameLoop {
     int cavemanDeathdelay = 20;
     int cavemanDeathCounter = 0;
     int dialogeCounter = 25;
-    int holdCounter = 40;
+    int holdCounter = 60;
     int attackCounter = 40;
     int hitCounter = 0;
     int rounds = 5;
@@ -163,7 +163,7 @@ public class RiftRaiders implements GameLoop {
         cavemanDeathdelay = 20;
         cavemanDeathCounter = 0;
         dialogeCounter = 25;
-        holdCounter = 40;
+        holdCounter = 60;
         attackCounter = 40;
         hitCounter = 0;
         rounds = 5;
@@ -241,6 +241,7 @@ public class RiftRaiders implements GameLoop {
         }
         //sound voor boss attack
         if (bossAttack) {
+            audio.setVolume(0.3F);
             audio.play(sounds.bossAttack, false);
         }
         //gameOver
