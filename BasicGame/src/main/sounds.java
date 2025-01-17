@@ -10,4 +10,5 @@ public class sounds {
     static String knuppelOppak = "sounds\\knuppel.wav";
     static String gameOver = "sounds\\gameOver.wav";
     static String Loop = "sounds\\Loop.wav";
+    static String victory = "sounds\\victory.wav";
 }

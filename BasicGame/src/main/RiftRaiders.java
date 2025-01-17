@@ -244,6 +244,10 @@ public class RiftRaiders implements GameLoop {
         if (indicator) {
             audio.play(sounds.damage, false);
         }
+        //victory sounds
+        if (gameCompleted) {
+            audio.play(sounds.victory, false);
+        }
 
 
         //hart sprites toevoegen
